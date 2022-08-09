@@ -7,25 +7,36 @@
 
         <title>{{ config('app.name', 'Laravel') }}</title>
 
-        <!-- Fonts -->
-        <link rel="stylesheet" href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap">
-
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
-            @include('layouts.navigation')
+        <div class="min-h-screen bg-gray-100 text-gray-900">
+            <header class="flex gap-2 items-center px-8 py-4">
+                <a href="/" class="font-bold text-xl hover:underline flex gap-4">
+                    <img src="{{ asset('img/logo.svg') }}" alt="App Logo" class="w-8 h-8">
+                    <span>Voting App</span>
+                </a>
 
-            <!-- Page Heading -->
-            <header class="bg-white shadow">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                    {{ $header }}
+                <div class="ml-auto flex gap-4">
+                    @auth
+                        <form method="post" action="{{ route('logout') }}" class="flex items-center">
+                            @csrf
+
+                            <button type="submit">{{ __('Log Out') }}</button>
+                        </form>
+
+                        <a href="#">
+                            <img src="https://gravatar.com/avatar/0?d=mp" alt="Avatar" class="w-10 h-10 rounded-full" />
+                        </a>
+                    @else
+                        <a href="{{ route('login') }}">{{ __('Log In') }}</a>
+                        <a href="{{ route('register') }}">{{ __('Register') }}</a>
+                    @endauth
                 </div>
             </header>
 
-            <!-- Page Content -->
-            <main>
+            <main class="container m-auto px-8 py-4">
                 {{ $slot }}
             </main>
         </div>
