@@ -12,13 +12,13 @@
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100 text-gray-900">
-            <header class="flex gap-2 items-center px-8 py-4">
-                <a href="/" class="font-bold text-xl hover:underline flex gap-4">
+            <header class="flex flex-wrap gap-2 items-center px-8 py-4 justify-center">
+                <a href="/" class="font-bold text-xl hover:underline flex gap-4 w-full justify-center sm:justify-start sm:w-auto">
                     <img src="{{ asset('img/logo.svg') }}" alt="App Logo" class="w-8 h-8">
                     <span>Voting App</span>
                 </a>
 
-                <div class="ml-auto flex gap-4">
+                <div class="sm:ml-auto flex gap-4">
                     @auth
                         <form method="post" action="{{ route('logout') }}" class="flex items-center">
                             @csrf
@@ -30,8 +30,8 @@
                             <img src="https://gravatar.com/avatar/0?d=mp" alt="Avatar" class="w-10 h-10 rounded-full" />
                         </a>
                     @else
-                        <a href="{{ route('login') }}">{{ __('Log In') }}</a>
-                        <a href="{{ route('register') }}">{{ __('Register') }}</a>
+                        <a href="{{ route('login') }}" class="hover:underline">{{ __('Log In') }}</a>
+                        <a href="{{ route('register') }}" class="hover:underline">{{ __('Register') }}</a>
                     @endauth
                 </div>
             </header>

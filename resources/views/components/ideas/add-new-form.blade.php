@@ -24,14 +24,14 @@
   <div class="mb-4">
     <select
       name="category"
-      class="w-full mb-2 rounded-xl border-none bg-gray-100 text-gray-500 cursor-pointer"
+      class="w-full rounded-xl border-none bg-gray-100 text-gray-500 cursor-pointer"
       required
     >
       <option selected disabled value="default">Category</option>
-      <option value="some category">Some category</option>
-      <option value="some other category">Some other category</option>
+      <option value="some-category">Some category</option>
+      <option value="some-other-category">Some other category</option>
     </select>
-    <div x-cloak x-show="errors['category'] != null" class="text-red-700 flex flex-wrap gap-1">
+    <div x-cloak x-show="errors['category'] != null" class="text-red-700 flex flex-wrap gap-1 mt-2">
       <x-icon.exclamation class="w-4 h-4 self-center" />
       <span x-text="errors['category']" class="text-sm"></span>
     </div>
