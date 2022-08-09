@@ -36,7 +36,7 @@
                 </div>
             </header>
 
-            <main class="container m-auto px-8 py-4">
+            <main class="container m-auto px-8 py-4 text-gray-700">
                 {{ $slot }}
             </main>
         </div>

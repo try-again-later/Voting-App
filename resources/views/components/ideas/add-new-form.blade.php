@@ -73,7 +73,7 @@
   </div>
 
   <div
-    class="mt-4 flex flex-wrap gap-2 items-center"
+    class="mt-4 flex flex-wrap gap-2 items-center text-sm"
     x-cloak
     x-show="attachment != null"
   >
