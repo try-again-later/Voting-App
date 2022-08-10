@@ -2,11 +2,11 @@
 
 <article class="bg-white rounded-xl shadow-md flex flex-col min-h-[10rem] sm:flex-row">
     <div @class([
-        'p-4 border-b-2 border-gray-200 flex flex-row items-center justify-start gap-1 sm:border-r-2 sm:border-b-0 sm:flex-col',
+        'p-4 border-b-2 border-gray-200 flex flex-wrap flex-row items-center justify-start gap-1 sm:border-r-2 sm:border-b-0 sm:flex-col',
         'text-purple-500' => $voted,
     ])>
         <div class="sm:text-2xl font-bold">{{ $votesCount }}</div>
-        <div class="min-w-[6rem] sm:text-center">Votes</div>
+        <div class="sm:min-w-[6rem] sm:text-center">Votes</div>
         <button type="button" @class([
             'mt-auto rounded-xl px-3 py-2 uppercase font-bold text-xs transition-colors ml-auto sm:ml-0',
             'bg-gray-200 hover:bg-gray-300 text-gray-700' => !$voted,
@@ -49,17 +49,17 @@
                                 <button class="bg-gray-200 rounded-full px-2 hover:bg-gray-300 transition-colors">
                                     <x-icon.dots-horizontal class="w-6 h-6" />
                                 </button>
-                            </x-slot>
-                            <x-slot:content>
-                                <div class="flex flex-col">
-                                    <button type="button" class="block py-1 hover:bg-gray-200">
-                                        Mark as spam
-                                    </button>
-                                    <button type="button" class="block py-1 hover:bg-gray-200">
-                                        Delete post
-                                    </button>
-                                </div>
-                            </x-slot>
+                                </x-slot>
+                                <x-slot:content>
+                                    <div class="flex flex-col">
+                                        <button type="button" class="block py-1 rounded-t-md hover:bg-gray-200 border-b-2">
+                                            Mark as spam
+                                        </button>
+                                        <button type="button" class="block py-1 rounded-b-md hover:bg-gray-200">
+                                            Delete post
+                                        </button>
+                                    </div>
+                                    </x-slot>
                         </x-dropdown>
                     </div>
                 </div>

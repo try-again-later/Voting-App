@@ -19,8 +19,8 @@
   <div
     @class([
       'h-1.5 transition-colors w-full',
-      'rounded-l-full' => $first,
-      'rounded-r-full' => $last,
+      'lg:rounded-l-full' => $first,
+      'lg:rounded-r-full' => $last,
       'bg-purple-500' => $active,
       'bg-gray-300 group-hover:bg-purple-400' => !$active
     ])

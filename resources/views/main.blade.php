@@ -10,24 +10,24 @@
       <x-ideas.add-new-form />
     </section>
 
-    <section class="flex-1 lg:px-8">
+    <section class="flex-1 lg:pl-8">
       <h2 class="sr-only">Ideas</h2>
 
       <div class="flex flex-wrap gap-y-4 justify-center xl:justify-start w-full mb-8">
-        <x-ideas.filter-item :active="true" href="#">
+        <x-ideas.filter-item :active="true" href="#" :first="true">
           All ideas (89)
         </x-ideas.filter-item>
         <x-ideas.filter-item href="#">
           Considering (6)
         </x-ideas.filter-item>
-        <x-ideas.filter-item href="#">
+        <x-ideas.filter-item href="#" :last="true">
           In progress (1)
         </x-ideas.filter-item>
 
-        <x-ideas.filter-item class="xl:ml-auto" href="#">
+        <x-ideas.filter-item class="xl:ml-auto" href="#" :first="true">
           Implemented (10)
         </x-ideas.filter-item>
-        <x-ideas.filter-item href="#">
+        <x-ideas.filter-item href="#" :last="true">
           Closed (55)
         </x-ideas.filter-item>
       </div>

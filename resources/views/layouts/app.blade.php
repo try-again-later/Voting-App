@@ -13,7 +13,7 @@
 </head>
 
 <body class="font-sans antialiased bg-gray-100 text-gray-900">
-    <header class="flex flex-wrap gap-2 items-center px-8 py-4 justify-center">
+    <header class="container m-auto flex flex-wrap gap-2 items-center px-8 py-4 justify-center">
         <a href="/"
             class="font-bold text-xl hover:underline flex gap-4 w-full justify-center sm:justify-start sm:w-auto">
             <img src="{{ asset('img/logo.svg') }}" alt="App Logo" class="w-8 h-8">
