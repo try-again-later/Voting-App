@@ -32,18 +32,29 @@
     <x-ideas.card.footer class="col-span-2" />
 </article>
 
-<div class="flex flex-wrap gap-2">
-    <button
-        type="button"
-        class="flex-1 px-4 py-2 rounded-xl bg-purple-500 text-white font-bold hover:bg-purple-400 transition-colors sm:text-lg"
-    >
-        Reply
-    </button>
 
-    <button class="flex-1 flex justify-between items-center gap-2 bg-gray-200 hover:bg-gray-300 transition-colors rounded-xl px-4 py-2 sm:text-lg">
-        <span class="whitespace-nowrap">Set status</span>
-        <x-icon.chevron-down class="w-4 h-4" />
-    </button>
+<div class="flex flex-wrap gap-2">
+    <x-floating-window class="flex-1">
+        <x-slot:button
+            class="w-full px-4 py-2 rounded-xl bg-purple-500 text-white font-bold hover:bg-purple-400 transition-colors sm:text-lg"
+        >
+            Reply
+        </x-slot>
+
+        <x-slot:window>
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Totam, quae.
+        </x-slot>
+    </x-floating-window>
+
+    <x-floating-window class="flex-1">
+        <x-slot:button class="w-full flex justify-between items-center gap-2 bg-gray-200 hover:bg-gray-300 transition-colors rounded-xl px-4 py-2 sm:text-lg">
+            <span class="whitespace-nowrap">Set status</span>
+            <x-icon.chevron-down class="w-4 h-4" />
+        </x-slot>
+        <x-slot:window>
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Totam, quae.
+        </x-slot>
+    </x-floating-window>
 
     <div class="flex sm:justify-end sm:flex-grow-[1] flex-wrap w-full sm:w-auto gap-2">
         <div class="flex flex-1 sm:flex-none items-center bg-white rounded-xl px-4 py-2 sm:ml-auto sm:text-lg justify-center">

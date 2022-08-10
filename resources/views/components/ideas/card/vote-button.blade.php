@@ -8,7 +8,7 @@
     'bg-purple-500 hover:bg-purple-400 text-white' => $voted,
 ]) }}>
     @if ($voted)
-        Unvote
+        Voted
     @else
         Vote
     @endif
