@@ -18,7 +18,7 @@
   </a>
   <div
     @class([
-      'h-1.5 transition-colors w-full',
+      'h-1.5 transition-colors w-full rounded-full sm:rounded-none',
       'lg:rounded-l-full' => $first,
       'lg:rounded-r-full' => $last,
       'bg-purple-500' => $active,

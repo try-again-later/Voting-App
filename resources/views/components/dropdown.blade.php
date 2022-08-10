@@ -1,4 +1,4 @@
-@props(['align' => 'right', 'width' => '48', 'contentClasses' => 'bg-white'])
+@props(['align' => 'right', 'width' => '48', 'contentClasses' => 'bg-white', 'wrapperClasses' => ''])
 
 @php
 switch ($align) {
@@ -21,7 +21,7 @@ switch ($width) {
 }
 @endphp
 
-<div class="relative" x-data="{ open: false }" @click.outside="open = false" @close.stop="open = false">
+<div class="relative {{ $wrapperClasses }}" x-data="{ open: false }" @click.outside="open = false" @close.stop="open = false">
     <div @click="open = ! open" class="flex items-center">
         {{ $trigger }}
     </div>

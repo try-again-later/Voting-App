@@ -27,6 +27,6 @@
             </div>
         </div>
 
-        <x-ideas.card.footer />
+        <x-ideas.card.footer class="px-4 pb-4" />
     </div>
 </article>

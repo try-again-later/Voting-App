@@ -1,4 +1,4 @@
-<x-dropdown>
+<x-dropdown :wrapperClasses="$class ?? ''">
   <x-slot:trigger>
       <button class="bg-gray-100 rounded-full px-2 hover:bg-gray-200 transition-colors">
           <x-icon.dots-horizontal class="w-6 h-6" />
