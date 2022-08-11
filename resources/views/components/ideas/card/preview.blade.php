@@ -9,12 +9,12 @@
         <div class="sm:min-w-[6rem] sm:text-center">Votes</div>
         <x-ideas.card.vote-button :voted="$voted" class="mt-auto ml-auto sm:ml-0" />
     </div>
-    <div>
-        <div class="flex">
-            <div class="py-4 pl-4">
+    <div class="w-full flex flex-col justify-between p-4 gap-4">
+        <div class="flex gap-4">
+            <div>
                 <x-ideas.card.avatar src="https://unsplash.it/400/400" />
             </div>
-            <div class="flex-1 p-4">
+            <div class="flex-1">
                 <div class="flex flex-wrap justify-between gap-3 mb-4 sm:items-center">
                     <x-ideas.card.heading :href="$href">{{ $title }}</x-ideas.card.heading>
 
@@ -27,6 +27,6 @@
             </div>
         </div>
 
-        <x-ideas.card.footer class="px-4 pb-4" />
+        <x-ideas.card.footer />
     </div>
 </article>
