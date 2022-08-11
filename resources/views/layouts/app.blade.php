@@ -10,6 +10,7 @@
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @livewireStyles
 </head>
 
 <body class="font-sans antialiased bg-gray-100 text-gray-900">
@@ -78,6 +79,8 @@
             </section>
         </div>
     </main>
+
+    @livewireScripts
 </body>
 
 </html>
