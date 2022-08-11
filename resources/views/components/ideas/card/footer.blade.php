@@ -17,6 +17,6 @@
         <div class="whitespace-nowrap">
             <span class="font-bold">{{ $commentsCount }}</span> comments
         </div>
-        <x-icon.mid-dot class="w-6 h-6 text-gray-300" />
+        <x-icon.mid-dot class="w-6 h-6 text-gray-300 lg:hidden" />
     </div>
 </div>
