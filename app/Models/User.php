@@ -46,4 +46,15 @@ class User extends Authenticatable
     {
         return $this->hasMany(Idea::class);
     }
+
+    public function avatar(): string
+    {
+        $emailHash = md5($this->email);
+        $fallbackImage = "https://avatars.dicebear.com/api/identicon/$emailHash.jpg";
+
+        return "https://gravatar.com/avatar/$emailHash?" . http_build_query([
+            's' => 200,
+            'd' => $fallbackImage,
+        ]);
+    }
 }

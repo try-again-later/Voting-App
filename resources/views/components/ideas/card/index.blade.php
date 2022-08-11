@@ -9,11 +9,12 @@
     'time',
     'datetime',
     'author',
+    'avatarSrc',
     'voted' => false,
 ])
 
 <article class="bg-white rounded-xl shadow-md grid grid-cols-[auto,_1fr] p-4 gap-4 mb-4">
-    <x-ideas.card.avatar src="https://unsplash.it/400/400" class="self-start" />
+    <x-ideas.card.avatar :src="$avatarSrc" class="self-start" />
 
     <div>
         <div class="flex flex-wrap gap-2 items-start sm:items-center mb-4">
