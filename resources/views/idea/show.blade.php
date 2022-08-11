@@ -15,5 +15,6 @@
         :time="$idea->created_at->diffForHumans()"
         :datetime="$idea->created_at"
         :author="$idea->user->name"
+        :avatar-src="$idea->user->avatar()"
     />
 </x-app-layout>

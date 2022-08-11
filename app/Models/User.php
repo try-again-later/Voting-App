@@ -46,4 +46,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Idea::class);
     }
+
+    public function avatar(): string
+    {
+        $emailHash = md5($this->email);
+        return "https://api.dicebear.com/9.x/identicon/jpg?seed={$emailHash}";
+    }
 }

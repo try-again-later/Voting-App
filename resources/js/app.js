@@ -1,6 +1,5 @@
 import "./bootstrap";
 
-import Alpine from "alpinejs";
 import {
     computePosition,
     flip,
@@ -8,8 +7,6 @@ import {
     offset,
     autoUpdate as floatingAutoUpdate,
 } from "@floating-ui/dom";
-
-window.Alpine = Alpine;
 
 function updateWindowPosition(button, floatingWindow) {
     computePosition(button, floatingWindow, {
@@ -29,4 +26,3 @@ function updateWindowPosition(button, floatingWindow) {
 
 window.updateWindowPosition = updateWindowPosition;
 window.floatingAutoUpdate = floatingAutoUpdate;
-Alpine.start();

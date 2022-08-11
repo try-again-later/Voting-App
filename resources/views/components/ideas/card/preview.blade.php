@@ -1,4 +1,4 @@
-@props(['title', 'description', 'votesCount', 'category', 'commentsCount', 'status', 'href', 'time', 'datetime', 'author', 'voted' => false])
+@props(['title', 'description', 'votesCount', 'category', 'commentsCount', 'status', 'href', 'time', 'datetime', 'author', 'avatarSrc', 'voted' => false])
 
 <article class="bg-white rounded-xl shadow-md flex flex-col min-h-[10rem] sm:flex-row">
     <div @class([
@@ -12,7 +12,7 @@
     <div class="w-full flex flex-col justify-between p-4 gap-4">
         <div class="flex gap-4">
             <div>
-                <x-ideas.card.avatar src="https://unsplash.it/400/400" />
+                <x-ideas.card.avatar :src="$avatarSrc" />
             </div>
             <div class="flex-1">
                 <div class="flex flex-wrap justify-between gap-3 mb-4 sm:items-center">

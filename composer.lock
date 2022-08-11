@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "dfc360ae33454c030c5ef78446f917a4",
+    "content-hash": "2f66bd5c900f0af9dbb406b16372e225",
     "packages": [
         {
             "name": "brick/math",
@@ -6227,6 +6227,66 @@
                 }
             ],
             "time": "2025-04-16T06:32:06+00:00"
+        },
+        {
+            "name": "brianium/paratest",
+            "version": "v0.4.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/paratestphp/paratest.git",
+                "reference": "0fa10fb9f31f00d18a4c7eb09271dd6812990dae"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/paratestphp/paratest/zipball/0fa10fb9f31f00d18a4c7eb09271dd6812990dae",
+                "reference": "0fa10fb9f31f00d18a4c7eb09271dd6812990dae",
+                "shasum": ""
+            },
+            "require": {
+                "ext-pcre": "*",
+                "ext-reflection": "*",
+                "ext-simplexml": "*",
+                "php": ">=5.3.0",
+                "phpunit/php-timer": ">=1.0.4",
+                "phpunit/phpunit": ">=3.7.8",
+                "symfony/console": ">=2.0.0"
+            },
+            "bin": [
+                "bin/paratest"
+            ],
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "ParaTest": [
+                        "src/",
+                        "test/",
+                        "it/"
+                    ]
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "APACHE-2"
+            ],
+            "authors": [
+                {
+                    "name": "Brian Scaturro",
+                    "email": "scaturrob@gmail.com",
+                    "homepage": "http://brianscaturro.com",
+                    "role": "Lead"
+                }
+            ],
+            "description": "Parallel testing for PHP",
+            "homepage": "https://github.com/brianium/paratest",
+            "keywords": [
+                "phpunit",
+                "testing"
+            ],
+            "support": {
+                "issues": "https://github.com/paratestphp/paratest/issues",
+                "source": "https://github.com/paratestphp/paratest/tree/v0.4.3"
+            },
+            "time": "2013-03-09T23:37:56+00:00"
         },
         {
             "name": "fakerphp/faker",
