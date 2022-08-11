@@ -8,6 +8,8 @@ use App\Models\Idea;
 
 class IdeaController extends Controller
 {
+    public const PAGINATION_COUNT = 5;
+
     /**
      * Display a listing of the resource.
      *
