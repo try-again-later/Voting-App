@@ -46,7 +46,7 @@
         </x-slot>
 
         <x-slot:window class="w-[24rem]">
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Totam, quae.
+            <x-ideas.reply-form />
         </x-slot>
     </x-floating-window>
 
@@ -68,3 +68,30 @@
         <x-ideas.card.vote-button :voted="$voted" class="sm:w-min" />
     </div>
 </div>
+
+<section class="pb-8 sm:pb-16 pt-8">
+    <h3 class="sr-only">Comments</h3>
+
+    <div class="flex flex-col gap-4 sm:gap-8 relative">
+        <x-ideas.comment
+            user-name="Someone"
+            time="20 hours ago"
+            datetime="2022-08-08"
+            comment="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Architecto, dolore alias, maxime eum ea officiis repudiandae similique veritatis, hic expedita exercitationem odio laborum illum sapiente. Ex nostrum necessitatibus blanditiis, minima aliquid quisquam quasi architecto veniam? Eos tempore quas est maiores esse veritatis iste quo? Nisi dicta necessitatibus veritatis cumque voluptas."
+        />
+        <x-ideas.comment
+            user-name="Someone else"
+            time="20 hours ago"
+            datetime="2022-08-08"
+            comment="Lorem ipsum, dolor sit amet consectetur adipisicing elit."
+            :is-admin="true"
+            new-status="in-progress"
+        />
+        <x-ideas.comment
+            user-name="Someone"
+            time="20 hours ago"
+            datetime="2022-08-08"
+            comment="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Architecto, dolore alias, maxime eum ea officiis repudiandae similique veritatis, hic expedita exercitationem odio laborum illum sapiente. Ex nostrum necessitatibus blanditiis, minima aliquid quisquam quasi architecto veniam? Eos tempore quas est maiores esse veritatis iste quo? Nisi dicta necessitatibus veritatis cumque voluptas."
+        />
+    </div>
+</section>

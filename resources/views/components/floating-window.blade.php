@@ -24,7 +24,7 @@
         {{ $button }}
     </button>
     <div
-        {{ $window->attributes->class('absolute bg-white p-4 shadow-lg rounded-xl ring-1 ring-gray-300 max-w-[calc(100vw_-_32px)]') }}
+        {{ $window->attributes->class('absolute z-50 bg-white p-4 shadow-lg rounded-xl ring-1 ring-gray-300 max-w-[calc(100vw_-_32px)]') }}
         :id="$id('open-button')"
         x-ref="floatingWindow"
         x-cloak

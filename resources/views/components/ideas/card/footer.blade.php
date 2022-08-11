@@ -2,7 +2,7 @@
 
 <div {{ $attributes->class('flex gap-y-1 flex-wrap text-gray-400 justify-end') }}>
     <div class="flex">
-        <div class="text-gray-700">{{ $author }}</div>
+        <div class="text-gray-700 font-semibold">{{ $author }}</div>
         <x-icon.mid-dot class="w-6 h-6 text-gray-300" />
     </div>
     <div class="flex">
