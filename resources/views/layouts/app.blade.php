@@ -80,6 +80,8 @@
         </div>
     </main>
 
+    <x-scroll-to-top />
+
     @livewireScripts
 </body>
 
