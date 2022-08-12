@@ -19,7 +19,7 @@
                     <x-ideas.card.heading :href="$href">{{ $title }}</x-ideas.card.heading>
 
                     <div class="flex flex-wrap gap-3 justify-end items-center">
-                        <x-ideas.card.status />
+                        <x-ideas.card.status :name="$status->name" :human-name="$status->human_name" />
                         <x-ideas.card.menu />
                     </div>
                 </div>

@@ -1,16 +1,15 @@
-@aware(['href', 'status'])
+@aware(['href', 'name', 'humanName'])
 
-<a href="{{ $href }}" {{ $attributes->class([
-    'block uppercase text-sm font-bold px-3 py-1 rounded-full transition-colors whitespace-nowrap',
-    'bg-gray-200 text-gray-700 hover:bg-gray-300' =>
-        strtolower($status) == 'open',
-    'bg-yellow-400 text-white hover:bg-yellow-300' =>
-        strtolower($status) == 'in-progress',
-    'bg-red-400 text-white hover:bg-red-300' => strtolower($status) == 'closed',
-    'bg-emerald-400 text-white hover:bg-emerald-300' =>
-        strtolower($status) == 'implemented',
-    'bg-indigo-400 text-white hover:bg-indigo-300' =>
-        strtolower($status) == 'considering',
-]) }}>
-    {{ str_replace('-', ' ', $status) }}
+<a
+    href="{{ $href }}"
+    {{ $attributes->class([
+        'block uppercase text-sm font-bold px-3 py-1 rounded-full transition-colors whitespace-nowrap',
+        'bg-status-open text-status-text-open hover:bg-status-hover-open' => $name == 'open',
+        'bg-status-in-progress text-status-text-in-progress hover:bg-status-hover-in-progress' => $name == 'in-progress',
+        'bg-status-closed text-status-text-closed hover:bg-status-hover-closed' => $name == 'closed',
+        'bg-status-implemented text-status-text-implemented hover:bg-status-hover-implemented' => $name == 'implemented',
+        'bg-status-considering text-status-text-considering hover:bg-status-hover-considering' => $name == 'considering',
+    ]) }}
+>
+    {{ $humanName }}
 </a>
