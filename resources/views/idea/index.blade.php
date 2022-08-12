@@ -31,7 +31,7 @@
                     :votesCount="12"
                     :voted="true"
                     :commentsCount="6"
-                    status="in-progress"
+                    :status="$idea->status"
                     :href="route('idea.show', $idea)"
                     :time="$idea->created_at->diffForHumans()"
                     :datetime="$idea->created_at"

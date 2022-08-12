@@ -25,21 +25,21 @@
             before:-translate-y-1/2 before:z-20 before:w-8 before:h-8 before:rounded-full
 
             @switch ($newStatus)
-            @case ('open')
-                before:bg-gray-300
-                @break
-            @case ('in-progress')
-                before:bg-yellow-400
-                @break
-            @case ('implemented')
-                before:bg-emerald-400
-                @break
-            @case ('considering')
-                before:bg-indigo-400
-                @break
-            @case ('closed')
-                before:bg-red-400
-                @break
+                @case ('open')
+                    before:bg-status-open
+                    @break
+                @case ('in-progress')
+                    before:bg-status-in-progress
+                    @break
+                @case ('implemented')
+                    before:bg-status-implemented
+                    @break
+                @case ('considering')
+                    before:bg-status-considering
+                    @break
+                @case ('closed')
+                    before:bg-status-closed
+                    @break
             @endswitch
         ">
         </div>

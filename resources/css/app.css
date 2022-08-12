@@ -2,7 +2,25 @@
 @plugin "@tailwindcss/forms";
 
 @theme {
-  --font-display: "Nunito", "sans-serif"
+  --font-display: "Nunito", "sans-serif";
+
+  --color-status-open: var(--color-gray-300);
+  --color-status-in-progress: var(--color-yellow-400);
+  --color-status-implemented: var(--color-emerald-400);
+  --color-status-considering: var(--color-indigo-400);
+  --color-status-closed: var(--color-red-400);
+
+  --color-status-hover-open: var(--color-gray-200);
+  --color-status-hover-in-progress: var(--color-yellow-300);
+  --color-status-hover-implemented: var(--color-emerald-300);
+  --color-status-hover-considering: var(--color-indigo-300);
+  --color-status-hover-closed: var(--color-red-300);
+
+  --color-status-text-open: var(--color-gray-700);
+  --color-status-text-in-progress: var(--color-white);
+  --color-status-text-implemented: var(--color-white);
+  --color-status-text-considering: var(--color-white);
+  --color-status-text-closed: var(--color-white);
 }
 
 @utility circle-background-hover {

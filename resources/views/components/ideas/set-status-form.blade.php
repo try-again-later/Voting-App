@@ -3,21 +3,21 @@
 
     <div class="mb-8">
         @foreach ([
-            ['open', 'text-gray-400'],
-            ['considering', 'text-indigo-400'],
-            ['in-progress', 'text-yellow-400'],
-            ['implemented', 'text-emerald-400'],
-            ['closed', 'text-red-400'],
-        ] as [$status, $accent])
-            <div class="mb-4 last:mb-0 flex items-center gap-2">
+            ['open', 'text-status-open', 'group-hover:bg-status-hover-open'],
+            ['considering', 'text-status-considering', 'group-hover:bg-status-hover-considering'],
+            ['in-progress', 'text-status-in-progress', 'group-hover:bg-status-hover-in-progress'],
+            ['implemented', 'text-status-implemented', 'group-hover:bg-status-hover-implemented'],
+            ['closed', 'text-status-closed', 'group-hover:bg-status-hover-closed'],
+        ] as [$status, $textColor, $hoverColor])
+            <div class="mb-4 last:mb-0 flex items-center gap-2 group w-fit">
                 <input
                     type="radio"
                     name="status"
                     value="{{ $status }}"
                     id="{{ $status }}"
-                    class="{{ $accent }} border-0 bg-gray-200 h-6 w-6"
+                    class="{{ $textColor }} {{ $hoverColor }} bg-white h-6 w-6 transition-colors cursor-pointer"
                 />
-                <label for="{{ $status }}">
+                <label for="{{ $status }}" class="cursor-pointer">
                     {{ ucwords(str_replace('-', ' ', $status)) }}
                 </label>
             </div>
