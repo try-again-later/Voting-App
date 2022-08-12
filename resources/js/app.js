@@ -15,7 +15,7 @@ function updateWindowPosition(button, floatingWindow) {
             shift({ padding: 16 }),
             flip({ fallbackStrategy: "initialPlacement" }),
         ],
-        placement: "top-start",
+        placement: "bottom-start",
     }).then(({ x, y }) => {
         Object.assign(floatingWindow.style, {
             left: `${x}px`,

@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Http\Controllers\IdeaController;
+use App\Models\Category;
 use App\Models\Idea;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -16,13 +17,15 @@ class ShowIdeasTest extends TestCase
     #[Test]
     public function list_of_ideas_is_shown_on_main_page()
     {
+
+        $categoryA = Category::factory()->create();
         $ideaA = Idea::factory()->create([
-            'title' => 'First test idea',
-            'description' => 'Description of the first test idea.',
+            'category_id' => $categoryA,
         ]);
+
+        $categoryB = Category::factory()->create();
         $ideaB = Idea::factory()->create([
-            'title' => 'Second test idea',
-            'description' => 'Description of the second test idea.',
+            'category_id' => $categoryB,
         ]);
 
         $response = $this->get(route('idea.index'));
@@ -31,17 +34,19 @@ class ShowIdeasTest extends TestCase
 
         $response->assertSee($ideaA->title);
         $response->assertSee($ideaA->description);
+        $response->assertSee($categoryA->name);
 
         $response->assertSee($ideaB->title);
         $response->assertSee($ideaB->description);
+        $response->assertSee($categoryB->name);
     }
 
     #[Test]
     public function single_idea_is_shown_on_the_show_page()
     {
+        $category = Category::factory()->create();
         $idea = Idea::factory()->create([
-            'title' => 'First test idea',
-            'description' => 'Description of the first test idea.',
+            'category_id' => $category,
         ]);
 
         $response = $this->get(route('idea.show', $idea));
@@ -50,6 +55,7 @@ class ShowIdeasTest extends TestCase
 
         $response->assertSee($idea->title);
         $response->assertSee($idea->description);
+        $response->assertSee($category->name);
     }
 
     #[Test]

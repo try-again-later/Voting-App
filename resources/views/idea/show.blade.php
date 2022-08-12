@@ -9,7 +9,10 @@
         :description="[
             $idea->description,
         ]"
-        category="Some category" :votesCount="12" :voted="true" :commentsCount="6"
+        :category="$idea->category->name"
+        :votesCount="12"
+        :voted="true"
+        :commentsCount="6"
         status="in-progress"
         :href="route('idea.show', $idea)"
         :time="$idea->created_at->diffForHumans()"
