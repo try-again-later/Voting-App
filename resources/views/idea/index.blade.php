@@ -25,17 +25,17 @@
         @foreach ($ideas as $idea)
             <li>
                 <x-ideas.card.preview
-                    title="{{ $idea->title }}"
-                    description="{{ $idea->description }}"
-                    category="Some category"
+                    :title="$idea->title"
+                    :description="$idea->description"
+                    :category="$idea->category->name"
                     :votesCount="12"
                     :voted="true"
                     :commentsCount="6"
                     status="in-progress"
-                    href="{{ route('idea.show', $idea) }}"
+                    :href="route('idea.show', $idea)"
                     :time="$idea->created_at->diffForHumans()"
                     :datetime="$idea->created_at"
-                    author="{{ $idea->user->name }}"
+                    :author="$idea->user->name"
                     :avatar-src="$idea->user->avatar()"
                 />
             </li>
