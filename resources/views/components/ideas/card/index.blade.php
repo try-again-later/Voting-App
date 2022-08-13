@@ -72,7 +72,7 @@
     </div>
 </div>
 
-<section class="pb-8 sm:pb-16 pt-8">
+<section class="pt-8">
     <h3 class="sr-only">Comments</h3>
 
     <div class="flex flex-col gap-4 sm:gap-8 relative">
