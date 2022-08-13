@@ -18,6 +18,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        $this->call([StatusSeeder::class]);
+
         $categories = Category::factory()
             ->count(4)
             ->sequence(
@@ -28,31 +30,7 @@ class DatabaseSeeder extends Seeder
             )
             ->create();
 
-        $statuses = Status::factory()
-            ->count(5)
-            ->sequence(
-                [
-                    'name' => 'open',
-                    'human_name' => 'Open'
-                ],
-                [
-                    'name' => 'in-progress',
-                    'human_name' => 'In progress'
-                ],
-                [
-                    'name' => 'implemented',
-                    'human_name' => 'Implemented'
-                ],
-                [
-                    'name' => 'considering',
-                    'human_name' => 'Considering'
-                ],
-                [
-                    'name' => 'closed',
-                    'human_name' => 'Closed'
-                ],
-            )
-            ->create();
+        $statuses = Status::all();
 
         Idea::factory()
             ->count(30)

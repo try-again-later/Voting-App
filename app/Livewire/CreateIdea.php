@@ -55,6 +55,11 @@ class CreateIdea extends Component
 
         $this->validate();
 
+        $status = Status::default();
+        if (!isset($status)) {
+            abort(Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
         $newIdea = Idea::create([
             'user_id' => auth()->user()->id,
             'category_id' => $this->category,

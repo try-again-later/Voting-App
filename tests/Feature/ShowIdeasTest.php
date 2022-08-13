@@ -2,7 +2,6 @@
 
 namespace Tests\Feature;
 
-use App\Http\Controllers\IdeaController;
 use App\Models\Category;
 use App\Models\Idea;
 use App\Models\Status;
@@ -65,27 +64,5 @@ class ShowIdeasTest extends TestCase
         $response->assertSee($idea->description);
         $response->assertSee($category->name);
         $response->assertSee($status->human_name);
-    }
-
-    #[Test]
-    public function pagination()
-    {
-        Idea::factory(IdeaController::PAGINATION_COUNT + 1)->create();
-
-        $firstIdea = Idea::find(1);
-        $firstIdea->title = 'My first idea';
-        $firstIdea->save();
-
-        $lastIdea = Idea::find(IdeaController::PAGINATION_COUNT + 1);
-        $lastIdea->title = 'My last idea';
-        $lastIdea->save();
-
-        $response = $this->get(route('idea.index'));
-        $response->assertSee($firstIdea->title);
-        $response->assertDontSee($lastIdea->title);
-
-        $response = $this->get(route('idea.index', ['page' => 2]));
-        $response->assertDontSee($firstIdea->title);
-        $response->assertSee($lastIdea->title);
     }
 }
