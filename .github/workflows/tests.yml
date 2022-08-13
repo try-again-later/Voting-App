@@ -19,8 +19,31 @@ jobs:
           key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
           restore-keys: |
             ${{ runner.os }}-php-
-      - name: Install dependencies
+
+      - name: Install composer dependencies
         run: composer install --prefer-dist --no-progress
+        env:
+          APP_ENV: testing
+
+      - name: Prepare Laravel Application
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+
+      - name: Cache npm packages
+        id: npm-cache
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-
+
+      - name: Install node dependencies
+        run: npm install
+
+      - name: Build frontend assets
+        run: npm run build
 
       - name: Run test suite
         run: php artisan test
