@@ -10,6 +10,8 @@ class Status extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
     public static function default()
     {
         return self::where('name', '=', 'open')->first();
