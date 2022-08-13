@@ -39,17 +39,39 @@
         </div>
     </header>
 
-    <main class="container m-auto px-4 sm:px-8 py-4 text-gray-700">
+    <main class="container m-auto px-4 sm:px-8 py-4 text-gray-700 pb-32">
 
         <h1 class="sr-only">Voting App</h1>
 
         <div class="flex flex-col gap-8 lg:flex-row lg:gap-0 lg:items-start">
             <section class="lg:max-h-[calc(100vh_-_1rem)] overflow-auto w-full sm:max-w-xs bg-white border-2 border-gray-200 rounded-xl px-4 py-6 m-auto lg:m-0 lg:sticky top-4">
                 <h2 class="text-center font-semibold text-xl mb-2">Add an idea</h2>
-                <p class="text-center mb-8">
-                    Let us know what you would like and we'll take a look over!
-                </p>
-                <x-ideas.add-new-form />
+
+                @auth
+                    <p class="text-center mb-8">
+                        Let us know what you would like and we'll take a look over!
+                    </p>
+                    <livewire:create-idea />
+                @else
+                    <p class="text-center mb-4">
+                        Please login or sign up to add a new idea.
+                    </p>
+                    <div class="flex gap-2 justify-center flex-wrap">
+                        <x-link-button
+                            :href="route('login')"
+                            class="bg-gray-200 hover:bg-gray-300 text-gray-700"
+                        >
+                            Log In
+                        </x-link-button>
+
+                        <x-link-button
+                            :href="route('login')"
+                            class="bg-purple-500 hover:bg-purple-400 text-white"
+                        >
+                            Sign Up
+                        </x-link-button>
+                    </div>
+                @endauth
             </section>
 
             <section class="flex-1 lg:pl-8">
