@@ -1,6 +1,9 @@
 <x-app-layout>
     <div class="flex flex-wrap gap-4 mb-8">
-        <select name="category-filter" class="border-none rounded-xl cursor-pointer w-full sm:w-auto">
+        <select
+            name="category-filter"
+            class="border-none rounded-xl cursor-pointer w-full sm:w-auto"
+        >
             <option value="default" selected disabled>Category</option>
             <option value="some-category">Some category</option>
             <option value="some-other-category">Some other category</option>
@@ -24,9 +27,9 @@
     <ul class="flex flex-col gap-4 sm:gap-8 mb-4">
         @foreach ($ideas as $idea)
             <li>
-                <x-ideas.card.preview
+                <livewire:idea-preview
                     :idea="$idea"
-                    :votes-count="$idea->votes()->count()"
+                    :votes-count="$idea->votes_count"
                     :voted="false"
                 />
             </li>

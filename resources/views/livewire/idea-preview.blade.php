@@ -1,5 +1,3 @@
-@props(['idea', 'voted', 'votesCount'])
-
 <article class="bg-white rounded-xl shadow-md flex flex-col min-h-[10rem] sm:flex-row">
     <div @class([
         'p-4 border-b-2 border-gray-200 flex flex-wrap flex-row items-center justify-start gap-1',
