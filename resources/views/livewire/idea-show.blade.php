@@ -45,7 +45,7 @@
             </x-slot>
         </x-floating-window>
 
-        <div class="flex sm:justify-end sm:flex-grow-[1] flex-wrap w-full sm:w-auto gap-2">
+        <div class="flex sm:justify-end sm:grow flex-wrap w-full sm:w-auto gap-2">
             <div class="flex flex-1 sm:flex-none items-center bg-white rounded-xl px-4 py-2 sm:ml-auto sm:text-lg justify-center">
                 <span class="font-semibold">{{ $this->votesCount }}&nbsp;</span>votes
             </div>
