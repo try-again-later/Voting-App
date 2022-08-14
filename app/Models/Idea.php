@@ -40,4 +40,15 @@ class Idea extends Model
     {
         return $this->belongsToMany(User::class, 'votes');
     }
+
+    public function votedBy(?User $user): bool
+    {
+        if (!isset($user)) {
+            return false;
+        }
+
+        return Vote::where('user_id', $user->id)
+            ->where('idea_id', $this->id)
+            ->exists();
+    }
 }

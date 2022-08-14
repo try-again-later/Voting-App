@@ -30,7 +30,7 @@
                 <livewire:idea-preview
                     :idea="$idea"
                     :votes-count="$idea->votes_count"
-                    :voted="false"
+                    :voted="isset($idea->auth_user_vote_id) ? true : false"
                 />
             </li>
         @endforeach
