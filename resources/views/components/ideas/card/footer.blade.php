@@ -1,16 +1,18 @@
-@aware(['author', 'datetime', 'time', 'category', 'commentsCount'])
+@props(['idea', 'commentsCount'])
 
 <div {{ $attributes->class('flex gap-y-1 flex-wrap text-gray-400 justify-end') }}>
     <div class="flex">
-        <div class="text-gray-700 font-semibold">{{ $author }}</div>
+        <div class="text-gray-700 font-semibold">{{ $idea->user->name }}</div>
         <x-icon.mid-dot class="w-6 h-6 text-gray-300" />
     </div>
     <div class="flex">
-        <time datetime="{{ $datetime }}" class="whitespace-nowrap">{{ $time }}</time>
+        <time datetime="{{ $idea->created_at }}" class="whitespace-nowrap">
+            {{ $idea->created_at->diffForHumans() }}
+        </time>
         <x-icon.mid-dot class="w-6 h-6 text-gray-300" />
     </div>
     <div class="flex">
-        <div class="whitespace-nowrap">{{ $category }}</div>
+        <div class="whitespace-nowrap">{{ $idea->category->name }}</div>
         <x-icon.mid-dot class="w-6 h-6 text-gray-300" />
     </div>
     <div class="flex">

@@ -25,18 +25,9 @@
         @foreach ($ideas as $idea)
             <li>
                 <x-ideas.card.preview
-                    :title="$idea->title"
-                    :description="$idea->description"
-                    :category="$idea->category->name"
-                    :votesCount="12"
-                    :voted="true"
-                    :commentsCount="6"
-                    :status="$idea->status"
-                    :href="route('idea.show', $idea)"
-                    :time="$idea->created_at->diffForHumans()"
-                    :datetime="$idea->created_at"
-                    :author="$idea->user->name"
-                    :avatar-src="$idea->user->avatar()"
+                    :idea="$idea"
+                    :votes-count="$idea->votes()->count()"
+                    :voted="false"
                 />
             </li>
         @endforeach

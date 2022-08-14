@@ -24,7 +24,7 @@ class IdeaFactory extends Factory
             'category_id' => Category::factory(),
             'status_id' => Status::factory(),
             'title' => ucwords($this->faker->words(4, asText: true)),
-            'description' => $this->faker->paragraph(5),
+            'description' => $this->faker->paragraph(15),
         ];
     }
 }

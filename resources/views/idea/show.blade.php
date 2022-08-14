@@ -4,20 +4,5 @@
         <span>Back to all ideas</span>
     </a>
 
-    <x-ideas.card
-        title="{{ $idea->title }}"
-        :description="[
-            $idea->description,
-        ]"
-        :category="$idea->category->name"
-        :votesCount="12"
-        :voted="true"
-        :commentsCount="6"
-        :status="$idea->status"
-        :href="route('idea.show', $idea)"
-        :time="$idea->created_at->diffForHumans()"
-        :datetime="$idea->created_at"
-        :author="$idea->user->name"
-        :avatar-src="$idea->user->avatar()"
-    />
+    <livewire:idea-show :idea="$idea" :votes-count="$votesCount" :voted="$voted" />
 </x-app-layout>
