@@ -28,7 +28,8 @@ class IdeaController extends Controller
                 ->withCount('votes')
                 ->orderBy('id', 'desc')
                 ->orderBy('created_at', 'desc')
-                ->simplePaginate(5),
+                ->simplePaginate(5)
+                ->withPath(route('idea.index'))
         ]);
     }
 
