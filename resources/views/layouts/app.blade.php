@@ -26,15 +26,19 @@
                 <form method="post" action="{{ route('logout') }}" class="flex items-center">
                     @csrf
 
-                    <button type="submit">{{ __('Log Out') }}</button>
+                    <x-nav-button type="submit">{{ __('Log Out') }}</x-nav-button>
                 </form>
 
                 <a href="#">
                     <img src="https://gravatar.com/avatar/0?d=mp" alt="Avatar" class="w-10 h-10 rounded-full" />
                 </a>
             @else
-                <a href="{{ route('login') }}" class="hover:underline text-lg">{{ __('Log In') }}</a>
-                <a href="{{ route('register') }}" class="hover:underline text-lg">{{ __('Register') }}</a>
+                <x-nav-link :href="route('login')">
+                    {{ __('Log In') }}
+                </x-nav-link>
+                <x-nav-link :href="route('register')">
+                    {{ __('Register') }}
+                </x-nav-link>
             @endauth
         </div>
     </header>

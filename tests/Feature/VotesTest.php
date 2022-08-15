@@ -22,9 +22,7 @@ class VotesTest extends TestCase
         $this->seed(StatusSeeder::class);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function idea_show_page_receives_votes_count()
     {
         $userA = User::factory()->create();
@@ -52,9 +50,7 @@ class VotesTest extends TestCase
             ->assertViewHas('votesCount', 2);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function previews_on_ideas_index_page_show_correct_votes_count()
     {
         $userA = User::factory()->create();

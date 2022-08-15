@@ -30,6 +30,17 @@ class IdeaShow extends Component
         if (!auth()->check()) {
             return redirect(route('login'));
         }
+
+        $success = false;
+        if ($this->voted) {
+            $success = $this->idea->unvote(auth()->user());
+        } else {
+            $success = $this->idea->vote(auth()->user());
+        }
+        if ($success) {
+            $this->voted = !$this->voted;
+            $this->votesCount += $this->voted ? 1 : -1;
+        }
     }
 
     public function getAvatarSrcProperty()

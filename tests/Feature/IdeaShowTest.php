@@ -95,4 +95,42 @@ class IdeaShowTest extends TestCase
             ->call('vote')
             ->assertRedirect(route('login'));
     }
+
+    /** @test */
+    public function calling_vote_method_on__when_authenticated_increasses_the_vote_count()
+    {
+        $idea = Idea::factory()->create();
+        $user = User::factory()->create();
+
+        Livewire::actingAs($user)
+            ->test(IdeaShow::class, ['idea' => $idea])
+            ->call('vote')
+            ->assertSet('votesCount', 1)
+            ->assertSet('voted', true)
+            ->assertSee('Voted');
+
+        $this->assertDatabaseHas('votes', [
+            'user_id' => $user->id,
+            'idea_id' => $idea->id,
+        ]);
+    }
+
+    /** @test */
+    public function calling_vote_method_on_already_voted_idea_when_authenticated_decreases_the_vote_count()
+    {
+        $idea = Idea::factory()->create();
+        $user = User::factory()->create();
+        $idea->vote($user);
+
+        Livewire::actingAs($user)
+            ->test(IdeaShow::class, [
+                'idea' => $idea,
+                'votesCount' => $idea->votes()->count(),
+                'voted' => $idea->votedBy($user),
+            ])
+            ->call('vote')
+            ->assertSet('votesCount', 0)
+            ->assertSet('voted', false)
+            ->assertDontSee('Voted');
+    }
 }
