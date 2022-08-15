@@ -27,8 +27,9 @@
     <ul class="flex flex-col gap-4 sm:gap-8 mb-4">
         @foreach ($ideas as $idea)
             <li>
-                <livewire:idea-preview
+                <livewire:idea-show
                     :idea="$idea"
+                    :show-preview="true"
                     :votes-count="$idea->votes_count"
                     :voted="isset($idea->auth_user_vote_id) ? true : false"
                 />

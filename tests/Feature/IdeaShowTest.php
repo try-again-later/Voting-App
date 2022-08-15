@@ -84,4 +84,16 @@ class IdeaShowTest extends TestCase
             ->assertOk()
             ->assertSeeLivewire('idea-show');
     }
+
+    /** @test */
+    public function calling_vote_method_when_not_authenticated_redirects_to_login_page()
+    {
+        $idea = Idea::factory()->create();
+
+        Livewire::test(IdeaShow::class, [
+            'idea' => $idea,
+        ])
+            ->call('vote')
+            ->assertRedirect(route('login'));
+    }
 }
