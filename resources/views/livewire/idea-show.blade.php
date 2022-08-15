@@ -16,6 +16,7 @@
             </div>
 
             <x-ideas.card.main-content
+                class="w-full"
                 :idea="$idea"
                 :avatar-src="$this->avatarSrc"
                 :idea-link="$this->ideaLink"
@@ -25,6 +26,7 @@
     @else
         <article class="bg-white rounded-xl shadow-md mb-4">
             <x-ideas.card.main-content
+                class="w-full"
                 :idea="$idea"
                 :avatar-src="$this->avatarSrc"
                 :idea-link="$this->ideaLink"
