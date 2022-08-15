@@ -51,4 +51,29 @@ class Idea extends Model
             ->where('idea_id', $this->id)
             ->exists();
     }
+
+    public function vote(?User $user): bool
+    {
+        if (!isset($user) || $this->votedBy($user)) {
+            return false;
+        }
+
+        Vote::create([
+            'idea_id' => $this->id,
+            'user_id' => $user->id,
+        ]);
+        return true;
+    }
+
+    public function unvote(?User $user): bool
+    {
+        if (!isset($user)) {
+            return false;
+        }
+
+        Vote::where('idea_id', $this->id)
+            ->where('user_id', $user->id)
+            ->delete();
+        return true;
+    }
 }

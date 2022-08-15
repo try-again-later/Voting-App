@@ -15,9 +15,13 @@
                     name="status"
                     value="{{ $status }}"
                     id="{{ $status }}"
-                    class="{{ $textColor }} {{ $hoverColor }} bg-white h-6 w-6 transition-colors cursor-pointer"
+                    @class([
+                        $textColor,
+                        $hoverColor,
+                        'bg-white h-6 w-6 transition-colors cursor-pointer',
+                    ])
                 />
-                <label for="{{ $status }}" class="cursor-pointer">
+                <label for="{{ $status }}" class="cursor-pointer hover:underline">
                     {{ ucwords(str_replace('-', ' ', $status)) }}
                 </label>
             </div>

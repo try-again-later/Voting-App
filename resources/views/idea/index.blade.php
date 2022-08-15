@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="flex flex-wrap gap-4 mb-8">
+    <div class="flex flex-wrap gap-4 mb-8"">
         <select
             name="category-filter"
             class="border-none rounded-xl cursor-pointer w-full sm:w-auto"
@@ -24,18 +24,17 @@
         </div>
     </div>
 
-    <ul class="flex flex-col gap-4 sm:gap-8 mb-4">
+    <div class="flex flex-col gap-4 sm:gap-8 mb-4">
         @foreach ($ideas as $idea)
-            <li>
-                <livewire:idea-show
-                    :idea="$idea"
-                    :show-preview="true"
-                    :votes-count="$idea->votes_count"
-                    :voted="isset($idea->auth_user_vote_id) ? true : false"
-                />
-            </li>
+            <livewire:idea-show
+                :key="$idea->id"
+                :idea="$idea"
+                :show-preview="true"
+                :votes-count="$idea->votes_count"
+                :voted="isset($idea->auth_user_vote_id) ? true : false"
+            />
         @endforeach
-    </ul>
+    </div>
 
     <div>
         {{ $ideas->links() }}

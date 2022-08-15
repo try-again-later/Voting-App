@@ -1,6 +1,6 @@
 <x-dropdown :wrapperClasses="$class ?? ''">
   <x-slot:trigger>
-      <button class="bg-gray-100 rounded-full px-2 hover:bg-gray-200 transition-colors">
+      <button class="bg-gray-200 rounded-full px-2 hover:bg-gray-300 transition-colors">
           <x-icon.dots-horizontal class="w-6 h-6" />
       </button>
   </x-slot>
