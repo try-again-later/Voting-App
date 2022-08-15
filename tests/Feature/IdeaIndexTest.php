@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Http\Livewire\IdeaShow;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 use App\Models\{Status, Category, Idea};
@@ -43,7 +44,7 @@ class IdeaIndexTest extends TestCase
                 ->get(route('idea.index', ['page' => $page]))
                 ->assertOk();
 
-            $response->assertSeeLivewire('idea-preview');
+            $response->assertSeeLivewire(IdeaShow::class);
             $response->assertSee($idea->title, escape: false);
             $response->assertSee($idea->category->name, escape: false);
             $response->assertSee($idea->status->human_name, escape: false);
