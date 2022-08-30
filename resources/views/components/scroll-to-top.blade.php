@@ -1,5 +1,5 @@
 <button
-    class="fixed bottom-8 right-8 z-50 bg-purple-500 hover:bg-purple-400 hover:scale-110 hover:shadow-lg transition-all rounded-full p-2 shadow-md lg:hidden"
+    class="fixed bottom-8 right-8 z-40 bg-purple-500 hover:bg-purple-400 hover:scale-110 hover:shadow-lg transition-all rounded-full p-2 shadow-md lg:hidden"
     x-data="{
         shown: false,
         updateShown() {

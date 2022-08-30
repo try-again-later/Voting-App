@@ -5,6 +5,7 @@ namespace App\Models;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Idea extends Model
 {
@@ -75,5 +76,23 @@ class Idea extends Model
             ->where('user_id', $user->id)
             ->delete();
         return true;
+    }
+
+    public static function getCountsByStatuses(): array
+    {
+        $ideasCountByStatus = DB::table('ideas')
+            ->selectRaw('COUNT(*) AS count')
+            ->selectRaw('statuses.name AS status_name')
+            ->join('statuses', 'ideas.status_id', '=', 'statuses.id')
+            ->groupBy('statuses.name')
+            ->get()
+            ->pluck('count', 'status_name');
+
+        $ideasCountByStatus['all'] = $ideasCountByStatus->reduce(
+            fn ($totalCount, $statusCount) => $totalCount + $statusCount,
+            initial: 0,
+        );
+
+        return $ideasCountByStatus->toArray();
     }
 }
