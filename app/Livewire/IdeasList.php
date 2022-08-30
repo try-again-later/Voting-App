@@ -3,7 +3,7 @@
 namespace App\Livewire;
 
 use Livewire\Component;
-use App\Models\{Idea, Vote};
+use App\Models\{Category, Idea, Vote};
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Url;
@@ -15,12 +15,19 @@ class IdeasList extends Component
 
     #[Url(as: 'status', except: 'all')]
     public $statusFilter = 'all';
-    public $categoryFilter = null;
+
+    #[Url(as: 'category', except: 'all')]
+    public $categoryFilter = 'all';
 
     #[On('update:status-filter')]
     public function handleStatusFilterUpdate($statusFilter)
     {
         $this->statusFilter = $statusFilter;
+        $this->resetPage();
+    }
+
+    public function updatingCategoryFilter()
+    {
         $this->resetPage();
     }
 
@@ -38,6 +45,13 @@ class IdeasList extends Component
                         ->join('statuses', 'ideas.status_id', '=', 'statuses.id')
                         ->where('statuses.name', $status);
                 })
+                ->when($this->categoryFilter, function ($query, $category) {
+                    if ($category === 'all') {
+                        return;
+                    }
+
+                    $query->where('category_id', $category);
+                })
                 ->addSelect(['auth_user_vote_id' => Vote::select('id')
                     ->where('user_id', Auth::id())
                     ->whereColumn('idea_id', 'ideas.id')
@@ -48,7 +62,9 @@ class IdeasList extends Component
                 ->orderBy('created_at', 'desc')
                 ->simplePaginate(5)
                 ->withPath(route('idea.index'))
-                ->withQueryString()
+                ->withQueryString(),
+
+            'categories' => Category::all(),
         ]);
     }
 }

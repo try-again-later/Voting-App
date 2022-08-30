@@ -5,10 +5,13 @@
         <select
             name="category-filter"
             class="border-none rounded-xl cursor-pointer w-full sm:w-auto"
+            wire:model.live="categoryFilter"
         >
-            <option value="default" selected disabled>Category</option>
-            <option value="some-category">Some category</option>
-            <option value="some-other-category">Some other category</option>
+            <option value="all">All</option>
+
+            @foreach ($categories as $category)
+                <option value="{{ $category->id }}">{{ $category->name }}</option>
+            @endforeach
         </select>
 
         <select name="other-filter" class="border-none rounded-xl cursor-pointer w-full sm:w-auto">
