@@ -1,21 +1,22 @@
 @props([
-  'href',
   'first' => false,
   'last' => false,
   'active' => false
 ])
 
-<div {{ $attributes->merge(['class' => 'group w-full sm:w-min']) }}>
-  <a
-    href="{{ $href }}"
+{{-- <div {{ $attributes->class(['group w-full sm:w-min']) }}> --}}
+<div class="{{ $attributes['class'] }} group w-full sm:w-min">
+  <button
+    type="button"
+    {{ $attributes->whereStartsWith('wire') }}
     @class([
-      'block mb-4 px-4 uppercase font-bold transition-colors whitespace-nowrap text-center cursor-pointer',
+      'block mx-auto mb-4 px-4 uppercase font-bold transition-colors whitespace-nowrap text-center cursor-pointer',
       'text-gray-700' => $active,
       'text-gray-400 group-hover:text-gray-600' => !$active
     ])
   >
     {{ $slot }}
-  </a>
+  </button>
   <div
     @class([
       'h-1.5 transition-colors w-full rounded-full sm:rounded-none',

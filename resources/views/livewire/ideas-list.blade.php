@@ -1,5 +1,7 @@
-<x-app-layout>
-    <div class="flex flex-wrap gap-4 mb-8"">
+<div>
+    <section class="flex flex-wrap gap-4 mb-8">
+        <h2 class="sr-only">Ideas filters</h2>
+
         <select
             name="category-filter"
             class="border-none rounded-xl cursor-pointer w-full sm:w-auto"
@@ -22,9 +24,11 @@
             <input type="search" name="search" placeholder="Find an idea"
                 class="border-none rounded-r-xl w-full pl-2" />
         </div>
-    </div>
+    </section>
 
-    <div class="flex flex-col gap-4 sm:gap-8 mb-4">
+    <section class="flex flex-col gap-4 sm:gap-8 mb-4">
+        <h2 class="sr-only">Ideas</h2>
+
         @foreach ($ideas as $idea)
             <livewire:idea-show
                 :key="$idea->id"
@@ -34,9 +38,9 @@
                 :voted="isset($idea->auth_user_vote_id) ? true : false"
             />
         @endforeach
-    </div>
 
-    <div>
-        {{ $ideas->links() }}
-    </div>
-</x-app-layout>
+        <div>
+            {{ $ideas->links() }}
+        </div>
+    </section>
+</div>

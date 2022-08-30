@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Livewire\IdeasList;
 use App\Models\Category;
 use App\Models\Idea;
 use App\Models\User;
@@ -72,8 +73,7 @@ class VotesTest extends TestCase
             ]
         )->create();
 
-        $this
-            ->get(route('idea.index'))
+        Livewire::test(IdeasList::class)
             ->assertViewHas('ideas', fn ($ideas) => intval($ideas->first()->votes_count) === 2);
     }
 }

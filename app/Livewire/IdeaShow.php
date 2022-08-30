@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Idea;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
 
@@ -28,15 +29,15 @@ class IdeaShow extends Component
 
     public function vote()
     {
-        if (!auth()->check()) {
+        if (!Auth::check()) {
             return redirect(route('login'));
         }
 
         $success = false;
         if ($this->voted) {
-            $success = $this->idea->unvote(auth()->user());
+            $success = $this->idea->unvote(Auth::user());
         } else {
-            $success = $this->idea->vote(auth()->user());
+            $success = $this->idea->vote(Auth::user());
         }
         if ($success) {
             $this->voted = !$this->voted;

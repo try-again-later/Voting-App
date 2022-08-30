@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\Category;
 use App\Models\Idea;
 use App\Models\Status;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -61,7 +62,7 @@ class CreateIdea extends Component
         }
 
         $newIdea = Idea::create([
-            'user_id' => auth()->user()->id,
+            'user_id' => Auth::id(),
             'category_id' => $this->category,
             'status_id' => Status::default()->id,
             'title' => $this->title,
