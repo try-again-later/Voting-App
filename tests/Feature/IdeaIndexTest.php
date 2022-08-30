@@ -34,8 +34,8 @@ class IdeaIndexTest extends TestCase
                 'category_id' => $category,
             ])
             ->create()
-            ->sortByDesc('id')
-            ->sortByDesc('created_at');
+            ->sortByDesc('created_at')
+            ->sortByDesc('id');
 
         $ideaIndex = 0;
         foreach ($ideas as $idea) {

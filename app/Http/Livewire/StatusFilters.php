@@ -33,6 +33,7 @@ class StatusFilters extends Component
 
         if ($this->currentRouteName !== 'idea.index') {
             $this->queryString = [];
+            $this->statusFilter = null;
         }
     }
 
