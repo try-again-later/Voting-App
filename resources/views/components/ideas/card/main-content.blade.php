@@ -4,7 +4,7 @@
     <x-ideas.card.avatar :src="$avatarSrc" class="self-start" />
 
     <div class="flex flex-wrap gap-x-2 gap-y-4 items-start">
-        <x-ideas.card.heading :href="$ideaLink" class="order-0 w-min flex-1">
+        <x-ideas.card.heading :href="$ideaLink" class="order-0 flex-1">
             {{ $idea->title }}
         </x-ideas.card.heading>
         <x-ideas.card.status

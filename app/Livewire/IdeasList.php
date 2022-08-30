@@ -19,6 +19,9 @@ class IdeasList extends Component
     #[Url(as: 'category', except: 'all')]
     public $categoryFilter = 'all';
 
+    #[Url(as: 'filter', except: 'no-filter')]
+    public $additionalFilter = 'no-filter';
+
     #[On('update:status-filter')]
     public function handleStatusFilterUpdate($statusFilter)
     {
@@ -29,6 +32,18 @@ class IdeasList extends Component
     public function updatingCategoryFilter()
     {
         $this->resetPage();
+    }
+
+    public function updatingAdditionalFilter()
+    {
+        $this->resetPage();
+    }
+
+    public function updatedAdditionalFilter()
+    {
+        if ($this->additionalFilter === 'my-ideas' && !Auth::check()) {
+            return redirect()->route('login');
+        }
     }
 
     public function render()
@@ -52,14 +67,29 @@ class IdeasList extends Component
 
                     $query->where('category_id', $category);
                 })
+                ->when($this->additionalFilter, function ($query, $filter) {
+                    if ($filter === 'top-voted') {
+                        $query
+                            ->orderByDesc('votes_count')
+                            ->orderByDesc('id');
+                        return;
+                    }
+
+                    $query
+                        ->orderByDesc('created_at')
+                        ->orderByDesc('id');
+
+                    if ($filter === 'my-ideas' && Auth::check()) {
+                        $query
+                            ->where('user_id', Auth::id());
+                    }
+                })
                 ->addSelect(['auth_user_vote_id' => Vote::select('id')
                     ->where('user_id', Auth::id())
                     ->whereColumn('idea_id', 'ideas.id')
                     ->take(1)
                 ])
                 ->withCount('votes')
-                ->orderBy('id', 'desc')
-                ->orderBy('created_at', 'desc')
                 ->simplePaginate(5)
                 ->withPath(route('idea.index'))
                 ->withQueryString(),

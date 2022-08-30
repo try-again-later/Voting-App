@@ -7,6 +7,7 @@
             class="border-none rounded-xl cursor-pointer w-full sm:w-auto"
             wire:model.live="categoryFilter"
         >
+            <option disabled class="text-gray-300">Select a category</option>
             <option value="all">All</option>
 
             @foreach ($categories as $category)
@@ -14,10 +15,21 @@
             @endforeach
         </select>
 
-        <select name="other-filter" class="border-none rounded-xl cursor-pointer w-full sm:w-auto">
-            <option value="default" selected disabled>Other filters</option>
-            <option value="the-other-filter">The other filter</option>
-            <option value="something-else">Something else</option>
+        <select
+            wire:model.live="additionalFilter"
+            name="other-filter"
+            class="border-none rounded-xl cursor-pointer w-full sm:w-auto"
+        >
+            <option value="default" disabled class="text-gray-300">
+                Additional filters
+            </option>
+
+            <option value="no-filter" selected>No filter</option>
+            <option value="top-voted">Top Voted</option>
+
+            @auth
+                <option value="my-ideas">My Ideas</option>
+            @endauth
         </select>
 
         <div class="flex flex-1 max-w-xl ml-auto">
@@ -32,7 +44,7 @@
     <section class="flex flex-col gap-4 sm:gap-8 mb-4">
         <h2 class="sr-only">Ideas</h2>
 
-        @foreach ($ideas as $idea)
+        @forelse ($ideas as $idea)
             <livewire:idea-show
                 :key="$idea->id"
                 :idea="$idea"
@@ -40,7 +52,11 @@
                 :votes-count="$idea->votes_count"
                 :voted="isset($idea->auth_user_vote_id) ? true : false"
             />
-        @endforeach
+        @empty
+            <div class="text-xl text-gray-400 italic min-h-[16rem] grid place-items-center">
+                No ideas here...
+            </div>
+        @endforelse
 
         <div>
             {{ $ideas->links() }}

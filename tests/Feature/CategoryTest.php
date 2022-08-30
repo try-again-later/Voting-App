@@ -35,7 +35,9 @@ class CategoryTest extends TestCase
                 ['name' => 'Category C'],
                 ['name' => 'Category D'],
             )
-            ->create();
+            ->create()
+            ->sortByDesc('created_at')
+            ->sortByDesc('id');
         $selectedCategoryId = 1;
 
         $ideas = Idea::factory()
