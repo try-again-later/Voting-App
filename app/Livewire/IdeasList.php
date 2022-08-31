@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\{Category, Idea, Vote};
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Url;
@@ -22,6 +23,9 @@ class IdeasList extends Component
     #[Url(as: 'filter', except: 'no-filter')]
     public $additionalFilter = 'no-filter';
 
+    #[Url(as: 'q', except: '')]
+    public $searchQuery = '';
+
     #[On('update:status-filter')]
     public function handleStatusFilterUpdate($statusFilter)
     {
@@ -35,6 +39,11 @@ class IdeasList extends Component
     }
 
     public function updatingAdditionalFilter()
+    {
+        $this->resetPage();
+    }
+
+    public function updatingSearchquery()
     {
         $this->resetPage();
     }
@@ -83,6 +92,24 @@ class IdeasList extends Component
                         $query
                             ->where('user_id', Auth::id());
                     }
+                })
+                ->when($this->searchQuery, function ($query, $searchQuery) {
+                    // just ignore short search queries
+                    if (mb_strlen($searchQuery) < 3) {
+                        return;
+                    }
+
+                    $searchQuery = mb_strtolower($searchQuery);
+                    $query->where(DB::raw('lower(title)'), 'like', "%$searchQuery%");
+                })
+                ->when($this->searchQuery, function ($query, $searchQuery) {
+                    // just ignore short search queries
+                    if (mb_strlen($searchQuery) < 3) {
+                        return;
+                    }
+
+                    $searchQuery = mb_strtolower($searchQuery);
+                    $query->where(DB::raw('lower(title)'), 'like', "%$searchQuery%");
                 })
                 ->addSelect(['auth_user_vote_id' => Vote::select('id')
                     ->where('user_id', Auth::id())

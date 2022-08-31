@@ -40,7 +40,7 @@ class CategoryTest extends TestCase
             ->sortByDesc('id');
         $selectedCategoryId = 1;
 
-        $ideas = Idea::factory()
+        Idea::factory()
             ->count(50)
             ->sequence(fn () => [
                 'category_id' => $categories->random(),

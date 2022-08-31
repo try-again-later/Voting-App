@@ -36,8 +36,13 @@
             <div class="flex items-center bg-white pl-2 rounded-l-xl">
                 <x-icon.search class="w-5 h-5 text-gray-700" />
             </div>
-            <input type="search" name="search" placeholder="Find an idea"
-                class="border-none rounded-r-xl w-full pl-2" />
+            <input
+                wire:model.live.debounce.500ms="searchQuery"
+                type="search"
+                name="search"
+                placeholder="Find an idea"
+                class="border-none rounded-r-xl w-full pl-2"
+            />
         </div>
     </section>
 
