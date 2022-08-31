@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Models\{Category, Idea, Vote};
+use Illuminate\Support\Facades\DB;
 use Livewire\WithPagination;
 
 class IdeasList extends Component
@@ -13,6 +14,7 @@ class IdeasList extends Component
     public $statusFilter = 'all';
     public $categoryFilter = 'all';
     public $additionalFilter = 'no-filter';
+    public $searchQuery = '';
 
     protected $queryString = [
         'statusFilter' => [
@@ -26,6 +28,10 @@ class IdeasList extends Component
         'additionalFilter' => [
             'as' => 'filter',
             'except' => 'no-filter',
+        ],
+        'searchQuery' => [
+            'as' => 'q',
+            'except' => '',
         ],
     ];
 
@@ -43,6 +49,11 @@ class IdeasList extends Component
     }
 
     public function updatingAdditionalFilter()
+    {
+        $this->resetPage();
+    }
+
+    public function updatingSearchquery()
     {
         $this->resetPage();
     }
@@ -91,6 +102,15 @@ class IdeasList extends Component
                         $query
                             ->where('user_id', auth()->user()->id);
                     }
+                })
+                ->when($this->searchQuery, function ($query, $searchQuery) {
+                    // just ignore short search queries
+                    if (mb_strlen($searchQuery) < 3) {
+                        return;
+                    }
+
+                    $searchQuery = mb_strtolower($searchQuery);
+                    $query->where(DB::raw('lower(title)'), 'like', "%$searchQuery%");
                 })
                 ->addSelect(['auth_user_vote_id' => Vote::select('id')
                     ->where('user_id', auth()->id())
