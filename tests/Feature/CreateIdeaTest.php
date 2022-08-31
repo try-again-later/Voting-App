@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Idea;
 use App\Models\User;
 use Database\Seeders\StatusSeeder;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
@@ -42,8 +43,11 @@ class CreateIdeaTest extends TestCase
      */
     public function create_idea_form_is_shown_when_logged_in()
     {
+        /** @var Authenticatable */
+        $user = User::factory()->create();
+
         $this
-            ->actingAs(User::factory()->create())
+            ->actingAs($user)
             ->get(route('idea.index'))
             ->assertOk()
             ->assertDontSee('Please login or sign up to add a new idea.', escape: false)
@@ -58,8 +62,11 @@ class CreateIdeaTest extends TestCase
      */
     public function ideas_index_page_contains_create_idea_component()
     {
+        /** @var Authenticatable */
+        $user = User::factory()->create();
+
         $this
-            ->actingAs(User::factory()->create())
+            ->actingAs($user)
             ->get(route('idea.index'))
             ->assertOk()
             ->assertSeeLivewire('create-idea');

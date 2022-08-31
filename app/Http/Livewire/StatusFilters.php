@@ -20,14 +20,13 @@ class StatusFilters extends Component
         'closed' => 0,
     ];
 
+    protected $listeners = ['update:status' => 'updateIdeasCounts'];
+
     public function mount()
     {
         $this->statusFilter = request('status') ?? 'all';
 
-        $this->ideasCountByStatus = [
-            ...$this->ideasCountByStatus,
-            ...Idea::getCountsByStatuses(),
-        ];
+        $this->updateIdeasCounts();
 
         $this->currentRouteName = Route::currentRouteName();
 
@@ -35,6 +34,14 @@ class StatusFilters extends Component
             $this->queryString = [];
             $this->statusFilter = null;
         }
+    }
+
+    public function updateIdeasCounts()
+    {
+        $this->ideasCountByStatus = [
+            ...$this->ideasCountByStatus,
+            ...Idea::getCountsByStatuses(),
+        ];
     }
 
     public function setStatusFilter(string $statusFilter)
