@@ -51,6 +51,7 @@
 
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <x-input-file
+            id="create-idea-attachment"
             wire:model="attachment"
             @change="attachment = $event.target?.files?.[0]?.name"
         />
@@ -74,6 +75,6 @@
             <span class="sr-only">Remove attached file</span>
         </button>
         <span>Attached file: </span>
-        <span x-text="attachment"></span>
+        <span class="text-gray-400 break-all" x-text="attachment"></span>
     </div>
 </form>

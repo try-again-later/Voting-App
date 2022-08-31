@@ -5,8 +5,10 @@ namespace App\Livewire;
 use App\Models\Idea;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Computed;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
+#[On('update:status')]
 class IdeaShow extends Component
 {
     public Idea $idea;

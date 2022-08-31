@@ -57,4 +57,11 @@ class User extends Authenticatable
         $emailHash = md5($this->email);
         return "https://api.dicebear.com/9.x/identicon/jpg?seed={$emailHash}";
     }
+
+    public function isAdmin(): bool
+    {
+        return in_array($this->email, [
+            'admin@email.com',
+        ], strict: true);
+    }
 }
