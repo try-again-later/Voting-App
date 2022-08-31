@@ -1,6 +1,6 @@
-<form>
-    @csrf
-
+<form
+    wire:submit.prevent="changeStatus"
+>
     <div class="mb-8">
         @foreach ([
             ['open', 'text-status-open', 'group-hover:bg-status-hover-open'],
@@ -11,6 +11,7 @@
         ] as [$status, $textColor, $hoverColor])
             <div class="mb-4 last:mb-0 flex items-center gap-2 group w-fit">
                 <input
+                    wire:model.defer="status"
                     type="radio"
                     name="status"
                     value="{{ $status }}"
@@ -28,10 +29,16 @@
         @endforeach
     </div>
 
-    <x-textarea name="comment" placeholder="Add an update comment (optional)" class="mb-4" />
+    <x-textarea
+        wire:model.defer="comment"
+        name="comment"
+        placeholder="Add an update comment (optional)"
+        class="mb-4"
+    />
 
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
         <x-input-file
+            id="set-status-attachment"
             class="flex-1"
             name="attachment"
         />
@@ -41,6 +48,7 @@
 
     <div class="flex items-center gap-2">
         <input
+            wire:model.defer="notifyVoters"
             type="checkbox"
             name="notify-all-voters"
             id="notify-all-voters"

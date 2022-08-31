@@ -51,6 +51,7 @@
 
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <x-input-file
+            id="create-idea-attachment"
             wire:model.defer="attachment"
             @change="attachment = $event.target?.files?.[0]?.name"
         />

@@ -62,4 +62,11 @@ class User extends Authenticatable
             'd' => $fallbackImage,
         ]);
     }
+
+    public function isAdmin(): bool
+    {
+        return in_array($this->email, [
+            'admin@email.com',
+        ], strict: true);
+    }
 }

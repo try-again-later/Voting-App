@@ -12,6 +12,8 @@ class IdeaShow extends Component
     public bool $voted;
     public bool $showPreview;
 
+    protected $listeners = ['update:status' => '$refresh'];
+
     public function mount(
         Idea $idea,
         int $votesCount = 0,

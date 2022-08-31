@@ -3,24 +3,34 @@
     'window',
 ])
 
-<div {{ $attributes->class('') }} x-data="{ opened: false, cleanup: null }" x-id="['open-button']">
+<div
+    {{ $attributes->class('') }}
+    x-data="{
+        opened: false,
+        cleanup: null,
+
+        async setOpened(newOpened) {
+            this.opened = newOpened;
+            await $nextTick();
+
+            if (this.opened) {
+                this.cleanup = floatingAutoUpdate($refs.toggleButton, $refs.floatingWindow, () => {
+                    updateWindowPosition($refs.toggleButton, $refs.floatingWindow);
+                });
+            } else if (this.cleanup !== null) {
+                this.cleanup();
+                this.cleanup = null;
+            }
+        }
+    }"
+    x-id="['open-button']"
+>
     <button
         {{ $button->attributes->class('') }}
         type="button"
-        :data-opens-window="$id('open-button')"
-        @@click="
-          opened = !opened;
-          await $nextTick();
-
-          if (opened) {
-            cleanup = floatingAutoUpdate($el, $refs.floatingWindow, () => {
-              updateWindowPosition($el, $refs.floatingWindow);
-            });
-          } else {
-            cleanup();
-            cleanup = null;
-          }
-      ">
+        @@click="setOpened(!opened)"
+        x-ref="toggleButton"
+    >
         {{ $button }}
     </button>
     <div
