@@ -43,7 +43,7 @@ class IdeasList extends Component
         $this->resetPage();
     }
 
-    public function updatingSearchquery()
+    public function updatingSearchQuery()
     {
         $this->resetPage();
     }

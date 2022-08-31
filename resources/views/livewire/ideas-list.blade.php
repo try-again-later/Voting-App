@@ -32,7 +32,10 @@
             @endauth
         </select>
 
-        <div class="flex flex-1 max-w-xl ml-auto">
+        <div
+            x-data
+            class="flex flex-1 max-w-xl ml-auto"
+        >
             <div class="flex items-center bg-white pl-2 rounded-l-xl">
                 <x-icon.search class="w-5 h-5 text-gray-700" />
             </div>
@@ -41,8 +44,17 @@
                 type="search"
                 name="search"
                 placeholder="Find an idea"
-                class="border-none rounded-r-xl w-full pl-2"
+                class="border-none w-full pl-2 z-10 placeholder:italic placeholder:text-gray-400"
             />
+            <div class="flex items-center bg-white rounded-r-xl px-2">
+                <button
+                    x-show="$wire.searchQuery !== ''"
+                    @@click="$wire.searchQuery = ''"
+                >
+                    <span class="sr-only">Clear the search query</span>
+                    <x-icon.x class="w-5 h-5 text-red-700" />
+                </button>
+            </div>
         </div>
     </section>
 

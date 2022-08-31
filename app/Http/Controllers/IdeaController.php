@@ -51,10 +51,19 @@ class IdeaController extends Controller
      */
     public function show(Idea $idea)
     {
+        $backUrl = url()->previous();
+        $ideaIndexPath = parse_url(route('idea.index'), PHP_URL_PATH) ?? '/';
+        $previousPath = parse_url(url()->previous(), PHP_URL_PATH) ?? '/';
+
+        if ($ideaIndexPath !== $previousPath) {
+            $backUrl = route('idea.index');
+        }
+
         return view('idea.show', [
             'idea' => $idea,
             'votesCount' => $idea->votes()->count(),
             'voted' => $idea->votedBy(Auth::user()),
+            'backUrl' => $backUrl,
         ]);
     }
 
