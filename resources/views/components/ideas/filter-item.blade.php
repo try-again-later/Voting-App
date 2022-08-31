@@ -4,7 +4,6 @@
   'active' => false
 ])
 
-{{-- <div {{ $attributes->class(['group w-full sm:w-min']) }}> --}}
 <div class="{{ $attributes['class'] }} group w-full sm:w-min">
   <button
     type="button"
