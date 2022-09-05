@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Jobs\NotifyAllVoters;
 use App\Models\Idea;
 use App\Models\Status;
 use Illuminate\Http\Response;
@@ -42,6 +43,15 @@ class SetStatusForm extends Component
         $this->idea->status_id = $newStatus->id;
         $this->idea->save();
 
+        if ($this->notifyVoters) {
+            $this->notifyVotersAboutStatusChange();
+        }
+
         $this->emit('update:status');
+    }
+
+    public function notifyVotersAboutStatusChange()
+    {
+        NotifyAllVoters::dispatch($this->idea);
     }
 }

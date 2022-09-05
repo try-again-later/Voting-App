@@ -3,12 +3,14 @@
 namespace Tests\Feature;
 
 use App\Http\Livewire\SetStatusForm;
+use App\Jobs\NotifyAllVoters;
 use App\Models\Idea;
 use App\Models\Status;
 use App\Models\User;
 use Database\Seeders\StatusSeeder;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Queue;
 use Livewire\Livewire;
 use Tests\TestCase;
 
@@ -86,5 +88,27 @@ class SetStatusFormTest extends TestCase
         Livewire::actingAs($admin)
             ->test(SetStatusForm::class, ['idea' => $idea])
             ->assertSet('status', 'in-progress');
+    }
+
+    /** @test */
+    public function voters_notification_job_is_pushed_onto_queue_when_idea_status_is_changed()
+    {
+        $idea = Idea::factory()->create();
+
+        $admin = User::factory()->create([
+            'email' => 'admin@email.com',
+        ]);
+
+        Queue::fake();
+
+        Queue::assertNothingPushed();
+
+        Livewire::actingAs($admin)
+            ->test(SetStatusForm::class, ['idea' => $idea])
+            ->set('status', 'in-progress')
+            ->set('notifyVoters', true)
+            ->call('changeStatus');
+
+        Queue::assertPushed(NotifyAllVoters::class);
     }
 }
