@@ -13,9 +13,12 @@ services:
       - voting-app-data:/var/lib/postgresql/data
     networks:
       - voting-app
-
+  mailhog:
+    image: mailhog/mailhog:latest
+    ports:
+      - '1025:1025'
+      - '8025:8025'
 networks:
   voting-app:
-
 volumes:
   voting-app-data:

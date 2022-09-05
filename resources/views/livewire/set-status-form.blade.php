@@ -43,7 +43,11 @@
             name="attachment"
         />
 
-        <x-submit-button class="flex-1">Submit</x-submit-button>
+        <x-submit-button
+            class="flex-1 disabled:opacity-25"
+        >
+            Submit
+        </x-submit-button>
     </div>
 
     <div class="flex items-center gap-2">
