@@ -10,4 +10,6 @@
     <livewire:idea-show :idea="$idea" :votes-count="$votesCount" :voted="$voted"/>
 
     <livewire:edit-idea-form />
+
+    <livewire:delete-idea-confirmation-modal />
 </x-app-layout>

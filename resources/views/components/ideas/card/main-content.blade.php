@@ -25,7 +25,9 @@
                 Mark as spam
             </x-ideas.card.menu-item>
 
-            <x-ideas.card.menu-item :last="true">
+            <x-ideas.card.menu-item
+                wire:click="deleteIdea"
+            >
                 Delete post
             </x-ideas.card.menu-item>
         </x-ideas.card.menu>

@@ -73,6 +73,13 @@ class IdeaShow extends Component
         $this->dispatch('edit:idea', $this->idea)->to(EditIdeaForm::class);
     }
 
+    public function deleteIdea()
+    {
+        $this
+            ->dispatch('open-delete-modal:idea', $this->idea)
+            ->to(DeleteIdeaConfirmationModal::class);
+    }
+
     public function render()
     {
         return view('livewire.idea-show');
