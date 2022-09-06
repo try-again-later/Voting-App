@@ -49,6 +49,7 @@
             <div class="flex items-center bg-white rounded-r-xl px-2">
                 <button
                     x-show="$wire.searchQuery !== ''"
+                    x-cloak
                     @@click="$wire.searchQuery = ''"
                 >
                     <span class="sr-only">Clear the search query</span>

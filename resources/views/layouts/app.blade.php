@@ -83,6 +83,8 @@
 
                 <livewire:status-filters class="w-full mb-8" />
 
+                <livewire:toast />
+
                 {{ $slot }}
 
             </section>

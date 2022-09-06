@@ -35,11 +35,14 @@ class DeleteIdeaConfirmationModal extends Component
         }
 
         $this->idea->delete();
-        $this->idea = null;
-        $this->dispatch('destroy:idea');
+        $this->dispatch('destroy:idea', $this->idea->title);
 
         if (isset($this->redirectOnDelete)) {
-            return redirect()->to($this->redirectOnDelete);
+            return redirect()
+                ->to($this->redirectOnDelete)
+                ->with('alerts', [
+                    ['title' => "Idea \"{$this->idea->title}\" successfully deleted..."],
+                ]);
         }
     }
 

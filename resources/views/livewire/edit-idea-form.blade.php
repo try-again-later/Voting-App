@@ -40,7 +40,7 @@
         </div>
 
         @isset($idea)
-            <h3 class="text-center font-semibold text-xl">
+            <h3 class="text-center font-semibold text-xl break-all">
                 Editing idea "{{ $idea->title }}"
             </h3>
 
