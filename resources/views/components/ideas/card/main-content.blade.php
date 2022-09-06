@@ -17,18 +17,20 @@
                 <x-ideas.card.menu-item
                     wire:click="editIdea"
                 >
-                    Edit
+                    Edit idea
+                </x-ideas.card.menu-item>
+            @endcan
+
+            @can('delete', $idea)
+                <x-ideas.card.menu-item
+                    wire:click="deleteIdea"
+                >
+                    Delete idea
                 </x-ideas.card.menu-item>
             @endcan
 
             <x-ideas.card.menu-item>
                 Mark as spam
-            </x-ideas.card.menu-item>
-
-            <x-ideas.card.menu-item
-                wire:click="deleteIdea"
-            >
-                Delete post
             </x-ideas.card.menu-item>
         </x-ideas.card.menu>
     </div>

@@ -11,5 +11,5 @@
 
     <livewire:edit-idea-form />
 
-    <livewire:delete-idea-confirmation-modal />
+    <livewire:delete-idea-confirmation-modal :redirect-on-delete="$backUrl" />
 </x-app-layout>

@@ -2,6 +2,7 @@
     x-data="{ open: false }"
     @@open-delete-modal:idea="open = true"
     @@keydown.escape.window="open = false"
+    @@destroy:idea="open = false"
 >
     <div
         x-show="open"
@@ -19,6 +20,7 @@
 
     <div
         x-show="open"
+        x-cloak
         x-transition:enter="transition delay-150 ease-out duration-150"
         x-transition:enter-start="opacity-0 scale-95"
         x-transition:enter-end="opacity-100 scale-100"
@@ -46,7 +48,10 @@
             This action cannot be undone.
         </p>
 
-        <button class="justify-self-center bg-red-500 text-white font-bold px-4 py-1 rounded-lg transition hover:bg-red-400">
+        <button
+            wire:click="deleteIdea"
+            class="justify-self-center bg-red-500 text-white font-bold px-4 py-1 rounded-lg transition hover:bg-red-400"
+        >
             Delete
         </button>
 

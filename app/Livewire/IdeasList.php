@@ -11,6 +11,7 @@ use Livewire\Attributes\On;
 use Livewire\Attributes\Url;
 use Livewire\WithPagination;
 
+#[On('destroy:idea')]
 class IdeasList extends Component
 {
     use WithPagination;

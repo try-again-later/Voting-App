@@ -31,6 +31,7 @@ class StatusFilters extends Component
     }
 
     #[On('update:status')]
+    #[On('destroy:idea')]
     public function updateIdeasCounts()
     {
         $this->ideasCountByStatus = [
