@@ -31,9 +31,7 @@ class SetStatusFormTest extends TestCase
     {
         $idea = Idea::factory()->create();
         /** @var Authenticatable */
-        $admin = User::factory()->create([
-            'email' => 'admin@email.com',
-        ]);
+        $admin = User::factory()->admin()->create();
 
         $this
             ->actingAs($admin)
@@ -60,9 +58,7 @@ class SetStatusFormTest extends TestCase
     public function admin_can_change_an_idea_status()
     {
         $idea = Idea::factory()->create();
-        $admin = User::factory()->create([
-            'email' => 'admin@email.com',
-        ]);
+        $admin = User::factory()->admin()->create();
 
         Livewire::actingAs($admin)
             ->test(SetStatusForm::class, ['idea' => $idea])
@@ -96,9 +92,7 @@ class SetStatusFormTest extends TestCase
     {
         $idea = Idea::factory()->create();
 
-        $admin = User::factory()->create([
-            'email' => 'admin@email.com',
-        ]);
+        $admin = User::factory()->admin()->create();
 
         Queue::fake();
 

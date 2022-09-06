@@ -7,9 +7,7 @@
         <span>Back to all ideas</span>
     </a>
 
-    <livewire:idea-show
-        :idea="$idea"
-        :votes-count="$votesCount"
-        :voted="$voted"
-    />
+    <livewire:idea-show :idea="$idea" :votes-count="$votesCount" :voted="$voted"/>
+
+    <livewire:edit-idea-form />
 </x-app-layout>

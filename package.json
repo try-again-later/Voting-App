@@ -16,6 +16,7 @@
         "vite": "^6.0.0"
     },
     "dependencies": {
-        "@floating-ui/dom": "^1.7.1"
+        "@floating-ui/dom": "^1.7.1",
+        "nprogress": "^0.2.0"
     }
 }

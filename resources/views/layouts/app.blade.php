@@ -91,7 +91,7 @@
 
     <x-scroll-to-top />
 
-    @livewireScripts
+    @livewireScriptConfig
 </body>
 
 </html>

@@ -9,6 +9,7 @@ use Livewire\Attributes\On;
 use Livewire\Component;
 
 #[On('update:status')]
+#[On('update:idea')]
 class IdeaShow extends Component
 {
     public Idea $idea;
@@ -57,6 +58,11 @@ class IdeaShow extends Component
     public function ideaLink()
     {
         return route('idea.show', $this->idea);
+    }
+
+    public function editIdea()
+    {
+        $this->dispatch('edit:idea', $this->idea)->to(EditIdeaForm::class);
     }
 
     public function render()
