@@ -34,14 +34,19 @@ class DeleteIdeaConfirmationModal extends Component
             abort(Response::HTTP_FORBIDDEN);
         }
 
+        $deletedIdeaTitle = $this->idea->title;
         Idea::destroy($this->idea->id);
 
         $this->dispatchBrowserEvent('close-delete-modal:idea');
-        $this->emit('destroy:idea');
+        $this->emit('destroy:idea', $deletedIdeaTitle);
         $this->idea = null;
 
         if (isset($this->redirectOnDelete)) {
-            return redirect()->to($this->redirectOnDelete);
+            return redirect()
+                ->to($this->redirectOnDelete)
+                ->with('alerts', [
+                    ['title' => "Idea \"$deletedIdeaTitle\" successfully deleted..."],
+                ]);
         }
     }
 

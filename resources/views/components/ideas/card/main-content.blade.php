@@ -3,7 +3,7 @@
 <div {{ $attributes->class('grid grid-cols-[auto,_1fr] p-4 gap-y-4 gap-x-4 sm:gap-x-8') }}>
     <x-ideas.card.avatar :src="$avatarSrc" class="self-start" />
 
-    <div class="flex flex-wrap gap-x-2 gap-y-4 items-start">
+    <div class="flex flex-wrap sm:flex-nowrap gap-x-2 gap-y-4 items-start">
         <x-ideas.card.heading :href="$ideaLink" class="order-0 flex-1">
             {{ $idea->title }}
         </x-ideas.card.heading>
@@ -36,7 +36,7 @@
     </div>
 
     <p @class([
-        'flex flex-col gap-4 col-span-2 sm:col-start-2 sm:col-span-1',
+        'flex flex-col gap-4 col-span-2 sm:col-start-2 sm:col-span-1 break-all',
         'line-clamp-5' => $showPreview,
     ])>
         {{ $idea->description }}
