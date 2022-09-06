@@ -39,6 +39,7 @@ let sentMessagesCount = 0;
 let nProgressRunning = false;
 
 Livewire.hook('commit', ({ component, commit, respond, succeed, fail }) => {
+    // Equivalent of 'message.sent'
     sentMessagesCount += 1;
     if (sentMessagesCount > 0 && !nProgressRunning) {
         nProgress.start();
@@ -46,7 +47,6 @@ Livewire.hook('commit', ({ component, commit, respond, succeed, fail }) => {
     }
 
     succeed(({ snapshot, effects }) => {
-        // Equivalent of 'message.sent'
         // Equivalent of 'message.received'
 
         queueMicrotask(() => {

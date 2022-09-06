@@ -20,7 +20,7 @@
 
     <div
         x-show="open"
-        class="fixed z-100 bottom-0 left-1/2 -translate-x-1/2 bg-white max-h-[80vh] overflow-scroll min-h-[25vh] min-w-[min(40rem,_100vw)] rounded-t-xl py-4 px-8"
+        class="fixed z-100 bottom-0 left-1/2 -translate-x-1/2 bg-white max-h-[80vh] overflow-auto min-h-[25vh] min-w-[min(40rem,_90vw)] rounded-t-xl p-8"
         x-cloak
         x-transition:enter="transition delay-150 ease-out duration-300"
         x-transition:enter-start="opacity-0 translate-y-16"
