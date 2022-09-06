@@ -14,7 +14,7 @@ class IdeaShow extends Component
 
     protected $listeners = [
         'update:status' => '$refresh',
-        'update:idea' => '$refresh',
+        'update:idea' => 'handleUpdate',
     ];
 
     public function mount(
@@ -28,6 +28,14 @@ class IdeaShow extends Component
         $this->votesCount = $votesCount;
         $this->voted = $voted;
         $this->showPreview = $showPreview;
+    }
+
+    public function handleUpdate(Idea $updatedIdea)
+    {
+        if ($this->idea->id !== $updatedIdea->id) {
+            return;
+        }
+        $this->idea->refresh();
     }
 
     public function vote()

@@ -52,7 +52,7 @@ class EditIdeaForm extends Component
             'title' => $this->title,
             'description' => $this->description,
         ]);
-        $this->emit('update:idea');
+        $this->emit('update:idea', $this->idea);
         $this->dispatchBrowserEvent('update:idea');
     }
 
