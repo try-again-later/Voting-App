@@ -80,10 +80,10 @@ class Idea extends Model
 
     public static function getCountsByStatuses(): array
     {
-        $ideasCountByStatus = DB::table('ideas')
-            ->selectRaw('COUNT(ideas.id) AS count')
+        $ideasCountByStatus = DB::table('statuses')
             ->selectRaw('statuses.name AS status_name')
-            ->rightJoin('statuses', 'ideas.status_id', '=', 'statuses.id')
+            ->selectRaw('COUNT(ideas.id) AS count')
+            ->leftJoin('ideas', 'ideas.status_id', '=', 'statuses.id')
             ->groupBy('statuses.name')
             ->get()
             ->pluck('count', 'status_name');
