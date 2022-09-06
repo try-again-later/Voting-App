@@ -39,7 +39,6 @@ let nProgressRunning = false;
 
 window.livewire.hook('message.sent', () => {
     ++sentMessagesCount;
-    console.log(nProgressRunning);
     if (sentMessagesCount > 0 && !nProgressRunning) {
         nProgress.start();
         nProgressRunning = true;

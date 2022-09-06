@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\Idea;
 use App\Services\CategoriesService;
+use Illuminate\Http\Response;
 use Livewire\Component;
 
 class EditIdeaForm extends Component
@@ -23,6 +24,10 @@ class EditIdeaForm extends Component
 
     public function handleEditIdea(Idea $idea)
     {
+        if (!auth()->check() || auth()->user()->cannot('update', $idea)) {
+            return;
+        }
+
         $this->idea = $idea;
         $this->category = $idea->category->id;
         $this->title = $idea->title;
@@ -34,6 +39,10 @@ class EditIdeaForm extends Component
     {
         if (!isset($this->idea)) {
             return;
+        }
+
+        if (!auth()->check() || auth()->user()->cannot('update', $this->idea)) {
+            abort(Response::HTTP_FORBIDDEN);
         }
 
         $this->validate();

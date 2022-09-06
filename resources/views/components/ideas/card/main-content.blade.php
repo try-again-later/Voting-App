@@ -13,12 +13,13 @@
             :status="$idea->status"
         />
         <x-ideas.card.menu class="order-1 ml-auto sm:ml-0 sm:order-2">
-            <x-ideas.card.menu-item
-                wire:click="editIdea"
-                :first="true"
-            >
-                Edit
-            </x-ideas.card.menu-item>
+            @can('update', $idea)
+                <x-ideas.card.menu-item
+                    wire:click="editIdea"
+                >
+                    Edit
+                </x-ideas.card.menu-item>
+            @endcan
 
             <x-ideas.card.menu-item>
                 Mark as spam

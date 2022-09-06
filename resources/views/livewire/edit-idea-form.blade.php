@@ -15,7 +15,7 @@
     class="fixed left-0 top-0 right-0 min-h-screen bg-black bg-opacity-25 z-50 grid items-end justify-center isolate overflow-hidden"
 >
     <div
-        class="bg-white max-h-[80vh] overflow-scroll min-h-[25vh] min-w-[min(40rem,_100vw)] rounded-t-xl py-4 px-8"
+        class="bg-white max-h-[80vh] overflow-auto min-h-[25vh] min-w-[min(40rem,_100vw)] rounded-t-xl py-4 px-8"
         x-show="open"
         x-transition:enter="transition ease-out duration-200"
         x-transition:enter-start="opacity-0 translate-y-16"
@@ -35,7 +35,7 @@
         </div>
 
         @isset($idea)
-            <h3 class="text-center font-semibold text-xl">
+            <h3 class="text-center font-semibold text-xl mt-2">
                 Editing idea "{{ $idea->title }}"
             </h3>
 
