@@ -30,6 +30,14 @@ class IdeaShow extends Component
         $this->showPreview = $showPreview;
     }
 
+    public function handleUpdate(Idea $updatedIdea)
+    {
+        if ($this->idea->id !== $updatedIdea->id) {
+            return;
+        }
+        $this->idea->refresh();
+    }
+
     public function vote()
     {
         if (!Auth::check()) {

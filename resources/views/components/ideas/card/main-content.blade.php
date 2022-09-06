@@ -32,8 +32,9 @@
     </div>
 
     <p @class([
-        'flex flex-col gap-4 col-span-2 sm:col-start-2 sm:col-span-1',
-        'line-clamp-5' => $showPreview,
+        'flex flex-col gap-4 col-span-2 sm:col-start-2 sm:col-span-1 break-all overflow-auto',
+        'line-clamp-5 max-h-64 pr-4' => $showPreview,
+        'max-h-128' => !$showPreview,
     ])>
         {{ $idea->description }}
     </p>
