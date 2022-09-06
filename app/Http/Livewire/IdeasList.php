@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Models\{Category, Idea, Vote};
+use App\Services\CategoriesService;
 use Illuminate\Support\Facades\DB;
 use Livewire\WithPagination;
 
@@ -65,7 +66,7 @@ class IdeasList extends Component
         }
     }
 
-    public function render()
+    public function render(CategoriesService $categories)
     {
         return view('livewire.ideas-list', [
             'ideas' => Idea::query()
@@ -122,7 +123,7 @@ class IdeasList extends Component
                 ->withPath(route('idea.index'))
                 ->withQueryString(),
 
-            'categories' => Category::all(),
+            'categories' => $categories->all(),
         ]);
     }
 }

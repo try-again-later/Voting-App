@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use App\Models\Category;
 use App\Models\Idea;
 use App\Models\Status;
+use App\Services\CategoriesService;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -40,16 +41,16 @@ class CreateIdea extends Component
         return basename($this->attachment);
     }
 
-    public function render()
+    public function render(CategoriesService $categories)
     {
         return view('livewire.create-idea', [
-            'categories' => Category::all(),
+            'categories' => $categories->all(),
         ]);
     }
 
     public function createIdea()
     {
-        if (!auth()) {
+        if (!auth()->check()) {
             abort(Response::HTTP_FORBIDDEN);
         }
 

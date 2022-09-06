@@ -75,6 +75,8 @@
             </div>
         @endforelse
 
+        <livewire:edit-idea-form :categories="$categories" />
+
         <div>
             {{ $ideas->links() }}
         </div>

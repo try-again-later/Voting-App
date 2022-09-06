@@ -1,5 +1,8 @@
 import "./bootstrap";
 
+import nProgress from "nprogress";
+import 'nprogress/nprogress.css';
+
 import Alpine from "alpinejs";
 import {
     computePosition,
@@ -30,3 +33,31 @@ function updateWindowPosition(button, floatingWindow) {
 window.updateWindowPosition = updateWindowPosition;
 window.floatingAutoUpdate = floatingAutoUpdate;
 Alpine.start();
+
+let sentMessagesCount = 0;
+let nProgressRunning = false;
+
+window.livewire.hook('message.sent', () => {
+    ++sentMessagesCount;
+    console.log(nProgressRunning);
+    if (sentMessagesCount > 0 && !nProgressRunning) {
+        nProgress.start();
+        nProgressRunning = true;
+    }
+});
+
+window.livewire.hook('message.failed', () => {
+    --sentMessagesCount;
+    if (sentMessagesCount <= 0 && nProgressRunning) {
+        nProgress.done();
+        nProgressRunning = false;
+    }
+});
+
+window.livewire.hook('message.processed', () => {
+    --sentMessagesCount;
+    if (sentMessagesCount <= 0 && nProgressRunning) {
+        nProgress.done();
+        nProgressRunning = false;
+    }
+});

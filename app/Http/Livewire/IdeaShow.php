@@ -12,7 +12,10 @@ class IdeaShow extends Component
     public bool $voted;
     public bool $showPreview;
 
-    protected $listeners = ['update:status' => '$refresh'];
+    protected $listeners = [
+        'update:status' => '$refresh',
+        'update:idea' => '$refresh',
+    ];
 
     public function mount(
         Idea $idea,
@@ -53,6 +56,11 @@ class IdeaShow extends Component
     public function getIdeaLinkProperty()
     {
         return route('idea.show', $this->idea);
+    }
+
+    public function editIdea()
+    {
+        $this->emit('edit:idea', $this->idea);
     }
 
     public function render()

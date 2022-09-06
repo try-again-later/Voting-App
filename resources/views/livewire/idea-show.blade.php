@@ -1,29 +1,29 @@
-@if ($this->showPreview)
-    <article class="bg-white rounded-xl shadow-md flex flex-col min-h-[10rem] sm:flex-row">
-        <div @class([
-            'p-4 border-b-2 border-gray-200 flex flex-wrap flex-row items-center justify-start gap-1',
-            'sm:border-r-2 sm:border-b-0 sm:flex-col',
-            'text-purple-500' => $voted,
-        ])>
-            <div class="sm:text-2xl font-bold">{{ $votesCount }}</div>
-            <div class="sm:min-w-[6rem] sm:text-center">Votes</div>
-            <x-ideas.card.vote-button
-                wire:click.prevent="vote"
-                :voted="$voted"
-                class="mt-auto ml-auto sm:ml-0"
-            />
-        </div>
+<div>
+    @if ($this->showPreview)
+        <article class="bg-white rounded-xl shadow-md flex flex-col min-h-[10rem] sm:flex-row">
+            <div @class([
+                'p-4 border-b-2 border-gray-200 flex flex-wrap flex-row items-center justify-start gap-1',
+                'sm:border-r-2 sm:border-b-0 sm:flex-col',
+                'text-purple-500' => $voted,
+            ])>
+                <div class="sm:text-2xl font-bold">{{ $votesCount }}</div>
+                <div class="sm:min-w-[6rem] sm:text-center">Votes</div>
+                <x-ideas.card.vote-button
+                    wire:click.prevent="vote"
+                    :voted="$voted"
+                    class="mt-auto ml-auto sm:ml-0"
+                />
+            </div>
 
-        <x-ideas.card.main-content
-            class="w-full"
-            :idea="$this->idea"
-            :avatar-src="$this->avatarSrc"
-            :idea-link="$this->ideaLink"
-            :show-preview="true"
-        />
-    </article>
-@else
-    <div>
+            <x-ideas.card.main-content
+                class="w-full"
+                :idea="$this->idea"
+                :avatar-src="$this->avatarSrc"
+                :idea-link="$this->ideaLink"
+                :show-preview="true"
+            />
+        </article>
+    @else
         <article class="bg-white rounded-xl shadow-md mb-4">
             <x-ideas.card.main-content
                 class="w-full"
@@ -82,5 +82,5 @@
                 />
             </div>
         </div>
-    </div>
-@endif
+    @endif
+</div>

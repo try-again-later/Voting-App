@@ -12,7 +12,22 @@
             :href="$ideaLink"
             :status="$idea->status"
         />
-        <x-ideas.card.menu class="order-1 ml-auto sm:ml-0 sm:order-2" />
+        <x-ideas.card.menu class="order-1 ml-auto sm:ml-0 sm:order-2">
+            <x-ideas.card.menu-item
+                wire:click="editIdea"
+                :first="true"
+            >
+                Edit
+            </x-ideas.card.menu-item>
+
+            <x-ideas.card.menu-item>
+                Mark as spam
+            </x-ideas.card.menu-item>
+
+            <x-ideas.card.menu-item :last="true">
+                Delete post
+            </x-ideas.card.menu-item>
+        </x-ideas.card.menu>
     </div>
 
     <p @class([
