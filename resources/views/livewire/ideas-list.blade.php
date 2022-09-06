@@ -75,7 +75,9 @@
             </div>
         @endforelse
 
-        <livewire:edit-idea-form :categories="$categories" />
+        <livewire:edit-idea-form />
+
+        <livewire:delete-idea-confirmation-modal />
 
         <div>
             {{ $ideas->links() }}

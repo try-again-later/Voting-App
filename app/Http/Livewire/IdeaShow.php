@@ -71,6 +71,11 @@ class IdeaShow extends Component
         $this->emit('edit:idea', $this->idea);
     }
 
+    public function deleteIdea()
+    {
+        $this->emit('open-delete-modal:idea', $this->idea);
+    }
+
     public function render()
     {
         return view('livewire.idea-show');
