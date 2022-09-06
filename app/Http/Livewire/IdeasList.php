@@ -36,7 +36,15 @@ class IdeasList extends Component
         ],
     ];
 
-    protected $listeners = ['update:status-filter' => 'handleStatusFilterUpdate'];
+    protected $listeners = [
+        'update:status-filter' => 'handleStatusFilterUpdate',
+        'destroy:idea' => 'handleIdeaDestroy',
+    ];
+
+    public function handleIdeaDestroy()
+    {
+        $this->resetPage();
+    }
 
     public function handleStatusFilterUpdate($statusFilter)
     {

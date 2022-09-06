@@ -3,18 +3,46 @@
 namespace App\Http\Livewire;
 
 use App\Models\Idea;
+use Illuminate\Http\Response;
 use Livewire\Component;
 
 class DeleteIdeaConfirmationModal extends Component
 {
+    public ?string $redirectOnDelete = null;
+
     public ?Idea $idea = null;
 
     protected $listeners = ['open-delete-modal:idea' => 'openModal'];
 
     public function openModal(Idea $idea)
     {
+        if (!auth()->check() || auth()->user()->cannot('delete', $idea)) {
+            return;
+        }
+
         $this->idea = $idea;
         $this->dispatchBrowserEvent('open-delete-modal:idea');
+    }
+
+    public function deleteIdea()
+    {
+        if (!isset($this->idea)) {
+            return;
+        }
+
+        if (!auth()->check() || auth()->user()->cannot('delete', $this->idea)) {
+            abort(Response::HTTP_FORBIDDEN);
+        }
+
+        Idea::destroy($this->idea->id);
+
+        $this->dispatchBrowserEvent('close-delete-modal:idea');
+        $this->emit('destroy:idea');
+        $this->idea = null;
+
+        if (isset($this->redirectOnDelete)) {
+            return redirect()->to($this->redirectOnDelete);
+        }
     }
 
     public function render()

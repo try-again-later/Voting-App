@@ -69,7 +69,7 @@
                         </x-link-button>
 
                         <x-link-button
-                            :href="route('login')"
+                            :href="route('register')"
                             class="bg-purple-500 hover:bg-purple-400 text-white"
                         >
                             Sign Up

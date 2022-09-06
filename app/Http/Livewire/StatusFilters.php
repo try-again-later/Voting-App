@@ -20,7 +20,10 @@ class StatusFilters extends Component
         'closed' => 0,
     ];
 
-    protected $listeners = ['update:status' => 'updateIdeasCounts'];
+    protected $listeners = [
+        'update:status' => 'updateIdeasCounts',
+        'destroy:idea' => 'updateIdeasCounts',
+    ];
 
     public function mount()
     {

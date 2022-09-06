@@ -9,6 +9,7 @@
     x-transition:leave-start="opacity-35"
     x-transition:leave-end="opacity-0"
     @@open-delete-modal:idea="open = true"
+    @@close-delete-modal:idea="open = false"
     @@click.self="open = false"
     @@keydown.escape.window="open = false"
     class="fixed px-4 left-0 top-0 right-0 min-h-screen bg-black bg-opacity-25 z-50 isolate grid place-items-center overflow-hidden"
@@ -40,7 +41,10 @@
             This action cannot be undone.
         </p>
 
-        <button class="justify-self-center bg-red-500 text-white font-bold px-4 py-1 rounded-lg transition hover:bg-red-400">
+        <button
+            wire:click="deleteIdea"
+            class="justify-self-center bg-red-500 text-white font-bold px-4 py-1 rounded-lg transition hover:bg-red-400"
+        >
             Delete
         </button>
 
