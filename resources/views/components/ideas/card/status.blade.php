@@ -1,7 +1,6 @@
-@props(['status', 'href'])
+@props(['status'])
 
-<a
-    href="{{ $href }}"
+<button
     {{ $attributes->class([
         'block uppercase text-sm font-bold px-3 py-1 rounded-full transition-colors whitespace-nowrap',
         'bg-status-open text-status-text-open hover:bg-status-hover-open' => $status->name == 'open',
@@ -10,6 +9,8 @@
         'bg-status-implemented text-status-text-implemented hover:bg-status-hover-implemented' => $status->name == 'implemented',
         'bg-status-considering text-status-text-considering hover:bg-status-hover-considering' => $status->name == 'considering',
     ]) }}
+    type="button"
+    wire:click.prevent="$dispatch('change:status', { statusFilter: '{{ addslashes($status->name) }}' })"
 >
     {{ $status->human_name }}
-</a>
+</button>

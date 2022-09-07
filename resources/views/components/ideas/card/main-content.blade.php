@@ -9,7 +9,6 @@
         </x-ideas.card.heading>
         <x-ideas.card.status
             class="w-full text-center order-2 sm:ml-auto sm:w-auto sm:order-1"
-            :href="$ideaLink"
             :status="$idea->status"
         />
         <x-ideas.card.menu class="order-1 ml-auto sm:ml-0 sm:order-2">
@@ -36,8 +35,8 @@
     </div>
 
     <p @class([
-        'flex flex-col gap-4 col-span-2 sm:col-start-2 sm:col-span-1 break-all overflow-auto',
-        'line-clamp-5 max-h-64 pr-4' => $showPreview,
+        'flex flex-col gap-4 col-span-2 sm:col-start-2 sm:col-span-1 break-all overflow-auto pr-4',
+        'line-clamp-5 max-h-64' => $showPreview,
         'max-h-128' => !$showPreview,
     ])>
         {{ $idea->description }}

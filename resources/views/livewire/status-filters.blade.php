@@ -1,10 +1,17 @@
-<div class="flex flex-wrap gap-y-4 justify-center xl:justify-start {{ $class }}">
+<div class="flex flex-wrap gap-y-4 justify-center 2xl:justify-start {{ $class }}">
     <x-ideas.filter-item
         wire:click.prevent="setStatusFilter('all')"
         :active="$statusFilter == 'all'"
         :first="true"
     >
         All ideas ({{ $ideasCountByStatus['all'] }})
+    </x-ideas.filter-item>
+
+    <x-ideas.filter-item
+        wire:click.prevent="setStatusFilter('open')"
+        :active="$statusFilter == 'open'"
+    >
+        Open ({{ $ideasCountByStatus['open'] }})
     </x-ideas.filter-item>
 
     <x-ideas.filter-item

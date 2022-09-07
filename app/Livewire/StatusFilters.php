@@ -15,6 +15,7 @@ class StatusFilters extends Component
     public $statusFilter;
     public $ideasCountByStatus = [
         'all' => 0,
+        'open' => 0,
         'considering' => 0,
         'in-progress' => 0,
         'implemented' => 0,
@@ -40,6 +41,7 @@ class StatusFilters extends Component
         ];
     }
 
+    #[On('change:status')]
     public function setStatusFilter(string $statusFilter)
     {
         $this->statusFilter = $statusFilter;

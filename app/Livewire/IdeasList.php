@@ -7,6 +7,7 @@ use App\Models\{Category, Idea, Vote};
 use App\Services\CategoriesService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Livewire\Attributes\Computed;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Url;
 use Livewire\WithPagination;
@@ -55,6 +56,25 @@ class IdeasList extends Component
         if ($this->additionalFilter === 'my-ideas' && !Auth::check()) {
             return redirect()->route('login');
         }
+    }
+
+    #[Computed]
+    public function noFiltersAreActive()
+    {
+        return
+            $this->statusFilter === 'all' &&
+            $this->categoryFilter === 'all' &&
+            $this->additionalFilter === 'no-filter' &&
+            strlen($this->searchQuery) === 0;
+    }
+
+    public function resetFilters()
+    {
+        $this->statusFilter = 'all';
+        $this->categoryFilter = 'all';
+        $this->additionalFilter = 'no-filter';
+        $this->searchQuery = '';
+        $this->dispatch('change:status', 'all');
     }
 
     public function render(CategoriesService $categories)

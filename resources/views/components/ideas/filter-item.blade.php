@@ -9,7 +9,7 @@
     type="button"
     {{ $attributes->whereStartsWith('wire') }}
     @class([
-      'block mx-auto mb-4 px-4 uppercase font-bold transition-colors whitespace-nowrap text-center cursor-pointer',
+      'block mx-auto mb-4 px-3 uppercase font-bold transition-colors whitespace-nowrap text-center cursor-pointer',
       'text-gray-700' => $active,
       'text-gray-400 group-hover:text-gray-600' => !$active
     ])
