@@ -2,6 +2,18 @@
     <section class="flex flex-wrap gap-4 mb-8">
         <h2 class="sr-only">Ideas filters</h2>
 
+        @if (!$this->noFiltersAreActive)
+            <button
+                wire:click="resetFilters"
+                type="button"
+            >
+                <span class="sr-only">Reset all filters</span>
+                <x-icon.backspace
+                    class="w-8 h-8 text-gray-300 transition hover:text-gray-400"
+                />
+            </button>
+        @endif
+
         <select
             name="category-filter"
             class="border-none rounded-xl cursor-pointer w-full sm:w-auto"

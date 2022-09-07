@@ -74,6 +74,24 @@ class IdeasList extends Component
         }
     }
 
+    public function getNoFiltersAreActiveProperty()
+    {
+        return
+            $this->statusFilter === 'all' &&
+            $this->categoryFilter === 'all' &&
+            $this->additionalFilter === 'no-filter' &&
+            strlen($this->searchQuery) === 0;
+    }
+
+    public function resetFilters()
+    {
+        $this->statusFilter = 'all';
+        $this->categoryFilter = 'all';
+        $this->additionalFilter = 'no-filter';
+        $this->searchQuery = '';
+        $this->emit('change:status', 'all');
+    }
+
     public function render(CategoriesService $categories)
     {
         return view('livewire.ideas-list', [

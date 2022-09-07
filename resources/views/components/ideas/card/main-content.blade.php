@@ -9,7 +9,6 @@
         </x-ideas.card.heading>
         <x-ideas.card.status
             class="w-full text-center order-2 sm:ml-auto sm:w-auto sm:order-1"
-            :href="$ideaLink"
             :status="$idea->status"
         />
         <x-ideas.card.menu class="order-1 ml-auto sm:ml-0 sm:order-2">
