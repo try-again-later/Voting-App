@@ -44,6 +44,7 @@
                 :idea="$idea"
                 :avatar-src="$this->avatarSrc"
                 :idea-link="$this->ideaLink"
+                :category-button-redirect="true"
             />
         </article>
 
@@ -60,7 +61,7 @@
                 </x-slot>
             </x-floating-window>
 
-            @if (auth()->check() && auth()->user()->isAdmin())
+            @admin
                 <x-floating-window class="flex-1 lg:max-w-[16rem]">
                     <x-slot:button class="w-full flex justify-center items-center gap-2 bg-gray-200 hover:bg-gray-300 transition-colors rounded-xl px-4 py-2 sm:text-lg">
                         <span class="whitespace-nowrap font-semibold">Set status</span>
@@ -70,7 +71,7 @@
                         <livewire:set-status-form :idea="$idea" />
                     </x-slot>
                 </x-floating-window>
-            @endif
+            @endadmin
 
             <div class="flex sm:justify-end sm:ml-auto flex-wrap w-full sm:w-auto gap-2">
                 <div @class([
