@@ -45,6 +45,7 @@
                 :idea="$this->idea"
                 :avatar-src="$this->avatarSrc"
                 :idea-link="$this->ideaLink"
+                :category-button-redirect="true"
             />
         </article>
 
@@ -62,7 +63,7 @@
                 </x-slot>
             </x-floating-window>
 
-            @if (auth()->check() && auth()->user()->isAdmin())
+            @admin
                 <x-floating-window
                     class="flex-1 max-w-[16rem]"
                     x-init="
@@ -79,7 +80,7 @@
                         <livewire:set-status-form :idea="$idea" />
                     </x-slot>
                 </x-floating-window>
-            @endif
+            @endadmin
 
             <div class="flex sm:justify-end sm:flex-grow-[1] flex-wrap w-full sm:w-auto gap-2">
                 <div @class([

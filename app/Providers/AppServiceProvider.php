@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Services\CategoriesService;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -26,6 +27,10 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->singleton(CategoriesService::class, function ($app) {
             return new CategoriesService;
+        });
+
+        Blade::if('admin', function () {
+            return auth()->check() && auth()->user()->isAdmin();
         });
     }
 }

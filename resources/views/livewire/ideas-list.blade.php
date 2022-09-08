@@ -48,6 +48,7 @@
 
             @auth
                 <option value="my-ideas">My Ideas</option>
+                <option value="voted-for">Ideas I voted for</option>
             @endauth
         </select>
 

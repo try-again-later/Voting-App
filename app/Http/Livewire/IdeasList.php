@@ -41,7 +41,10 @@ class IdeasList extends Component
 
     public function mount()
     {
-        if (!auth()->check() && $this->additionalFilter === 'my-ideas') {
+        if (
+            !auth()->check() &&
+            in_array($this->additionalFilter, ['my-ideas', 'voted-for'], strict: true)
+        ) {
             $this->redirect(route('login'));
         }
 

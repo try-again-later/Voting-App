@@ -1,6 +1,9 @@
+@aware(['categoryButtonRedirect'])
+
 @props(['status'])
 
 <button
+    x-data
     {{ $attributes->class([
         'block uppercase text-sm font-bold px-3 py-1 rounded-full transition-colors whitespace-nowrap',
         'bg-status-open text-status-text-open hover:bg-status-hover-open' => $status->name == 'open',
@@ -10,7 +13,8 @@
         'bg-status-considering text-status-text-considering hover:bg-status-hover-considering' => $status->name == 'considering',
     ]) }}
     type="button"
-    wire:click="$emit('update:status-filter', '{{ addslashes($status->name) }}')"
+    wire:click="$emit('{{ $categoryButtonRedirect ? 'status-filter-redirect' : 'update:status-filter' }}', '{{ addslashes($status->name) }}')"
+    @@click="scrollTo({top: 0, behavior: 'smooth'})"
 >
     {{ $status->human_name }}
 </button>
