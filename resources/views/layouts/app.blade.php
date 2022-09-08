@@ -81,8 +81,6 @@
             <section class="flex-1 lg:pl-8">
                 <h2 class="sr-only">Ideas</h2>
 
-                <livewire:status-filters class="w-full mb-8" />
-
                 <livewire:toast />
 
                 {{ $slot }}

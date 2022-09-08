@@ -35,13 +35,11 @@ window.floatingAutoUpdate = floatingAutoUpdate;
 
 Livewire.start();
 
-let sentMessagesCount = 0;
 let nProgressRunning = false;
 
 Livewire.hook('commit', ({ component, commit, respond, succeed, fail }) => {
     // Equivalent of 'message.sent'
-    sentMessagesCount += 1;
-    if (sentMessagesCount > 0 && !nProgressRunning) {
+    if (!nProgressRunning) {
         nProgress.start();
         nProgressRunning = true;
     }
@@ -51,8 +49,7 @@ Livewire.hook('commit', ({ component, commit, respond, succeed, fail }) => {
 
         queueMicrotask(() => {
             // Equivalent of 'message.processed'
-            sentMessagesCount -= 1;
-            if (sentMessagesCount <= 0 && nProgressRunning) {
+            if (nProgressRunning) {
                 nProgress.done();
                 nProgressRunning = false;
             }
@@ -61,8 +58,7 @@ Livewire.hook('commit', ({ component, commit, respond, succeed, fail }) => {
 
     fail(() => {
         // Equivalent of 'message.failed'
-        sentMessagesCount -= 1;
-        if (sentMessagesCount <= 0 && nProgressRunning) {
+        if (nProgressRunning) {
             nProgress.done();
             nProgressRunning = false;
         }

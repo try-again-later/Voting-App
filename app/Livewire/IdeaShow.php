@@ -6,28 +6,65 @@ use App\Models\Idea;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\On;
+use Illuminate\Support\Facades\Route;
 use Livewire\Component;
 
-#[On('update:status')]
 #[On('update:idea')]
 class IdeaShow extends Component
 {
+    public ?array $ideasCountByStatus = null;
+
+    #[On('update:status')]
+    public function updateIdeasCounts()
+    {
+        if (isset($this->ideasCountByStatus)) {
+            $this->ideasCountByStatus = [
+                ...$this->ideasCountByStatus,
+                ...Idea::getCountsByStatuses(),
+            ];
+        }
+    }
+
     public Idea $idea;
     public int $votesCount;
     public bool $voted;
     public bool $showPreview;
+    public string $backUrl;
+    public string $currentRouteName;
 
     public function mount(
         Idea $idea,
         int $votesCount = 0,
         bool $voted = false,
         bool $showPreview = false,
+        string $backUrl = '/',
     )
     {
         $this->idea = $idea;
         $this->votesCount = $votesCount;
         $this->voted = $voted;
         $this->showPreview = $showPreview;
+        $this->backUrl = $backUrl;
+
+        if (!$showPreview) {
+            $this->ideasCountByStatus = [
+                'all' => 0,
+                'open' => 0,
+                'considering' => 0,
+                'in-progress' => 0,
+                'implemented' => 0,
+                'closed' => 0,
+            ];
+            $this->updateIdeasCounts();
+        }
+    }
+
+    #[On('status-filter-redirect')]
+    public function redirectToIdeasList(string $statusFilter)
+    {
+        $this->redirect(route('idea.index', [
+            'status' => $statusFilter,
+        ]));
     }
 
     public function handleUpdate(Idea $updatedIdea)

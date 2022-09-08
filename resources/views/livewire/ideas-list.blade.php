@@ -2,6 +2,12 @@
     <section class="flex flex-wrap gap-4 mb-8">
         <h2 class="sr-only">Ideas filters</h2>
 
+        <x-ideas.status-filters
+            :status-filter="$this->statusFilter"
+            :ideas-count-by-status="$this->ideasCountByStatus"
+            class="w-full"
+        />
+
         @if (!$this->noFiltersAreActive)
             <button
                 wire:click="resetFilters"
@@ -62,7 +68,7 @@
                 <button
                     x-show="$wire.searchQuery !== ''"
                     x-cloak
-                    @@click="$wire.searchQuery = ''"
+                    @@click="@this.set('searchQuery', '')"
                 >
                     <span class="sr-only">Clear the search query</span>
                     <x-icon.x class="w-5 h-5 text-red-700" />
@@ -71,7 +77,7 @@
         </div>
     </section>
 
-    <section class="flex flex-col gap-4 sm:gap-8 mb-4">
+    <section class="flex flex-col gap-4 sm:gap-8">
         <h2 class="sr-only">Ideas</h2>
 
         @forelse ($ideas as $idea)
@@ -90,7 +96,7 @@
 
         <livewire:edit-idea-form />
 
-        <livewire:delete-idea-confirmation-modal />
+        <livewire:delete-idea-confirmation-modal @destroy:idea="updateIdeasCounts" />
 
         <div>
             {{ $ideas->links() }}

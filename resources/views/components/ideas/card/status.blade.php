@@ -10,7 +10,7 @@
         'bg-status-considering text-status-text-considering hover:bg-status-hover-considering' => $status->name == 'considering',
     ]) }}
     type="button"
-    wire:click.prevent="$dispatch('change:status', { statusFilter: '{{ addslashes($status->name) }}' })"
+    wire:click.prevent="$dispatch('update:status-filter', { statusFilter: '{{ addslashes($status->name) }}' })"
 >
     {{ $status->human_name }}
 </button>

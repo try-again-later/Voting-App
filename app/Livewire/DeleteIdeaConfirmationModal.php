@@ -35,7 +35,7 @@ class DeleteIdeaConfirmationModal extends Component
         }
 
         $this->idea->delete();
-        $this->dispatch('destroy:idea', $this->idea->title);
+        $this->dispatch('destroy:idea', ideaTitle: $this->idea->title);
 
         if (isset($this->redirectOnDelete)) {
             return redirect()
