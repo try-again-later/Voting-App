@@ -52,7 +52,7 @@ class EditIdeaForm extends Component
             'title' => $this->title,
             'description' => $this->description,
         ]);
-        $this->dispatch('update:idea');
+        $this->dispatch('update:idea', $this->idea);
     }
 
     public function render(CategoriesService $categories)

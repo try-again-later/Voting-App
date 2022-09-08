@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Route;
 use Livewire\Component;
 
 #[On('update:idea')]
+#[On('update:status')]
 class IdeaShow extends Component
 {
     public Idea $idea;
