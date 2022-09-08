@@ -35,29 +35,24 @@ window.floatingAutoUpdate = floatingAutoUpdate;
 Alpine.start();
 
 if (window.livewire) {
-    let sentMessagesCount = 0;
     let nProgressRunning = false;
 
     window.livewire.hook('message.sent', () => {
-        ++sentMessagesCount;
-        if (sentMessagesCount > 0 && !nProgressRunning) {
-            console.log('!');
+        if (!nProgressRunning) {
             nProgress.start();
             nProgressRunning = true;
         }
     });
 
     window.livewire.hook('message.failed', () => {
-        --sentMessagesCount;
-        if (sentMessagesCount <= 0 && nProgressRunning) {
+        if (nProgressRunning) {
             nProgress.done();
             nProgressRunning = false;
         }
     });
 
     window.livewire.hook('message.processed', () => {
-        --sentMessagesCount;
-        if (sentMessagesCount <= 0 && nProgressRunning) {
+        if (nProgressRunning) {
             nProgress.done();
             nProgressRunning = false;
         }

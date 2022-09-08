@@ -1,46 +1,53 @@
-<div class="flex flex-wrap gap-y-4 justify-center 2xl:justify-start {{ $class }}">
+@props([
+    'statusFilter' => 'all',
+    'ideasCountByStatus' => [
+        'all' => 0,
+        'open' => 0,
+        'considering' => 0,
+        'in-progress' => 0,
+        'implemented' => 0,
+        'closed' => 0,
+    ],
+    'redirect' => false,
+])
+
+<div {{ $attributes->class('flex flex-wrap gap-y-4 justify-center xl:justify-start') }}>
     <x-ideas.filter-item
-        wire:click.prevent="setStatusFilter('all')"
-        :active="$statusFilter == 'all'"
+        filter-name="all"
         :first="true"
     >
         All ideas ({{ $ideasCountByStatus['all'] }})
     </x-ideas.filter-item>
 
     <x-ideas.filter-item
-        wire:click.prevent="setStatusFilter('open')"
-        :active="$statusFilter == 'open'"
+        filter-name="open"
     >
         Open ({{ $ideasCountByStatus['open'] }})
     </x-ideas.filter-item>
 
     <x-ideas.filter-item
-        wire:click.prevent="setStatusFilter('considering')"
-        :active="$statusFilter == 'considering'"
+        filter-name="considering"
     >
         Considering ({{ $ideasCountByStatus['considering'] }})
     </x-ideas.filter-item>
 
     <x-ideas.filter-item
-        wire:click.prevent="setStatusFilter('in-progress')"
-        :active="$statusFilter == 'in-progress'"
+        filter-name="in-progress"
         :last="true"
     >
         In progress ({{ $ideasCountByStatus['in-progress'] }})
     </x-ideas.filter-item>
 
     <x-ideas.filter-item
-        wire:click="setStatusFilter('implemented')"
-        :active="$statusFilter == 'implemented'"
-        class="xl:ml-auto"
+        filter-name="implemented"
         :first="true"
+        class="xl:ml-auto"
     >
         Implemented ({{ $ideasCountByStatus['implemented'] }})
     </x-ideas.filter-item>
 
     <x-ideas.filter-item
-        wire:click="setStatusFilter('closed')"
-        :active="$statusFilter == 'closed'"
+        filter-name="closed"
         :last="true"
     >
         Closed ({{ $ideasCountByStatus['closed'] }})

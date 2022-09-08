@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Http\Livewire\IdeasList;
 use App\Models\Idea;
 use App\Models\Status;
 use Database\Seeders\StatusSeeder;
@@ -9,7 +10,6 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 use App\Models\Category;
 
-use App\Http\Livewire\StatusFilters;
 use Livewire\Livewire;
 
 class StatusTest extends TestCase
@@ -69,23 +69,12 @@ class StatusTest extends TestCase
             ->create();
 
         $this->get(route('idea.index'))
-            ->assertSeeLivewire(StatusFilters::class);
+            ->assertSeeLivewire(IdeasList::class);
 
-        Livewire::test(StatusFilters::class)
+        Livewire::test(IdeasList::class)
             ->assertSee('All ideas (12)', escape: false)
             ->assertSee('Considering (4)', escape: false)
             ->assertSee('Closed (8)', escape: false);
-    }
-
-    /** @test */
-    public function idea_show_page_contains_filters_component()
-    {
-        $idea = Idea::factory()->create();
-
-        $this->get(route('idea.show', [
-            'idea' => $idea,
-        ]))
-            ->assertSeeLivewire(StatusFilters::class);
     }
 
     /**

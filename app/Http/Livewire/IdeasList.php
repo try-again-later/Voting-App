@@ -2,20 +2,17 @@
 
 namespace App\Http\Livewire;
 
+use App\Filters\Idea\{AdditionalFilter, CategoryFilter, StatusFilter, SearchFilter};
 use Livewire\Component;
-use App\Models\{Category, Idea, Vote};
+use App\Models\{Idea, Vote};
 use App\Services\CategoriesService;
-use Illuminate\Support\Facades\DB;
 use Livewire\WithPagination;
 
 class IdeasList extends Component
 {
     use WithPagination;
-
-    public $statusFilter = 'all';
-    public $categoryFilter = 'all';
-    public $additionalFilter = 'no-filter';
-    public $searchQuery = '';
+    use IdeasCountByStatus;
+    use StatusFilter, SearchFilter, CategoryFilter, AdditionalFilter;
 
     protected $queryString = [
         'statusFilter' => [
@@ -37,118 +34,58 @@ class IdeasList extends Component
     ];
 
     protected $listeners = [
-        'update:status-filter' => 'handleStatusFilterUpdate',
-        'destroy:idea' => 'handleIdeaDestroy',
+        'update:status-filter' => 'setStatusFilter',
+        'update:status' => 'updateIdeasCounts',
+        'destroy:idea' => 'updateIdeasCounts',
     ];
 
-    public function handleIdeaDestroy()
+    public function mount()
     {
-        $this->resetPage();
-    }
-
-    public function handleStatusFilterUpdate($statusFilter)
-    {
-        $this->statusFilter = $statusFilter;
-        $this->resetPage();
-    }
-
-    public function updatingCategoryFilter()
-    {
-        $this->resetPage();
-    }
-
-    public function updatingAdditionalFilter()
-    {
-        $this->resetPage();
-    }
-
-    public function updatingSearchquery()
-    {
-        $this->resetPage();
-    }
-
-    public function updatedAdditionalFilter()
-    {
-        if ($this->additionalFilter === 'my-ideas' && !auth()->check()) {
-            return redirect()->route('login');
+        if (!auth()->check() && $this->additionalFilter === 'my-ideas') {
+            $this->redirect(route('login'));
         }
+
+        $this->updateIdeasCounts();
     }
 
     public function getNoFiltersAreActiveProperty()
     {
         return
-            $this->statusFilter === 'all' &&
-            $this->categoryFilter === 'all' &&
-            $this->additionalFilter === 'no-filter' &&
-            strlen($this->searchQuery) === 0;
+            !$this->isStatusFilterActive() &&
+            !$this->isSearchFilterActive() &&
+            !$this->isCategoryFilterActive() &&
+            !$this->isAdditionalFilterActive();
     }
 
     public function resetFilters()
     {
-        $this->statusFilter = 'all';
-        $this->categoryFilter = 'all';
-        $this->additionalFilter = 'no-filter';
-        $this->searchQuery = '';
-        $this->emit('change:status', 'all');
+        $this->resetStatusFilter();
+        $this->resetSearchFilter();
+        $this->resetCategoryFilter();
+        $this->resetAdditionalFilter();
     }
 
     public function render(CategoriesService $categories)
     {
+        $ideas = Idea::query()
+            ->with('user', 'category', 'status')
+            ->withCount('votes')
+            ->addSelect(['auth_user_vote_id' => Vote::select('id')
+                ->where('user_id', auth()->id())
+                ->whereColumn('idea_id', 'ideas.id')
+                ->take(1)
+            ]);
+
+        $this->applyStatusFilter($ideas);
+        $this->applySearchFilter($ideas);
+        $this->applyCategoryFilter($ideas);
+        $this->applyAdditionalFilter($ideas);
+
         return view('livewire.ideas-list', [
-            'ideas' => Idea::query()
-                ->with('user', 'category', 'status')
-                ->when($this->statusFilter, function ($query, $status) {
-                    if ($status === 'all') {
-                        return;
-                    }
-
-                    $query
-                        ->join('statuses', 'ideas.status_id', '=', 'statuses.id')
-                        ->where('statuses.name', $status);
-                })
-                ->when($this->categoryFilter, function ($query, $category) {
-                    if ($category === 'all') {
-                        return;
-                    }
-
-                    $query->where('category_id', $category);
-                })
-                ->when($this->additionalFilter, function ($query, $filter) {
-                    if ($filter === 'top-voted') {
-                        $query
-                            ->orderByDesc('votes_count')
-                            ->orderByDesc('id');
-                        return;
-                    }
-
-                    $query
-                        ->orderByDesc('created_at')
-                        ->orderByDesc('id');
-
-                    if ($filter === 'my-ideas' && auth()->check()) {
-                        $query
-                            ->where('user_id', auth()->user()->id);
-                    }
-                })
-                ->when($this->searchQuery, function ($query, $searchQuery) {
-                    // just ignore short search queries
-                    if (mb_strlen($searchQuery) < 3) {
-                        return;
-                    }
-
-                    $searchQuery = mb_strtolower($searchQuery);
-                    $query->where(DB::raw('lower(title)'), 'like', "%$searchQuery%");
-                })
-                ->addSelect(['auth_user_vote_id' => Vote::select('id')
-                    ->where('user_id', auth()->id())
-                    ->whereColumn('idea_id', 'ideas.id')
-                    ->take(1)
-                ])
-                ->withCount('votes')
+            'ideas' => $ideas
                 ->simplePaginate(5)
                 ->withPath(route('idea.index'))
                 ->withQueryString(),
-
             'categories' => $categories->all(),
         ]);
     }

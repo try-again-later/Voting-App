@@ -2,10 +2,17 @@
     <section class="flex flex-wrap gap-4 mb-8">
         <h2 class="sr-only">Ideas filters</h2>
 
+        <x-ideas.status-filters
+            :status-filter="$this->statusFilter"
+            :ideas-count-by-status="$this->ideasCountByStatus"
+            class="w-full"
+        />
+
         @if (!$this->noFiltersAreActive)
             <button
                 wire:click="resetFilters"
                 type="button"
+                title="Reset all filters"
             >
                 <span class="sr-only">Reset all filters</span>
                 <x-icon.backspace
@@ -71,7 +78,7 @@
         </div>
     </section>
 
-    <section class="flex flex-col gap-4 sm:gap-8 mb-4">
+    <section class="flex flex-col gap-4 sm:gap-8">
         <h2 class="sr-only">Ideas</h2>
 
         @forelse ($ideas as $idea)

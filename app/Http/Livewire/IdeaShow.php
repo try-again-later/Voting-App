@@ -3,18 +3,25 @@
 namespace App\Http\Livewire;
 
 use App\Models\Idea;
+use Illuminate\Support\Facades\Route;
 use Livewire\Component;
 
 class IdeaShow extends Component
 {
+    use IdeasCountByStatus;
+
     public Idea $idea;
     public int $votesCount;
     public bool $voted;
     public bool $showPreview;
 
+    public string $backUrl;
+    public string $currentRouteName;
+
     protected $listeners = [
-        'update:status' => '$refresh',
+        'update:status' => 'updateIdeasCounts',
         'update:idea' => 'handleUpdate',
+        'status-filter-redirect' => 'redirectToIdeasList',
     ];
 
     public function mount(
@@ -22,12 +29,23 @@ class IdeaShow extends Component
         int $votesCount = 0,
         bool $voted = false,
         bool $showPreview = false,
+        string $backUrl = '/',
     )
     {
         $this->idea = $idea;
         $this->votesCount = $votesCount;
         $this->voted = $voted;
         $this->showPreview = $showPreview;
+        $this->backUrl = $backUrl;
+
+        $this->updateIdeasCounts();
+    }
+
+    public function redirectToIdeasList(string $statusFilter)
+    {
+        $this->redirect(route('idea.index', [
+            'status' => $statusFilter,
+        ]));
     }
 
     public function handleUpdate(Idea $updatedIdea)

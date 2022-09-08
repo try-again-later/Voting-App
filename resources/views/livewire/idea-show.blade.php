@@ -24,6 +24,21 @@
             />
         </article>
     @else
+        <x-ideas.status-filters
+            status-filter="none"
+            :ideas-count-by-status="$this->ideasCountByStatus"
+            :redirect="true"
+            class="mb-8"
+        />
+
+        <a
+            href="{{ $backUrl }}"
+            class="text-lg font-bold hover:underline inline-flex items-center gap-2 mb-4"
+        >
+            <x-icon.chevron-left class="w-4 h-4" />
+            <span>Back to all ideas</span>
+        </a>
+
         <article class="bg-white rounded-xl shadow-md mb-4">
             <x-ideas.card.main-content
                 class="w-full"
