@@ -13,26 +13,25 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('comments', function (Blueprint $table) {
             $table->id();
 
-            $table->string('name');
+            $table
+                ->foreignId('author_id')
+                ->constrained('users');
 
             $table
-                ->string('email')
-                ->unique();
+                ->foreignId('idea_id')
+                ->constrained();
 
             $table
-                ->timestamp('email_verified_at')
+                ->foreignId('new_idea_status_id')
+                ->nullable()
+                ->constrained('statuses');
+
+            $table
+                ->text('body')
                 ->nullable();
-
-            $table->string('password');
-
-            $table
-                ->boolean('is_admin')
-                ->default(false);
-
-            $table->rememberToken();
 
             $table->timestamps();
         });
@@ -45,6 +44,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('comments');
     }
 };

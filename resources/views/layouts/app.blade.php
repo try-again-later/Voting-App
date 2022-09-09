@@ -21,7 +21,7 @@
             <span>Voting App</span>
         </a>
 
-        <div class="sm:ml-auto flex gap-4">
+        <div class="sm:ml-auto flex gap-4 mt-4 sm:mt-0">
             @auth
                 <form method="post" action="{{ route('logout') }}" class="flex items-center">
                     @csrf
@@ -29,9 +29,11 @@
                     <x-nav-button type="submit">{{ __('Log Out') }}</x-nav-button>
                 </form>
 
-                <a href="#">
-                    <img src="https://gravatar.com/avatar/0?d=mp" alt="Avatar" class="w-10 h-10 rounded-full" />
-                </a>
+                <img
+                    src="{{ auth()->user()->avatar() }}"
+                    alt="Avatar"
+                    class="w-10 h-10 rounded-full ring-1 ring-gray-200"
+                />
             @else
                 <x-nav-link :href="route('login')">
                     {{ __('Log In') }}

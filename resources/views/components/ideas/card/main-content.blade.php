@@ -44,7 +44,8 @@
     </div>
 
     <div @class([
-        'flex flex-col gap-4 col-span-2 sm:col-start-2 sm:col-span-1 break-all max-h-[20rem] overflow-auto',
+        'flex flex-col gap-4 col-span-2 sm:col-start-2 sm:col-span-1 break-all overflow-auto',
+        'max-h-[20rem]' => $showPreview,
     ])>
         @foreach(preg_split('/\n{2,}/', $idea->description) as $paragraph)
             <p>{{ $paragraph }}</p>
@@ -52,5 +53,5 @@
     </div>
     {{-- </p> --}}
 
-    <x-ideas.card.footer :idea="$idea" :comments-count="42" class="col-span-2 mt-2" />
+    <x-ideas.card.footer :idea="$idea" :comments-count="$idea->comments->count()" class="col-span-2 mt-2" />
 </div>

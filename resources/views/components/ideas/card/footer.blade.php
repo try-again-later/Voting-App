@@ -17,7 +17,7 @@
     </div>
     <div class="flex">
         <div class="whitespace-nowrap">
-            <span class="font-bold">{{ $commentsCount }}</span> comments
+            <span class="font-bold">{{ $commentsCount }}</span> {{ Str::plural('comment', $commentsCount) }}
         </div>
         <x-icon.mid-dot class="w-6 h-6 text-gray-300 xl:hidden" />
     </div>
