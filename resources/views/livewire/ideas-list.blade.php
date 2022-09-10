@@ -12,9 +12,9 @@
                 wire:click="resetFilters"
                 type="button"
                 title="Reset all filters"
-                class="flex gap-2 items-center text-gray-600 group"
+                class="flex gap-1 items-center group"
             >
-                <span>
+                <span class="text-gray-400 group-hover:text-gray-500 transition">
                     Reset all filters
                 </span>
                 <x-icon.backspace

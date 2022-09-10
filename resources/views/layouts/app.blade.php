@@ -11,6 +11,13 @@
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
+
+    <style>
+        .squiggly-line {
+            background-image: url('{{ asset('img/squiggly-line-segment.svg') }}');
+            filter: invert(100%) brightness(85%);
+        }
+    </style>
 </head>
 
 <body class="font-sans antialiased bg-gray-100 text-gray-900">
