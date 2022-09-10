@@ -8,13 +8,10 @@
 
     <livewire:edit-idea-form />
 
-    <div class="mt-8 flex flex-col gap-8">
-        @foreach ($idea->comments as $comment)
-            <x-ideas.comment
-                :comment="$comment"
-            />
-        @endforeach
-    </div>
+    <livewire:comments-list
+        :idea="$idea"
+        class="mt-0 sm:mt-8"
+    />
 
     <livewire:delete-idea-confirmation-modal redirect-on-delete="{{ $backUrl }}" />
 </x-app-layout>

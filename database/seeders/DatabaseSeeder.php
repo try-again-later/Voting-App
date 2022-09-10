@@ -74,8 +74,8 @@ class DatabaseSeeder extends Seeder
                 ]);
             }
 
-            $statusChangesCount = rand(min: $idea->status->name === 'open' ? 0 : 1, max: 4);
-            $commentsCount = rand(min: $statusChangesCount, max: 15);
+            $statusChangesCount = rand(min: $idea->status->name === 'open' ? 0 : 1, max: 5);
+            $commentsCount = rand(min: $statusChangesCount, max: 50);
             // - "0" for a regular comment
             // - "1" OR "2" for a "status changed" comment
             // - "2" is the last "status changed" comment which means that it must change the status

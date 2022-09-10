@@ -44,7 +44,7 @@
     </div>
 
     <div @class([
-        'flex flex-col gap-4 col-span-2 sm:col-start-2 sm:col-span-1 break-all overflow-auto',
+        'flex flex-col gap-4 col-span-2 pr-8 sm:col-start-2 sm:col-span-1 break-all overflow-auto',
         'max-h-[20rem]' => $showPreview,
     ])>
         @foreach(preg_split('/\n{2,}/', $idea->description) as $paragraph)

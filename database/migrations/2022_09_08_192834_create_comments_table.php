@@ -18,11 +18,13 @@ return new class extends Migration
 
             $table
                 ->foreignId('author_id')
-                ->constrained('users');
+                ->constrained('users')
+                ->onDelete('cascade');
 
             $table
                 ->foreignId('idea_id')
-                ->constrained();
+                ->constrained()
+                ->onDelete('cascade');
 
             $table
                 ->foreignId('new_idea_status_id')
