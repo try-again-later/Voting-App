@@ -3,12 +3,12 @@
 namespace App\Http\Livewire;
 
 use App\Models\Idea;
-use App\Models\User;
-use Barryvdh\Debugbar\Facades\Debugbar;
 use Livewire\Component;
 
 class CommentsList extends Component
 {
+    public const CHUNK_SIZE = 3;
+
     public string $class;
     public Idea $idea;
 
@@ -22,13 +22,33 @@ class CommentsList extends Component
         $firstSeveralComments = $this->idea->comments()
             ->with('author', 'newIdeaStatus')
             ->orderBy('comments.id', 'asc')
-            ->limit(5)
+            ->limit(self::CHUNK_SIZE)
             ->get();
         if ($firstSeveralComments->count() > 0) {
-            $this->loadedCommentsIdsRanges[] = [
+            $this->loadedCommentsIdsRanges[0] = [
                 'chunkIndex' => 0,
                 'firstId' => $firstSeveralComments->first()->id,
                 'lastId' => $firstSeveralComments->last()->id,
+            ];
+        }
+
+        $lastSeveralComments = $this->idea->comments()
+            ->with('author', 'newIdeaStatus')
+            ->orderByDesc('comments.id')
+            ->when(
+                $firstSeveralComments->count() > 0,
+                function ($query) use ($firstSeveralComments) {
+                    $query->where('comments.id', '>', $firstSeveralComments->last()->id);
+                },
+            )
+            ->limit(self::CHUNK_SIZE)
+            ->get()
+            ->reverse();
+        if ($lastSeveralComments->count() > 0) {
+            $this->loadedCommentsIdsRanges[2] = [
+                'chunkIndex' => 2,
+                'firstId' => $lastSeveralComments->first()->id,
+                'lastId' => $lastSeveralComments->last()->id,
             ];
         }
 
@@ -40,16 +60,34 @@ class CommentsList extends Component
             $severalCommentsAfterTheStatusChange = $this->idea->comments()
                 ->with('author', 'newIdeaStatus')
                 ->orderBy('comments.id', 'asc')
+                ->when(
+                    $firstSeveralComments->count() > 0,
+                    function ($query) use ($firstSeveralComments) {
+                        $query->where('comments.id', '>', $firstSeveralComments->last()->id);
+                    },
+                )
+                ->when(
+                    $lastSeveralComments->count() > 0,
+                    function ($query) use ($lastSeveralComments) {
+                        $query->where('comments.id', '<', $lastSeveralComments->first()->id);
+                    },
+                )
                 ->where('comments.id', '>=', $lastStatusChangeComment->id)
-                ->limit(5)
+                ->limit(self::CHUNK_SIZE)
                 ->get();
             if ($severalCommentsAfterTheStatusChange->count() > 0) {
-                $this->loadedCommentsIdsRanges[] = [
+                $this->loadedCommentsIdsRanges[1] = [
                     'chunkIndex' => 1,
                     'firstId' => $severalCommentsAfterTheStatusChange->first()->id,
                     'lastId' => $severalCommentsAfterTheStatusChange->last()->id,
                 ];
             }
+        }
+
+        ksort($this->loadedCommentsIdsRanges);
+        $this->loadedCommentsIdsRanges = array_values($this->loadedCommentsIdsRanges);
+        foreach (array_keys($this->loadedCommentsIdsRanges) as $chunkIndex) {
+            $this->loadedCommentsIdsRanges[$chunkIndex]['chunkIndex'] = $chunkIndex;
         }
 
         for ($i = 0; $i < count($this->loadedCommentsIdsRanges); ++$i) {
