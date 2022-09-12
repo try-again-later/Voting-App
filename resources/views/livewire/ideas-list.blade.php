@@ -12,11 +12,11 @@
             <button
                 wire:click="resetFilters"
                 type="button"
-                title="Reset all filters"
+                title="Reset all filters and go to first page"
                 class="flex gap-2 items-center text-gray-600 group"
             >
                 <span class="sm:sr-only">
-                    Reset all filters
+                    Reset all filters and go to first page
                 </span>
                 <x-icon.backspace
                     class="w-8 h-8 text-gray-300 transition group-hover:text-gray-400 -order-1"
@@ -27,7 +27,11 @@
 
         <select
             name="category-filter"
-            class="border-none rounded-xl cursor-pointer w-full sm:w-auto"
+            @class([
+                'border-none rounded-xl cursor-pointer w-full sm:w-auto',
+                'ring-2 ring-purple-200' => $this->categoryFilter !== 'all',
+                'ring-0' => $this->categoryFilter === 'all',
+            ])
             wire:model="categoryFilter"
         >
             <option disabled class="text-gray-300">Select a category</option>
@@ -41,14 +45,19 @@
         <select
             wire:model="additionalFilter"
             name="other-filter"
-            class="border-none rounded-xl cursor-pointer w-full sm:w-auto"
+            @class([
+                'border-none rounded-xl cursor-pointer w-full sm:w-auto',
+                'ring-2 ring-purple-200' => $this->additionalFilter !== 'no-filter',
+                'ring-0' => $this->additionalFilter === 'no-filter',
+            ])
         >
             <option value="default" disabled class="text-gray-300">
                 Additional filters
             </option>
 
             <option value="no-filter" selected>No filter</option>
-            <option value="top-voted">Top Voted</option>
+            <option value="top-voted">Top voted</option>
+            <option value="most-commented">Most commented</option>
 
             @auth
                 <option value="my-ideas">My Ideas</option>
@@ -58,7 +67,11 @@
 
         <div
             x-data
-            class="flex flex-1 max-w-xl ml-auto"
+            @class([
+                'flex flex-1 max-w-xl ml-auto',
+                'ring-2 ring-purple-200 rounded-xl' => strlen($this->searchQuery) > 0,
+                'ring-0' => strlen($this->searchQuery) === 0,
+            ])
         >
             <div class="flex items-center bg-white pl-2 rounded-l-xl">
                 <x-icon.search class="w-5 h-5 text-gray-700" />

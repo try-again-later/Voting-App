@@ -57,7 +57,8 @@ class IdeasList extends Component
             !$this->isStatusFilterActive() &&
             !$this->isSearchFilterActive() &&
             !$this->isCategoryFilterActive() &&
-            !$this->isAdditionalFilterActive();
+            !$this->isAdditionalFilterActive() &&
+            $this->page === 1;
     }
 
     public function resetFilters()
@@ -66,6 +67,7 @@ class IdeasList extends Component
         $this->resetSearchFilter();
         $this->resetCategoryFilter();
         $this->resetAdditionalFilter();
+        $this->resetPage();
     }
 
     public function render(CategoriesService $categories)

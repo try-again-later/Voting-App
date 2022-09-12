@@ -36,7 +36,9 @@
                     </x-ideas.card.menu-item>
                 @endcan
 
-                <x-ideas.card.menu-item>
+                <x-ideas.card.menu-item
+                    wire:click="$emit('create:spam-report')"
+                >
                     Mark as spam
                 </x-ideas.card.menu-item>
             </x-ideas.card.menu>

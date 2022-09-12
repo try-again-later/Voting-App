@@ -40,6 +40,12 @@ trait AdditionalFilter
                     ->orderByDesc('ideas.id');
                 return;
             }
+            if ($this->additionalFilter === 'most-commented') {
+                $query
+                    ->orderByDesc('comments_count')
+                    ->orderByDesc('ideas.id');
+                return;
+            }
 
             if ($this->additionalFilter === 'my-ideas') {
                 $query

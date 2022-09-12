@@ -12,7 +12,15 @@ class Toast extends Component
         'update:status' => 'addStatusUpdateAlert',
         'destroy:idea' => 'addDestroyIdeaAlert',
         'create:comment' => 'addCreateCommentAlert',
+        'create:spam-report' => 'addCreateSpamReportAlert',
     ];
+
+    public function addCreateSpamReportAlert()
+    {
+        $this->dispatchBrowserEvent('create:alert', [
+            'title' => "Spam report has been sent!",
+        ]);
+    }
 
     public function addIdeaUpdateAlert(Idea $idea)
     {
