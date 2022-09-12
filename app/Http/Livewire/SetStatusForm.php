@@ -48,5 +48,14 @@ class SetStatusForm extends Component
         }
 
         $this->emit('update:status', $this->idea, $newStatus->human_name);
+
+        $body = strlen($this->comment) === 0 ? null : $this->comment;
+        $newComment = $this->idea->leaveReply(
+            author: auth()->user(),
+            body: $body,
+            newIdeaStatusId: $newStatus->id,
+        );
+        $this->emit('create:comment', $newComment);
+        $this->dispatchBrowserEvent('close-set-status-form');
     }
 }

@@ -82,6 +82,7 @@
             <time
                 :datetime="comment.created_at"
                 x-text="comment.created_at_for_humans"
+                class="text-gray-400"
             >
             </time>
         </div>

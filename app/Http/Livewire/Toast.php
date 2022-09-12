@@ -11,6 +11,7 @@ class Toast extends Component
         'update:idea' => 'addIdeaUpdateAlert',
         'update:status' => 'addStatusUpdateAlert',
         'destroy:idea' => 'addDestroyIdeaAlert',
+        'create:comment' => 'addCreateCommentAlert',
     ];
 
     public function addIdeaUpdateAlert(Idea $idea)
@@ -31,6 +32,13 @@ class Toast extends Component
     {
         $this->dispatchBrowserEvent('create:alert', [
             'title' => "Idea \"$ideaTitle\" successfully deleted...",
+        ]);
+    }
+
+    public function addCreateCommentAlert($comment) {
+        $ideaTitle = $comment['idea']['title'];
+        $this->dispatchBrowserEvent('create:alert', [
+            'title' => "Successfully commented on idea \"{$ideaTitle}\"",
         ]);
     }
 

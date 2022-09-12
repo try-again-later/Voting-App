@@ -4,7 +4,7 @@
         visible: [],
         async addAlert(title) {
             const alert = {
-                id: Date.now(),
+                id: Date.now() + title,
                 title,
             };
             this.alerts.push(alert);

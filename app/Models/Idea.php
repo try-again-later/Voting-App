@@ -84,7 +84,11 @@ class Idea extends Model
         return true;
     }
 
-    public function leaveReply(User $author, string $body): Comment
+    public function leaveReply(
+        User $author,
+        ?string $body = null,
+        ?int $newIdeaStatusId = null
+    ): Comment
     {
         $newComment = Comment::query()
             ->with('author', 'newIdeaStatus')
@@ -92,7 +96,9 @@ class Idea extends Model
                 'author_id' => $author->id,
                 'idea_id' => $this->id,
                 'body' => $body,
+                'new_idea_status_id' => $newIdeaStatusId,
             ]);
+        $newComment->load('newIdeaStatus', 'idea');
 
         $newComment['author']['avatar'] = $newComment->author->avatar();
         $newComment['author']['is_admin'] = $newComment->author->isAdmin();

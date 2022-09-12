@@ -37,7 +37,7 @@ class IdeaReplyForm extends Component
         $newComment = $this->idea->leaveReply(auth()->user(), $this->body);
 
         $this->emit('create:comment', $newComment);
-        $this->dispatchBrowserEvent('close-create-comment-form', $newComment->id);
+        $this->dispatchBrowserEvent('close-create-comment-form');
         $this->body = '';
     }
 
