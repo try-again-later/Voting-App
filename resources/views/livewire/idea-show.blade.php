@@ -49,17 +49,9 @@
         </article>
 
         <div class="flex flex-wrap gap-2">
-            <x-floating-window class="flex-1 lg:max-w-[16rem]">
-                <x-slot:button
-                    class="w-full px-4 py-2 rounded-xl bg-purple-500 text-white font-semibold hover:bg-purple-400 transition-colors sm:text-lg"
-                >
-                    Reply
-                </x-slot>
-
-                <x-slot:window class="w-[24rem]">
-                    <x-ideas.reply-form />
-                </x-slot>
-            </x-floating-window>
+            <livewire:idea-reply-form
+                :idea="$this->idea"
+            />
 
             @admin
                 <x-floating-window class="flex-1 lg:max-w-[16rem]">

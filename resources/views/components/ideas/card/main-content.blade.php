@@ -49,9 +49,9 @@
         'max-h-128' => !$showPreview,
     ])>
         @foreach(preg_split('/\n{2,}/', $idea->description) as $paragraph)
-            <p>{{ $paragraph }}</p>
+            <p class="break-normal">{{ $paragraph }}</p>
         @endforeach
     </div>
 
-    <x-ideas.card.footer :idea="$idea" :comments-count="$idea->comments->count()" class="col-span-2 mt-2" />
+    <x-ideas.card.footer :idea="$idea" :comments-count="$idea->comments_count" class="col-span-2 mt-2" />
 </div>

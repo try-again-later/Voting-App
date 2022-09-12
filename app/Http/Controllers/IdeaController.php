@@ -62,7 +62,7 @@ class IdeaController extends Controller
         }
 
         return view('idea.show', [
-            'idea' => $idea,
+            'idea' => $idea->loadCount('comments'),
             'votesCount' => $idea->votes()->count(),
             'voted' => $idea->votedBy(Auth::user()),
             'backUrl' => $backUrl,

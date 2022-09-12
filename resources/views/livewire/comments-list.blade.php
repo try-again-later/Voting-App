@@ -48,6 +48,19 @@
             }
         });
     "
+    @@created:comment="
+        commentsChunk = commentsChunks.find((x) => x.chunkIndex === $event.detail.chunkIndex);
+
+        if (commentsChunk == undefined) {
+            commentsChunk = {
+                chunkIndex: $event.detail.chunkIndex,
+                comments: [],
+                hiddenCount: 0,
+            };
+            commentsChunks.push(commentsChunk);
+        }
+        commentsChunk.comments.push($event.detail.comment);
+    "
     class="flex flex-col {{ $class }}"
 >
     <template
@@ -55,7 +68,7 @@
         :key="'commentsChunk-' + commentsChunk.chunkIndex"
     >
         <div>
-            <div class="space-y-4 sm:space-y-8">
+            <div>
                 <template
                     x-for="(comment, commentIndex) in commentsChunk.comments"
                     :key="comment.id"

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Barryvdh\Debugbar\Facades\Debugbar;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -81,6 +82,23 @@ class Idea extends Model
             ->where('user_id', $user->id)
             ->delete();
         return true;
+    }
+
+    public function leaveReply(User $author, string $body): Comment
+    {
+        $newComment = Comment::query()
+            ->with('author', 'newIdeaStatus')
+            ->create([
+                'author_id' => $author->id,
+                'idea_id' => $this->id,
+                'body' => $body,
+            ]);
+
+        $newComment['author']['avatar'] = $newComment->author->avatar();
+        $newComment['author']['is_admin'] = $newComment->author->isAdmin();
+        $newComment['created_at_for_humans'] = $newComment->created_at->diffForHumans();
+
+        return $newComment;
     }
 
     public static function getCountsByStatuses(): array

@@ -1,6 +1,6 @@
 <article
     class="
-        flex gap-4 p-4 rounded-xl sm:ml-32 relative max-w-2xl ring-2
+        flex gap-4 p-4 rounded-xl sm:ml-32 relative max-w-2xl ring-2 mb-4 sm:mb-8
         before:hidden sm:before:block before:h-1 before:w-16 before:bg-gray-200 before:absolute before:-left-[5rem] before:top-1/2
         after:hidden sm:after:block after:w-1 after:bg-gray-200 after:absolute after:-left-[5rem] after:-bottom-8 after:-top-8
         first:after:-top-4"
