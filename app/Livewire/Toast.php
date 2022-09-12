@@ -45,6 +45,15 @@ class Toast extends Component
         );
     }
 
+    #[On('create:spam-report')]
+    public function addCreateSpamReportAlert()
+    {
+        $this->dispatch(
+            'create:alert',
+            title: "Spam report has been sent!"
+        );
+    }
+
     public function render()
     {
         return view('livewire.toast');
