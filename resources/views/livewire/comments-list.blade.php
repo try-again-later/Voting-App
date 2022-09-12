@@ -48,6 +48,19 @@
             }
         });
     "
+    @@create:comment="
+        commentsChunk = commentsChunks.find((x) => x.chunkIndex === $event.detail.chunkIndex);
+
+        if (commentsChunk == undefined) {
+            commentsChunk = {
+                chunkIndex: $event.detail.chunkIndex,
+                comments: [],
+                hiddenCount: 0,
+            };
+            commentsChunks.push(commentsChunk);
+        }
+        commentsChunk.comments.push($event.detail.comment);
+    "
     class="flex flex-col {{ $class }}"
 >
     <template

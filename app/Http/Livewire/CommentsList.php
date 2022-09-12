@@ -2,7 +2,9 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Comment;
 use App\Models\Idea;
+use Barryvdh\Debugbar\Facades\Debugbar;
 use Livewire\Component;
 
 class CommentsList extends Component
@@ -13,6 +15,31 @@ class CommentsList extends Component
     public Idea $idea;
 
     public array $loadedCommentsIdsRanges = [];
+
+    public int $lastChunk;
+    public bool $loadedNewComments = false;
+
+    protected $listeners = [
+        'create:comment' => 'addNewComment',
+    ];
+
+    public function addNewComment($newComment)
+    {
+        Debugbar::info($newComment);
+
+        if (!$this->loadedNewComments) {
+            $this->loadedNewComments = true;
+            $this->loadedCommentsIdsRanges[$this->lastChunk + 1] = [
+                'chunkIndex' => $this->lastChunk + 1,
+                'hiddenCount' => 0,
+            ];
+        }
+
+        $this->dispatchBrowserEvent('create:comment', [
+            'comment' => $newComment,
+            'chunkIndex' => $this->lastChunk + 1,
+        ]);
+    }
 
     public function mount(Idea $idea, string $class = '')
     {
@@ -88,6 +115,7 @@ class CommentsList extends Component
         $this->loadedCommentsIdsRanges = array_values($this->loadedCommentsIdsRanges);
         foreach (array_keys($this->loadedCommentsIdsRanges) as $chunkIndex) {
             $this->loadedCommentsIdsRanges[$chunkIndex]['chunkIndex'] = $chunkIndex;
+            $this->lastChunk = $chunkIndex;
         }
 
         for ($i = 0; $i < count($this->loadedCommentsIdsRanges); ++$i) {

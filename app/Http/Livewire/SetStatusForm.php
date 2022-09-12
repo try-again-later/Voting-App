@@ -43,15 +43,10 @@ class SetStatusForm extends Component
         $this->idea->status_id = $newStatus->id;
         $this->idea->save();
 
-        if ($this->notifyVoters) {
-            $this->notifyVotersAboutStatusChange();
+        if ($this->notifyVoters && env('SEND_EMAILS', default: true)) {
+            NotifyAllVoters::dispatch($this->idea);
         }
 
         $this->emit('update:status', $this->idea, $newStatus->human_name);
-    }
-
-    public function notifyVotersAboutStatusChange()
-    {
-        NotifyAllVoters::dispatch($this->idea);
     }
 }

@@ -73,6 +73,7 @@ class IdeasList extends Component
         $ideas = Idea::query()
             ->with('user', 'category', 'status')
             ->withCount('votes')
+            ->withCount('comments')
             ->addSelect(['auth_user_vote_id' => Vote::select('id')
                 ->where('user_id', auth()->id())
                 ->whereColumn('idea_id', 'ideas.id')
