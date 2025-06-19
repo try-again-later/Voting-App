@@ -39,7 +39,44 @@
     </header>
 
     <main class="container m-auto px-4 sm:px-8 py-4 text-gray-700">
-        {{ $slot }}
+
+        <h1 class="sr-only">Voting App</h1>
+
+        <div class="flex flex-col gap-8 lg:flex-row lg:gap-0 lg:items-start">
+            <section class="lg:max-h-[calc(100vh_-_1rem)] overflow-auto w-full sm:max-w-xs bg-white border-2 border-gray-200 rounded-xl px-4 py-6 m-auto lg:m-0 lg:sticky top-4">
+                <h2 class="text-center font-semibold text-xl mb-2">Add an idea</h2>
+                <p class="text-center mb-8">
+                    Let us know what you would like and we'll take a look over!
+                </p>
+                <x-ideas.add-new-form />
+            </section>
+
+            <section class="flex-1 lg:pl-8">
+                <h2 class="sr-only">Ideas</h2>
+
+                <div class="flex flex-wrap gap-y-4 justify-center xl:justify-start w-full mb-8">
+                    <x-ideas.filter-item :active="true" href="#" :first="true">
+                        All ideas (89)
+                    </x-ideas.filter-item>
+                    <x-ideas.filter-item href="#">
+                        Considering (6)
+                    </x-ideas.filter-item>
+                    <x-ideas.filter-item href="#" :last="true">
+                        In progress (1)
+                    </x-ideas.filter-item>
+
+                    <x-ideas.filter-item class="xl:ml-auto" href="#" :first="true">
+                        Implemented (10)
+                    </x-ideas.filter-item>
+                    <x-ideas.filter-item href="#" :last="true">
+                        Closed (55)
+                    </x-ideas.filter-item>
+                </div>
+
+                {{ $slot }}
+
+            </section>
+        </div>
     </main>
 </body>
 
