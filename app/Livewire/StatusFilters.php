@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\Idea;
 use Illuminate\Support\Facades\Route;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class StatusFilters extends Component
@@ -24,12 +25,18 @@ class StatusFilters extends Component
     {
         $this->statusFilter = request('status') ?? 'all';
 
+        $this->updateIdeasCounts();
+
+        $this->currentRouteName = Route::currentRouteName();
+    }
+
+    #[On('update:status')]
+    public function updateIdeasCounts()
+    {
         $this->ideasCountByStatus = [
             ...$this->ideasCountByStatus,
             ...Idea::getCountsByStatuses(),
         ];
-
-        $this->currentRouteName = Route::currentRouteName();
     }
 
     public function setStatusFilter(string $statusFilter)
