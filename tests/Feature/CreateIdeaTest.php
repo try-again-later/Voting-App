@@ -2,20 +2,20 @@
 
 namespace Tests\Feature;
 
-use App\Http\Livewire\CreateIdea;
+use App\Livewire\CreateIdea;
 use App\Models\Category;
 use App\Models\Idea;
 use App\Models\User;
 use Database\Seeders\StatusSeeder;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
 use Tests\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 class CreateIdeaTest extends TestCase
 {
-    use RefreshDatabase, DatabaseMigrations;
+    use DatabaseMigrations;
 
     public function setUp(): void
     {
@@ -24,9 +24,7 @@ class CreateIdeaTest extends TestCase
         $this->seed(StatusSeeder::class);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function create_idea_form_is_not_shown_when_not_logged_in()
     {
         $this->get(route('idea.index'))
@@ -38,9 +36,7 @@ class CreateIdeaTest extends TestCase
             );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function create_idea_form_is_shown_when_logged_in()
     {
         /** @var Authenticatable */
@@ -57,9 +53,7 @@ class CreateIdeaTest extends TestCase
             );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function ideas_index_page_contains_create_idea_component()
     {
         /** @var Authenticatable */
@@ -72,9 +66,7 @@ class CreateIdeaTest extends TestCase
             ->assertSeeLivewire('create-idea');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function create_idea_form_validation_works()
     {
         Livewire::actingAs(User::factory()->create())
@@ -86,9 +78,7 @@ class CreateIdeaTest extends TestCase
             ->assertHasErrors(['title', 'category', 'description']);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function create_idea_form_creates_an_idea()
     {
         $category = Category::factory()->create();
@@ -107,9 +97,7 @@ class CreateIdeaTest extends TestCase
         ]);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function ideas_with_same_title_are_created_with_different_slugs()
     {
         $category = Category::factory()->create();

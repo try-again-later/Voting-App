@@ -2,13 +2,14 @@
 
 namespace Tests\Feature;
 
-use App\Http\Livewire\DeleteIdeaConfirmationModal;
+use App\Livewire\DeleteIdeaConfirmationModal;
 use App\Models\Idea;
 use App\Models\User;
 use Database\Seeders\StatusSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Response;
 use Livewire\Livewire;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class DeleteIdeaTest extends TestCase
@@ -22,7 +23,7 @@ class DeleteIdeaTest extends TestCase
         $this->seed(StatusSeeder::class);
     }
 
-    /** @test */
+    #[Test]
     public function delete_idea_modal_is_present_on_the_ideas_index_page()
     {
         $this
@@ -30,7 +31,7 @@ class DeleteIdeaTest extends TestCase
             ->assertSeeLivewire(DeleteIdeaConfirmationModal::class);
     }
 
-    /** @test */
+    #[Test]
     public function delete_idea_modal_is_present_on_the_idea_show_page()
     {
         $idea = Idea::factory()->create();
@@ -40,22 +41,7 @@ class DeleteIdeaTest extends TestCase
             ->assertSeeLivewire(DeleteIdeaConfirmationModal::class);
     }
 
-    /** @test */
-    public function can_change_idea_to_be_deleted_with_event()
-    {
-        $author = User::factory()->create();
-        $idea = Idea::factory()->create([
-            'user_id' => $author,
-        ]);
-
-        Livewire::actingAs($author)
-            ->test(DeleteIdeaConfirmationModal::class)
-            ->emit('open-delete-modal:idea', $idea)
-            ->assertSet('idea', $idea)
-            ->assertDispatchedBrowserEvent('open-delete-modal:idea');
-    }
-
-    /** @test */
+    #[Test]
     public function idea_author_can_delete_their_idea()
     {
         $author = User::factory()->create();
@@ -65,17 +51,15 @@ class DeleteIdeaTest extends TestCase
 
         Livewire::actingAs($author)
             ->test(DeleteIdeaConfirmationModal::class)
-            ->set('idea', $idea)
-            ->call('deleteIdea')
-            ->assertDispatchedBrowserEvent('close-delete-modal:idea')
-            ->assertEmitted('destroy:idea');
+            ->call('deleteIdea', $idea->id)
+            ->assertDispatched('destroy:idea');
 
         $this->assertDatabaseMissing('ideas', [
             'id' => $idea->id,
         ]);
     }
 
-    /** @test */
+    #[Test]
     public function admin_can_delete_any_idea()
     {
         $admin = User::factory()->admin()->create();
@@ -83,8 +67,7 @@ class DeleteIdeaTest extends TestCase
 
         Livewire::actingAs($admin)
             ->test(DeleteIdeaConfirmationModal::class)
-            ->set('idea', $idea)
-            ->call('deleteIdea')
+            ->call('deleteIdea', $idea->id)
             ->assertStatus(Response::HTTP_OK);
 
         $this->assertDatabaseMissing('ideas', [
@@ -92,7 +75,7 @@ class DeleteIdeaTest extends TestCase
         ]);
     }
 
-    /** @test */
+    #[Test]
     public function other_user_cannot_delete_someone_elses_idea()
     {
         $user = User::factory()->create();
@@ -100,10 +83,8 @@ class DeleteIdeaTest extends TestCase
 
         Livewire::actingAs($user)
             ->test(DeleteIdeaConfirmationModal::class)
-            ->set('idea', $idea)
-            ->call('deleteIdea')
-            ->assertNotDispatchedBrowserEvent('close-delete-modal:idea')
-            ->assertNotEmitted('destroy:idea')
+            ->call('deleteIdea', $idea->id)
+            ->assertNotDispatched('destroy:idea')
             ->assertStatus(Response::HTTP_FORBIDDEN);
 
         $this->assertDatabaseHas('ideas', [

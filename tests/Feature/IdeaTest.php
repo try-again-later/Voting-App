@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\{Idea, User, Vote};
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Database\Seeders\StatusSeeder;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 use function PHPUnit\Framework\assertFalse;
@@ -25,13 +26,13 @@ class IdeaTest extends TestCase
         $this->user = User::factory()->create();
     }
 
-    /** @test */
+    #[Test]
     public function voted_by_method_returns_false_when_null_is_passed_as_user()
     {
         assertFalse($this->idea->votedBy(null));
     }
 
-    /** @test */
+    #[Test]
     public function voted_by_method_shows_when_there_is_no_entry_in_votes_table()
     {
         $this->assertFalse($this->idea->votedBy($this->user));
@@ -42,7 +43,7 @@ class IdeaTest extends TestCase
         $this->assertTrue($this->idea->votedBy($this->user));
     }
 
-    /** @test */
+    #[Test]
     public function user_can_vote_for_idea()
     {
         $this->assertFalse($this->idea->votedBy($this->user));
@@ -50,7 +51,7 @@ class IdeaTest extends TestCase
         $this->assertTrue($this->idea->votedBy($this->user));
     }
 
-    /** @test */
+    #[Test]
     public function calling_vote_twice_does_not_give_errors()
     {
         $this->expectNotToPerformAssertions();
@@ -59,7 +60,7 @@ class IdeaTest extends TestCase
         $this->idea->vote($this->user);
     }
 
-    /** @test */
+    #[Test]
     public function user_can_remove_a_vote_from_idea()
     {
         Vote::factory()->create([
@@ -72,7 +73,7 @@ class IdeaTest extends TestCase
         $this->assertFalse($this->idea->votedBy($this->user));
     }
 
-    /** @test */
+    #[Test]
     public function calling_unvote_twice_does_not_give_errors()
     {
         $this->expectNotToPerformAssertions();

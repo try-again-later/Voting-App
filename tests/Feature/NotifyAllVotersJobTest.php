@@ -9,6 +9,7 @@ use App\Models\{User, Idea};
 use Database\Seeders\StatusSeeder;
 use App\Jobs\NotifyAllVoters;
 use App\Mail\IdeaStatusUpdatedMail;
+use PHPUnit\Framework\Attributes\Test;
 use Symfony\Component\VarDumper\VarDumper;
 
 class NotifyAllVotersJobTest extends TestCase
@@ -22,7 +23,7 @@ class NotifyAllVotersJobTest extends TestCase
         $this->seed(StatusSeeder::class);
     }
 
-    /** @test */
+    #[Test]
     public function it_sends_emails_to_all_voters_for_the_given_idea()
     {
         $idea = Idea::factory()->create();

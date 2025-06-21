@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Http\Livewire\EditIdeaForm;
+use App\Livewire\EditIdeaForm;
 use App\Models\Category;
 use App\Models\Idea;
 use App\Models\User;
@@ -10,6 +10,7 @@ use Database\Seeders\StatusSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Response;
 use Livewire\Livewire;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class EditIdeaTest extends TestCase
@@ -23,7 +24,7 @@ class EditIdeaTest extends TestCase
         $this->seed(StatusSeeder::class);
     }
 
-    /** @test */
+    #[Test]
     public function edit_idea_form_is_present_on_the_ideas_index_page()
     {
         $this
@@ -31,7 +32,7 @@ class EditIdeaTest extends TestCase
             ->assertSeeLivewire(EditIdeaForm::class);
     }
 
-    /** @test */
+    #[Test]
     public function edit_idea_form_is_present_on_the_idea_show_page()
     {
         $idea = Idea::factory()->create();
@@ -41,7 +42,7 @@ class EditIdeaTest extends TestCase
             ->assertSeeLivewire(EditIdeaForm::class);
     }
 
-    /** @test */
+    #[Test]
     public function can_change_edited_idea_with_event()
     {
         $author = User::factory()->create();
@@ -51,12 +52,11 @@ class EditIdeaTest extends TestCase
 
         Livewire::actingAs($author)
             ->test(EditIdeaForm::class)
-            ->emit('edit:idea', $idea)
-            ->assertSet('idea', $idea)
-            ->assertDispatchedBrowserEvent('edit:idea');
+            ->dispatch('edit:idea', ideaId: $idea->id)
+            ->assertSet('idea.id', $idea->id);
     }
 
-    /** @test */
+    #[Test]
     public function idea_author_can_change_their_idea()
     {
         $oldCategory = Category::factory()->create();
@@ -75,8 +75,7 @@ class EditIdeaTest extends TestCase
             ->set('title', 'Updated title')
             ->set('description', 'Updated description')
             ->call('updateIdea')
-            ->assertDispatchedBrowserEvent('update:idea')
-            ->assertEmitted('update:idea');
+            ->assertDispatched('update:idea');
 
         $idea->refresh();
 
@@ -85,7 +84,7 @@ class EditIdeaTest extends TestCase
         $this->assertEquals('Updated description', $idea->description);
     }
 
-    /** @test */
+    #[Test]
     public function user_cannot_edit_someone_elses_ieda()
     {
         $user = User::factory()->create();
@@ -96,12 +95,11 @@ class EditIdeaTest extends TestCase
             ->set('idea', $idea)
             ->set('title', 'Updated title')
             ->call('updateIdea')
-            ->assertNotDispatchedBrowserEvent('update:idea')
-            ->assertNotEmitted('update:idea')
+            ->assertNotDispatched('update:idea')
             ->assertStatus(Response::HTTP_FORBIDDEN);
     }
 
-    /** @test */
+    #[Test]
     public function user_cannot_edit_ideas_created_more_than_one_hour_ago()
     {
         $author = User::factory()->create();
@@ -114,8 +112,7 @@ class EditIdeaTest extends TestCase
             ->test(EditIdeaForm::class)
             ->set('idea', $idea)
             ->call('updateIdea')
-            ->assertNotDispatchedBrowserEvent('update:idea')
-            ->assertNotEmitted('update:idea')
+            ->assertNotDispatched('update:idea')
             ->assertStatus(Response::HTTP_FORBIDDEN);
     }
 }

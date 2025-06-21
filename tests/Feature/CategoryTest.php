@@ -2,13 +2,14 @@
 
 namespace Tests\Feature;
 
-use App\Http\Livewire\IdeasList;
+use App\Livewire\IdeasList;
 use App\Models\Category;
 use App\Models\Idea;
 use App\Models\Status;
 use Database\Seeders\StatusSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class CategoryTest extends TestCase
@@ -22,7 +23,7 @@ class CategoryTest extends TestCase
         $this->seed(StatusSeeder::class);
     }
 
-    /** @test */
+    #[Test]
     public function ideas_list_has_correct_ideas_when_category_prop_is_set()
     {
         $statuses = Status::all();
@@ -58,7 +59,7 @@ class CategoryTest extends TestCase
             );
     }
 
-    /** @test */
+    #[Test]
     public function ideas_list_has_correct_category_set_when_category_query_parameter_is_present()
     {
         Livewire::withQueryParams(['category' => '3'])
@@ -66,7 +67,7 @@ class CategoryTest extends TestCase
             ->assertSet('categoryFilter', '3');
     }
 
-    /** @test */
+    #[Test]
     public function ideas_list_has_all_category_by_default()
     {
         Livewire::test(IdeasList::class)

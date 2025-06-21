@@ -2,11 +2,12 @@
 
 namespace Tests\Feature;
 
-use App\Http\Livewire\IdeaShow;
+use App\Livewire\IdeaShow;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 use App\Models\{Status, Category, Idea};
 use Database\Seeders\StatusSeeder;
+use PHPUnit\Framework\Attributes\Test;
 
 class IdeaIndexTest extends TestCase
 {
@@ -19,7 +20,7 @@ class IdeaIndexTest extends TestCase
         $this->seed(StatusSeeder::class);
     }
 
-    /** @test */
+    #[Test]
     public function all_ideas_are_shown_on_index_page()
     {
         $previewsPerPage = 5;

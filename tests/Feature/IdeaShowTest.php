@@ -2,12 +2,13 @@
 
 namespace Tests\Feature;
 
-use App\Http\Livewire\IdeaShow;
+use App\Livewire\IdeaShow;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 use Database\Seeders\StatusSeeder;
 use Livewire\Livewire;
 use App\Models\{User, Idea, Vote};
+use PHPUnit\Framework\Attributes\Test;
 
 class IdeaShowTest extends TestCase
 {
@@ -20,7 +21,7 @@ class IdeaShowTest extends TestCase
         $this->seed(StatusSeeder::class);
     }
 
-    /** @test */
+    #[Test]
     public function single_idea_is_shown_on_the_show_page()
     {
         $idea = Idea::factory()->create();
@@ -35,7 +36,7 @@ class IdeaShowTest extends TestCase
         $response->assertSee($idea->status->human_name, escape: false);
     }
 
-    /** @test */
+    #[Test]
     public function when_auth_user_voted_for_idea_the_idea_card_indicates_this()
     {
         $user = User::factory()->create();
@@ -54,7 +55,7 @@ class IdeaShowTest extends TestCase
             ->assertSee('Voted');
     }
 
-    /** @test */
+    #[Test]
     public function when_auth_user_has_not_voted_for_idea_the_idea_card_indicates_this()
     {
         $user = User::factory()->create();
@@ -73,7 +74,7 @@ class IdeaShowTest extends TestCase
             ->assertDontSee('Voted');
     }
 
-    /** @test */
+    #[Test]
     public function is_rendered_on_show_page()
     {
         $idea = Idea::factory()->create();
@@ -84,7 +85,7 @@ class IdeaShowTest extends TestCase
             ->assertSeeLivewire('idea-show');
     }
 
-    /** @test */
+    #[Test]
     public function calling_vote_method_when_not_authenticated_redirects_to_login_page()
     {
         $idea = Idea::factory()->create();
@@ -96,7 +97,7 @@ class IdeaShowTest extends TestCase
             ->assertRedirect(route('login'));
     }
 
-    /** @test */
+    #[Test]
     public function calling_vote_method_on__when_authenticated_increasses_the_vote_count()
     {
         $idea = Idea::factory()->create();
@@ -115,7 +116,7 @@ class IdeaShowTest extends TestCase
         ]);
     }
 
-    /** @test */
+    #[Test]
     public function calling_vote_method_on_already_voted_idea_when_authenticated_decreases_the_vote_count()
     {
         $idea = Idea::factory()->create();

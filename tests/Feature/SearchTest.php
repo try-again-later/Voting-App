@@ -2,12 +2,13 @@
 
 namespace Tests\Feature;
 
-use App\Http\Livewire\IdeasList;
+use App\Livewire\IdeasList;
 use App\Models\Idea;
 use App\Models\Status;
 use Database\Seeders\StatusSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class SearchTest extends TestCase
@@ -21,7 +22,7 @@ class SearchTest extends TestCase
         $this->seed(StatusSeeder::class);
     }
 
-    /** @test */
+    #[Test]
     public function ideas_list_has_correct_ideas_when_query_filter_is_set()
     {
         Idea::factory()
@@ -46,7 +47,7 @@ class SearchTest extends TestCase
             );
     }
 
-    /** @test */
+    #[Test]
     public function ideas_list_has_correct_search_query_set_when_search_query_parameter_is_present()
     {
         Livewire::withQueryParams(['q' => 'abc'])

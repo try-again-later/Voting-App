@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Http\Livewire\SetStatusForm;
+use App\Livewire\SetStatusForm;
 use App\Jobs\NotifyAllVoters;
 use App\Models\Idea;
 use App\Models\Status;
@@ -12,6 +12,7 @@ use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Queue;
 use Livewire\Livewire;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class SetStatusFormTest extends TestCase
@@ -25,7 +26,7 @@ class SetStatusFormTest extends TestCase
         $this->seed(StatusSeeder::class);
     }
 
-    /** @test */
+    #[Test]
     public function admins_can_see_a_set_status_form()
     {
         $idea = Idea::factory()->create();
@@ -38,7 +39,7 @@ class SetStatusFormTest extends TestCase
             ->assertSeeLivewire(SetStatusForm::class);
     }
 
-    /** @test */
+    #[Test]
     public function regular_user_cannot_see_a_set_status_form()
     {
         $idea = Idea::factory()->create();
@@ -53,7 +54,7 @@ class SetStatusFormTest extends TestCase
             ->assertDontSeeLivewire(SetStatusForm::class);
     }
 
-    /** @test */
+    #[Test]
     public function admin_can_change_an_idea_status()
     {
         $idea = Idea::factory()->create();
@@ -63,14 +64,14 @@ class SetStatusFormTest extends TestCase
             ->test(SetStatusForm::class, ['idea' => $idea])
             ->set('status', 'in-progress')
             ->call('changeStatus')
-            ->assertEmitted('update:status');
+            ->assertDispatched('update:status');
 
         $idea = $idea->fresh();
 
         $this->assertEquals('in-progress', $idea->status->name);
     }
 
-    /** @test */
+    #[Test]
     public function initially_set_status_on_the_form_matches_the_idea_status()
     {
         $initialStatus = Status::query()->where('name', 'in-progress')->firstOrFail();
@@ -86,7 +87,7 @@ class SetStatusFormTest extends TestCase
             ->assertSet('status', 'in-progress');
     }
 
-    /** @test */
+    #[Test]
     public function voters_notification_job_is_pushed_onto_queue_when_idea_status_is_changed()
     {
         $idea = Idea::factory()->create();

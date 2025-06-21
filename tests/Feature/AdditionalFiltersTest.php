@@ -2,11 +2,12 @@
 
 namespace Tests\Feature;
 
-use App\Http\Livewire\IdeasList;
+use App\Livewire\IdeasList;
 use App\Models\{Idea, User, Vote};
 use Database\Seeders\StatusSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class AdditionalFiltersTest extends TestCase
@@ -36,7 +37,7 @@ class AdditionalFiltersTest extends TestCase
         return true;
     }
 
-    /** @test */
+    #[Test]
     public function ideas_list_can_be_sorted_by_votes_count()
     {
         $ideasPerPage = 5;
@@ -62,7 +63,7 @@ class AdditionalFiltersTest extends TestCase
             );
     }
 
-    /** @test */
+    #[Test]
     public function ideas_list_can_be_filtered_by_ideas_created_by_auth_user()
     {
         $authUser = User::factory()->create();

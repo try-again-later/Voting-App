@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Http\Livewire\IdeasList;
+use App\Livewire\IdeasList;
 use App\Models\Idea;
 use App\Models\Status;
 use Database\Seeders\StatusSeeder;
@@ -11,6 +11,7 @@ use Tests\TestCase;
 use App\Models\Category;
 
 use Livewire\Livewire;
+use PHPUnit\Framework\Attributes\Test;
 
 class StatusTest extends TestCase
 {
@@ -23,7 +24,7 @@ class StatusTest extends TestCase
         $this->seed(StatusSeeder::class);
     }
 
-    /** @test */
+    #[Test]
     public function get_counts_by_statuses_function_returns_correct_counts()
     {
         $openStatus = Status::query()->where('name', 'open')->firstOrFail();
@@ -49,7 +50,7 @@ class StatusTest extends TestCase
         $this->assertEquals(42, $ideasCountsByStatuses['all']);
     }
 
-    /** @test */
+    #[Test]
     public function ideas_index_page_contains_filters_component()
     {
         $consideringStatus = Status::query()->where('name', 'considering')->firstOrFail();
@@ -77,9 +78,7 @@ class StatusTest extends TestCase
             ->assertSee('Closed (8)', escape: false);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function filtering_ideas_by_status_works_when_status_query_parameter_is_present()
     {
         $ideasPerPage = 5;

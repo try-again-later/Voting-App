@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Http\Livewire\IdeasList;
+use App\Livewire\IdeasList;
 use App\Models\Category;
 use App\Models\Idea;
 use App\Models\User;
@@ -10,6 +10,7 @@ use App\Models\Vote;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Database\Seeders\StatusSeeder;
 use Livewire\Livewire;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class VotesTest extends TestCase
@@ -23,7 +24,7 @@ class VotesTest extends TestCase
         $this->seed(StatusSeeder::class);
     }
 
-    /** @test */
+    #[Test]
     public function idea_show_page_receives_votes_count()
     {
         $userA = User::factory()->create();
@@ -51,7 +52,7 @@ class VotesTest extends TestCase
             ->assertViewHas('votesCount', 2);
     }
 
-    /** @test */
+    #[Test]
     public function previews_on_ideas_index_page_show_correct_votes_count()
     {
         $userA = User::factory()->create();
