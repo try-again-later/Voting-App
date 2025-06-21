@@ -15,7 +15,7 @@
         ] as [$status, $textColor, $hoverColor])
             <div class="mb-4 last:mb-0 flex items-center gap-2 group w-fit">
                 <input
-                    wire:model.defer="status"
+                    wire:model="status"
                     type="radio"
                     name="status"
                     value="{{ $status }}"
@@ -23,7 +23,7 @@
                     @class([
                         $textColor,
                         $hoverColor,
-                        'bg-white h-6 w-6 transition-colors cursor-pointer',
+                        'h-6 w-6 transition-colors cursor-pointer',
                     ])
                 />
                 <label for="{{ $status }}" class="cursor-pointer hover:underline">
@@ -34,7 +34,7 @@
     </div>
 
     <x-textarea
-        wire:model.defer="comment"
+        wire:model="comment"
         name="comment"
         placeholder="Add an update comment (optional)"
         class="mb-4"
@@ -56,7 +56,7 @@
 
     <div class="flex items-center gap-2">
         <input
-            wire:model.defer="notifyVoters"
+            wire:model="notifyVoters"
             type="checkbox"
             name="notify-all-voters"
             id="notify-all-voters"

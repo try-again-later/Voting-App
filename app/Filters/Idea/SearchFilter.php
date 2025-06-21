@@ -4,9 +4,11 @@ namespace App\Filters\Idea;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
+use Livewire\Attributes\Url;
 
 trait SearchFilter
 {
+    #[Url(as: 'q', except: '')]
     public string $searchQuery = '';
 
     public function setSearchQuery(string $newSearchQuery): void
@@ -33,5 +35,10 @@ trait SearchFilter
     public function isSearchFilterActive(): bool
     {
         return mb_strlen($this->searchQuery) >= 3;
+    }
+
+    public function updatingSearchQuery()
+    {
+        $this->resetPage();
     }
 }

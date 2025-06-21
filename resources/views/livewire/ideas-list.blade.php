@@ -2,9 +2,8 @@
     <section class="flex flex-wrap gap-4 mb-8">
         <h2 class="sr-only">Ideas filters</h2>
 
-        <x-ideas.status-filters
+        <livewire:idea-status-filters
             :status-filter="$this->statusFilter"
-            :ideas-count-by-status="$this->ideasCountByStatus"
             class="w-full"
         />
 
@@ -14,13 +13,13 @@
                 type="button"
                 title="Reset all filters and go to first page"
                 class="flex gap-2 items-center text-gray-600 group"
+                class="flex gap-1 items-center group"
             >
-                <span class="sm:sr-only">
-                    Reset all filters and go to first page
+                <span class="text-gray-400 group-hover:text-gray-500 transition">
+                    Reset all filters
                 </span>
                 <x-icon.backspace
                     class="w-8 h-8 text-gray-300 transition group-hover:text-gray-400 -order-1"
-                    aria-hidden="true"
                 />
             </button>
         @endif
@@ -32,7 +31,7 @@
                 'ring-2 ring-purple-200' => $this->categoryFilter !== 'all',
                 'ring-0' => $this->categoryFilter === 'all',
             ])
-            wire:model="categoryFilter"
+            wire:model.live="categoryFilter"
         >
             <option disabled class="text-gray-300">Select a category</option>
             <option value="all">All</option>
@@ -43,7 +42,7 @@
         </select>
 
         <select
-            wire:model="additionalFilter"
+            wire:model.live="additionalFilter"
             name="other-filter"
             @class([
                 'border-none rounded-xl cursor-pointer w-full sm:w-auto',
@@ -77,7 +76,7 @@
                 <x-icon.search class="w-5 h-5 text-gray-700" />
             </div>
             <input
-                wire:model.debounce.500ms="searchQuery"
+                wire:model.live.debounce.500ms="searchQuery"
                 type="search"
                 name="search"
                 placeholder="Find an idea"
@@ -87,7 +86,7 @@
                 <button
                     x-show="$wire.searchQuery !== ''"
                     x-cloak
-                    @@click="$wire.searchQuery = ''"
+                    wire:click="$set('searchQuery', '')"
                 >
                     <span class="sr-only">Clear the search query</span>
                     <x-icon.x class="w-5 h-5 text-red-700" />
@@ -101,7 +100,7 @@
 
         @forelse ($ideas as $idea)
             <livewire:idea-show
-                :wire:key="$idea->id"
+                :key="$idea->id"
                 :idea="$idea"
                 :show-preview="true"
                 :votes-count="$idea->votes_count"

@@ -55,12 +55,7 @@ class User extends Authenticatable
     public function avatar(): string
     {
         $emailHash = md5($this->email);
-        $fallbackImage = "https://avatars.dicebear.com/api/identicon/$emailHash.jpg";
-
-        return "https://gravatar.com/avatar/$emailHash?" . http_build_query([
-            's' => 200,
-            'd' => $fallbackImage,
-        ]);
+        return "https://api.dicebear.com/9.x/identicon/jpg?seed={$emailHash}";
     }
 
     public function isAdmin(): bool

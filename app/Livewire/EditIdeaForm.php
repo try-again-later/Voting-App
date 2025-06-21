@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Livewire;
 
 use App\Models\Idea;
 use App\Services\CategoriesService;
+use Livewire\Attributes\On;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class EditIdeaForm extends Component
@@ -14,17 +16,18 @@ class EditIdeaForm extends Component
     public string $title = '';
     public string $description = '';
 
-    protected $listeners = ['edit:idea' => 'handleEditIdea'];
-
     protected $rules = [
         'category' => ['required', 'integer', 'exists:categories,id'],
         'title' => ['required', 'max:255'],
         'description' => ['required'],
     ];
 
-    public function handleEditIdea(Idea $idea)
+    #[On('edit:idea')]
+    public function handleEditIdea(int $ideaId)
     {
-        if (!auth()->check() || auth()->user()->cannot('update', $idea)) {
+        $idea = Idea::find($ideaId);
+
+        if ($idea == null || !Auth::check() || Auth::user()->cannot('update', $idea)) {
             return;
         }
 
@@ -32,7 +35,6 @@ class EditIdeaForm extends Component
         $this->category = $idea->category->id;
         $this->title = $idea->title;
         $this->description = $idea->description;
-        $this->dispatchBrowserEvent('edit:idea');
     }
 
     public function updateIdea()
@@ -41,7 +43,7 @@ class EditIdeaForm extends Component
             return;
         }
 
-        if (!auth()->check() || auth()->user()->cannot('update', $this->idea)) {
+        if (!Auth::check() || Auth::user()->cannot('update', $this->idea)) {
             abort(Response::HTTP_FORBIDDEN);
         }
 
@@ -52,8 +54,7 @@ class EditIdeaForm extends Component
             'title' => $this->title,
             'description' => $this->description,
         ]);
-        $this->emit('update:idea', $this->idea);
-        $this->dispatchBrowserEvent('update:idea');
+        $this->dispatch('update:idea', $this->idea);
     }
 
     public function render(CategoriesService $categories)

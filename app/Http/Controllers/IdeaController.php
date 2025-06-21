@@ -6,6 +6,7 @@ use App\Http\Requests\StoreIdeaRequest;
 use App\Http\Requests\UpdateIdeaRequest;
 use App\Models\Idea;
 use App\Models\Vote;
+use Illuminate\Support\Facades\Auth;
 
 class IdeaController extends Controller
 {
@@ -50,6 +51,8 @@ class IdeaController extends Controller
      */
     public function show(Idea $idea)
     {
+        $idea->load(['status', 'user', 'category']);
+
         $backUrl = url()->previous();
         $ideaIndexPath = parse_url(route('idea.index'), PHP_URL_PATH) ?? '/';
         $previousPath = parse_url(url()->previous(), PHP_URL_PATH) ?? '/';
@@ -59,9 +62,9 @@ class IdeaController extends Controller
         }
 
         return view('idea.show', [
-            'idea' => $idea->loadCOunt('comments'),
+            'idea' => $idea->loadCount('comments'),
             'votesCount' => $idea->votes()->count(),
-            'voted' => $idea->votedBy(auth()->user()),
+            'voted' => $idea->votedBy(Auth::user()),
             'backUrl' => $backUrl,
         ]);
     }

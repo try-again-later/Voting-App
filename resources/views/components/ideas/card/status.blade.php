@@ -13,7 +13,7 @@
         'bg-status-considering text-status-text-considering hover:bg-status-hover-considering' => $status->name == 'considering',
     ]) }}
     type="button"
-    wire:click="$emit('{{ $categoryButtonRedirect ? 'status-filter-redirect' : 'update:status-filter' }}', '{{ addslashes($status->name) }}')"
+    wire:click.prevent="$dispatch('update:status-filter', { statusFilter: '{{ addslashes($status->name) }}' })"
     @@click="scrollTo({top: 0, behavior: 'smooth'})"
 >
     {{ $status->human_name }}

@@ -1,9 +1,9 @@
 <x-floating-window
-    @close-create-comment-form="
+    @create:comment="
         setOpened(false);
         scrollTo({top: document.body.scrollHeight, behavior: 'smooth'});
     "
-    class="flex-1 max-w-[16rem]"
+    class="flex-1 lg:max-w-[16rem]"
 >
     <x-slot:button
         class="w-full px-4 py-2 rounded-xl bg-purple-500 text-white font-semibold hover:bg-purple-400 transition-colors sm:text-lg"
@@ -18,7 +18,7 @@
         >
             <div>
                 <x-textarea
-                    wire:model.defer="body"
+                    wire:model="body"
                     name="comment"
                     placeholder="Give your feedback on this idea..."
                 />

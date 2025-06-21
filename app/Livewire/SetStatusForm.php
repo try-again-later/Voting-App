@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Livewire;
 
 use App\Jobs\NotifyAllVoters;
 use App\Models\Idea;
 use App\Models\Status;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class SetStatusForm extends Component
@@ -31,7 +32,7 @@ class SetStatusForm extends Component
 
     public function changeStatus()
     {
-        if (!auth()->check() || !auth()->user()->isAdmin()) {
+        if (!Auth::check() || !Auth::user()->isAdmin()) {
             abort(Response::HTTP_FORBIDDEN);
         }
 
@@ -47,15 +48,14 @@ class SetStatusForm extends Component
             NotifyAllVoters::dispatch($this->idea);
         }
 
-        $this->emit('update:status', $this->idea, $newStatus->human_name);
+        $this->dispatch('update:status', $this->idea, $newStatus->human_name);
 
         $body = strlen($this->comment) === 0 ? null : $this->comment;
         $newComment = $this->idea->leaveReply(
-            author: auth()->user(),
+            author: Auth::user(),
             body: $body,
             newIdeaStatusId: $newStatus->id,
         );
-        $this->emit('create:comment', $newComment);
-        $this->dispatchBrowserEvent('close-set-status-form');
+        $this->dispatch('create:comment', newComment: $newComment);
     }
 }

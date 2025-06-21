@@ -1,64 +1,41 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Livewire;
 
 use App\Filters\Idea\{AdditionalFilter, CategoryFilter, StatusFilter, SearchFilter};
 use Livewire\Component;
 use App\Models\{Idea, Vote};
 use App\Services\CategoriesService;
+use Illuminate\Support\Facades\Auth;
+use Livewire\Attributes\Computed;
+use Livewire\Attributes\On;
+use Livewire\Attributes\Url;
 use Livewire\WithPagination;
 
+#[On('destroy:idea')]
 class IdeasList extends Component
 {
     use WithPagination;
-    use IdeasCountByStatus;
     use StatusFilter, SearchFilter, CategoryFilter, AdditionalFilter;
-
-    protected $queryString = [
-        'statusFilter' => [
-            'as' => 'status',
-            'except' => 'all',
-        ],
-        'categoryFilter' => [
-            'as' => 'category',
-            'except' => 'all',
-        ],
-        'additionalFilter' => [
-            'as' => 'filter',
-            'except' => 'no-filter',
-        ],
-        'searchQuery' => [
-            'as' => 'q',
-            'except' => '',
-        ],
-    ];
-
-    protected $listeners = [
-        'update:status-filter' => 'setStatusFilter',
-        'update:status' => 'updateIdeasCounts',
-        'destroy:idea' => 'updateIdeasCounts',
-    ];
 
     public function mount()
     {
         if (
-            !auth()->check() &&
+            !Auth::check() &&
             in_array($this->additionalFilter, ['my-ideas', 'voted-for'], strict: true)
         ) {
             $this->redirect(route('login'));
         }
-
-        $this->updateIdeasCounts();
     }
 
-    public function getNoFiltersAreActiveProperty()
+    #[Computed]
+    public function noFiltersAreActive()
     {
         return
             !$this->isStatusFilterActive() &&
             !$this->isSearchFilterActive() &&
             !$this->isCategoryFilterActive() &&
-            !$this->isAdditionalFilterActive() &&
-            $this->page === 1;
+            !$this->isAdditionalFilterActive();
     }
 
     public function resetFilters()
@@ -77,7 +54,7 @@ class IdeasList extends Component
             ->withCount('votes')
             ->withCount('comments')
             ->addSelect(['auth_user_vote_id' => Vote::select('id')
-                ->where('user_id', auth()->id())
+                ->where('user_id', Auth::id())
                 ->whereColumn('idea_id', 'ideas.id')
                 ->take(1)
             ]);

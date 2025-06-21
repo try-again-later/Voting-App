@@ -1,13 +1,13 @@
 <form
     method="post"
-    wire:submit.prevent="createIdea"
+    wire:submit="createIdea"
     x-data="{ attachment: null }"
 >
     @csrf
 
     <div class="mb-4">
         <input
-            wire:model.defer="title"
+            wire:model="title"
             type="text"
             placeholder="Your idea"
             required
@@ -21,7 +21,7 @@
 
     <div class="mb-4">
         <select
-            wire:model.defer="category"
+            wire:model="category"
             required
             class="w-full rounded-xl border-none bg-gray-100 text-gray-500 cursor-pointer"
         >
@@ -38,7 +38,7 @@
 
     <div class="mb-4">
         <x-textarea
-            wire:model.defer="description"
+            wire:model="description"
             name="description"
             :required="true"
             placeholder="Describe your data"
@@ -52,7 +52,7 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <x-input-file
             id="create-idea-attachment"
-            wire:model.defer="attachment"
+            wire:model="attachment"
             @change="attachment = $event.target?.files?.[0]?.name"
         />
         <x-submit-button class="flex-1">Submit</x-submit-button>
@@ -75,6 +75,6 @@
             <span class="sr-only">Remove attached file</span>
         </button>
         <span>Attached file: </span>
-        <span x-text="attachment"></span>
+        <span class="text-gray-400 break-all" x-text="attachment"></span>
     </div>
 </form>

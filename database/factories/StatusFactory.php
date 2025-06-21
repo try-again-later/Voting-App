@@ -18,7 +18,7 @@ class StatusFactory extends Factory
     {
         return [
             'human_name' => $this->faker->words(nb: rand(1, 2), asText: true),
-            'name' => $this->faker->slug(nbWords: rand(1, 2)),
+            'name' => $this->faker->unique()->slug(nbWords: rand(1, 2)),
         ];
     }
 }

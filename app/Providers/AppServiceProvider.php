@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Services\CategoriesService;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
@@ -30,7 +31,7 @@ class AppServiceProvider extends ServiceProvider
         });
 
         Blade::if('admin', function () {
-            return auth()->check() && auth()->user()->isAdmin();
+            return Auth::check() && Auth::user()->isAdmin();
         });
     }
 }

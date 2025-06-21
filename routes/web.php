@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\IdeaController;
-use App\Http\Livewire\IdeasList;
+use App\Livewire\IdeasList;
 use Illuminate\Support\Facades\Route;
 
 /*

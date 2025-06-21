@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Livewire;
 
 use App\Models\Category;
 use App\Models\Idea;
 use App\Models\Status;
+use Illuminate\Support\Facades\Auth;
 use App\Services\CategoriesService;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
@@ -50,7 +51,7 @@ class CreateIdea extends Component
 
     public function createIdea()
     {
-        if (!auth()->check()) {
+        if (!Auth::check()) {
             abort(Response::HTTP_FORBIDDEN);
         }
 
@@ -62,7 +63,7 @@ class CreateIdea extends Component
         }
 
         $newIdea = Idea::create([
-            'user_id' => auth()->user()->id,
+            'user_id' => Auth::id(),
             'category_id' => $this->category,
             'status_id' => Status::default()->id,
             'title' => $this->title,

@@ -1,6 +1,6 @@
 <div
     x-data="{
-        loadedCommentsIdsRanges: @entangle('loadedCommentsIdsRanges'),
+        loadedCommentsIdsRanges: @entangle('loadedCommentsIdsRanges').live,
         commentsChunks: [],
         async loadMoreComments(chunkIndex, count) {
             chunks = [{
@@ -48,7 +48,7 @@
             }
         });
     "
-    @@create:comment="
+    @@created:comment="
         commentsChunk = commentsChunks.find((x) => x.chunkIndex === $event.detail.chunkIndex);
 
         if (commentsChunk == undefined) {
@@ -68,7 +68,7 @@
         :key="'commentsChunk-' + commentsChunk.chunkIndex"
     >
         <div>
-            <div class="space-y-4 sm:space-y-8">
+            <div>
                 <template
                     x-for="(comment, commentIndex) in commentsChunk.comments"
                     :key="comment.id"

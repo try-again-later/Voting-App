@@ -1,26 +1,31 @@
 <div
     x-data="{ open: false }"
-    x-show="open"
     @@edit:idea="open = true"
     @@update:idea="open = false"
-    @@click.self="open = false"
     @@keydown.escape.window="open = false"
-    x-cloak
-    x-transition:enter="transition-opacity ease-out duration-200"
-    x-transition:enter-start="opacity-0"
-    x-transition:enter-end="opacity-35"
-    x-transition:leave="transition-opacity ease-in duration-200"
-    x-transition:leave-start="opacity-35"
-    x-transition:leave-end="opacity-0"
-    class="fixed left-0 top-0 right-0 min-h-screen bg-black bg-opacity-25 z-50 grid items-end justify-center isolate overflow-hidden px-4"
 >
     <div
-        class="bg-white max-h-[80vh] overflow-auto min-h-[25vh] rounded-t-xl py-4 px-8"
         x-show="open"
-        x-transition:enter="transition ease-out duration-200"
+        @@click.self="open = false"
+        class="fixed z-50 inset-0 bg-black/25 overflow-hidden"
+        x-cloak
+        x-transition:enter="transition ease-out duration-300"
+        x-transition:enter-start="opacity-0"
+        x-transition:enter-end="opacity-100"
+        x-transition:leave="transition ease-in duration-300"
+        x-transition:leave-start="opacity-100"
+        x-transition:leave-end="opacity-0"
+    >
+    </div>
+
+    <div
+        x-show="open"
+        class="fixed z-100 bottom-0 left-1/2 -translate-x-1/2 bg-white max-h-[80vh] overflow-auto min-h-[25vh] min-w-[min(40rem,_90vw)] rounded-t-xl p-8"
+        x-cloak
+        x-transition:enter="transition delay-150 ease-out duration-300"
         x-transition:enter-start="opacity-0 translate-y-16"
         x-transition:enter-end="opacity-100 translate-y-0"
-        x-transition:leave="transition ease-in duration-200"
+        x-transition:leave="transition ease-in duration-150"
         x-transition:leave-start="opacity-100 translate-y-0"
         x-transition:leave-end="opacity-0 translate-y-16"
     >
@@ -35,7 +40,7 @@
         </div>
 
         @isset($idea)
-            <h3 class="text-center font-semibold text-xl mt-2 break-words">
+            <h3 class="text-center font-semibold text-xl break-all">
                 Editing idea "{{ $idea->title }}"
             </h3>
 
@@ -54,7 +59,7 @@
                         Title
                     </label>
                     <input
-                        wire:model.defer="title"
+                        wire:model="title"
                         type="text"
                         placeholder="Your idea"
                         required
@@ -75,7 +80,7 @@
                         Category
                     </label>
                     <select
-                        wire:model.defer="category"
+                        wire:model="category"
                         required
                         id="edit-idea-category"
                         class="mt-1 w-full rounded-xl border-none bg-gray-100 text-gray-500 cursor-pointer"
@@ -99,7 +104,7 @@
                         Description
                     </label>
                     <x-textarea
-                        wire:model.defer="description"
+                        wire:model="description"
                         name="description"
                         :required="true"
                         :rows="8"

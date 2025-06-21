@@ -1,28 +1,24 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Livewire;
 
 use App\Models\Idea;
+use Illuminate\Support\Facades\Auth;
+use Livewire\Attributes\Computed;
+use Livewire\Attributes\On;
 use Illuminate\Support\Facades\Route;
 use Livewire\Component;
 
+#[On('update:idea')]
+#[On('update:status')]
 class IdeaShow extends Component
 {
-    use IdeasCountByStatus;
-
     public Idea $idea;
     public int $votesCount;
     public bool $voted;
     public bool $showPreview;
-
     public string $backUrl;
     public string $currentRouteName;
-
-    protected $listeners = [
-        'update:status' => 'updateIdeasCounts',
-        'update:idea' => 'handleUpdate',
-        'status-filter-redirect' => 'redirectToIdeasList',
-    ];
 
     public function mount(
         Idea $idea,
@@ -37,10 +33,9 @@ class IdeaShow extends Component
         $this->voted = $voted;
         $this->showPreview = $showPreview;
         $this->backUrl = $backUrl;
-
-        $this->updateIdeasCounts();
     }
 
+    #[On('status-filter-redirect')]
     public function redirectToIdeasList(string $statusFilter)
     {
         $this->redirect(route('idea.index', [
@@ -58,15 +53,15 @@ class IdeaShow extends Component
 
     public function vote()
     {
-        if (!auth()->check()) {
+        if (!Auth::check()) {
             return redirect(route('login'));
         }
 
         $success = false;
         if ($this->voted) {
-            $success = $this->idea->unvote(auth()->user());
+            $success = $this->idea->unvote(Auth::user());
         } else {
-            $success = $this->idea->vote(auth()->user());
+            $success = $this->idea->vote(Auth::user());
         }
         if ($success) {
             $this->voted = !$this->voted;
@@ -74,24 +69,28 @@ class IdeaShow extends Component
         }
     }
 
-    public function getAvatarSrcProperty()
+    #[Computed]
+    public function avatarSrc()
     {
         return $this->idea->user->avatar();
     }
 
-    public function getIdeaLinkProperty()
+    #[Computed]
+    public function ideaLink()
     {
         return route('idea.show', $this->idea);
     }
 
     public function editIdea()
     {
-        $this->emit('edit:idea', $this->idea);
+        $this->dispatch('edit:idea', $this->idea)->to(EditIdeaForm::class);
     }
 
     public function deleteIdea()
     {
-        $this->emit('open-delete-modal:idea', $this->idea);
+        $this
+            ->dispatch('open-delete-modal:idea', $this->idea)
+            ->to(DeleteIdeaConfirmationModal::class);
     }
 
     public function render()

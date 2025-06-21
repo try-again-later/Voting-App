@@ -1,51 +1,33 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Livewire;
 
 use App\Models\Idea;
+use Livewire\Attributes\On;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class DeleteIdeaConfirmationModal extends Component
 {
     public ?string $redirectOnDelete = null;
 
-    public ?Idea $idea = null;
-
-    protected $listeners = ['open-delete-modal:idea' => 'openModal'];
-
-    public function openModal(Idea $idea)
+    public function deleteIdea(int $ideaId)
     {
-        if (!auth()->check() || auth()->user()->cannot('delete', $idea)) {
-            return;
-        }
+        $idea = Idea::find($ideaId);
 
-        $this->idea = $idea;
-        $this->dispatchBrowserEvent('open-delete-modal:idea');
-    }
-
-    public function deleteIdea()
-    {
-        if (!isset($this->idea)) {
-            return;
-        }
-
-        if (!auth()->check() || auth()->user()->cannot('delete', $this->idea)) {
+        if ($idea == null || !Auth::check() || Auth::user()->cannot('delete', $idea)) {
             abort(Response::HTTP_FORBIDDEN);
         }
 
-        $deletedIdeaTitle = $this->idea->title;
-        Idea::destroy($this->idea->id);
-
-        $this->dispatchBrowserEvent('close-delete-modal:idea');
-        $this->emit('destroy:idea', $deletedIdeaTitle);
-        $this->idea = null;
+        $idea->delete();
+        $this->dispatch('destroy:idea', ideaTitle: $idea->title);
 
         if (isset($this->redirectOnDelete)) {
             return redirect()
                 ->to($this->redirectOnDelete)
                 ->with('alerts', [
-                    ['title' => "Idea \"$deletedIdeaTitle\" successfully deleted..."],
+                    ['title' => "Idea \"{$idea->title}\" successfully deleted..."],
                 ]);
         }
     }

@@ -13,5 +13,5 @@
         class="mt-0 sm:mt-8"
     />
 
-    <livewire:delete-idea-confirmation-modal redirect-on-delete="{{ $backUrl }}" />
+    <livewire:delete-idea-confirmation-modal :redirect-on-delete="$backUrl" />
 </x-app-layout>

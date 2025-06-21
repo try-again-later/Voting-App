@@ -3,10 +3,17 @@
 namespace App\Filters\Idea;
 
 use Illuminate\Database\Eloquent\Builder;
+use Livewire\Attributes\Url;
 
 trait CategoryFilter
 {
+    #[Url(as: 'category', except: 'all')]
     public string $categoryFilter = 'all';
+
+    public function updatingCategoryFilter()
+    {
+        $this->resetPage();
+    }
 
     public function setCategoryFilter(string $newCategoryFilter): void
     {

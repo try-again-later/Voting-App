@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Livewire;
 
 use App\Models\Idea;
 use Barryvdh\Debugbar\Facades\Debugbar;
 use Barryvdh\Debugbar\Middleware\DebugbarEnabled;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class IdeaReplyForm extends Component
@@ -28,16 +29,15 @@ class IdeaReplyForm extends Component
 
     public function sendReply()
     {
-        if (!auth()->check()) {
+        if (!Auth::check()) {
             return $this->redirect(route('login'));
         }
 
         $this->validate();
 
-        $newComment = $this->idea->leaveReply(auth()->user(), $this->body);
+        $newComment = $this->idea->leaveReply(Auth::user(), $this->body);
 
-        $this->emit('create:comment', $newComment);
-        $this->dispatchBrowserEvent('close-create-comment-form');
+        $this->dispatch('create:comment', newComment: $newComment);
         $this->body = '';
     }
 

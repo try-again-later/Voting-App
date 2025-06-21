@@ -1,19 +1,8 @@
-@props([
-    'statusFilter' => 'all',
-    'ideasCountByStatus' => [
-        'all' => 0,
-        'open' => 0,
-        'considering' => 0,
-        'in-progress' => 0,
-        'implemented' => 0,
-        'closed' => 0,
-    ],
-    'redirect' => false,
-])
-
-<div {{ $attributes->class('flex flex-wrap gap-y-4 justify-center xl:justify-start') }}>
+<div class="flex flex-wrap gap-y-4 justify-center xl:justify-start mb-8 w-full">
     <x-ideas.filter-item
         filter-name="all"
+        :active="$statusFilter == 'all'"
+        :redirect="$redirect"
         :first="true"
     >
         All ideas ({{ $ideasCountByStatus['all'] }})
@@ -21,18 +10,24 @@
 
     <x-ideas.filter-item
         filter-name="open"
+        :active="$statusFilter == 'open'"
+        :redirect="$redirect"
     >
         Open ({{ $ideasCountByStatus['open'] }})
     </x-ideas.filter-item>
 
     <x-ideas.filter-item
         filter-name="considering"
+        :active="$statusFilter == 'considering'"
+        :redirect="$redirect"
     >
         Considering ({{ $ideasCountByStatus['considering'] }})
     </x-ideas.filter-item>
 
     <x-ideas.filter-item
         filter-name="in-progress"
+        :active="$statusFilter == 'in-progress'"
+        :redirect="$redirect"
         :last="true"
     >
         In progress ({{ $ideasCountByStatus['in-progress'] }})
@@ -40,6 +35,8 @@
 
     <x-ideas.filter-item
         filter-name="implemented"
+        :active="$statusFilter == 'implemented'"
+        :redirect="$redirect"
         :first="true"
         class="xl:ml-auto"
     >
@@ -48,6 +45,8 @@
 
     <x-ideas.filter-item
         filter-name="closed"
+        :active="$statusFilter == 'closed'"
+        :redirect="$redirect"
         :last="true"
     >
         Closed ({{ $ideasCountByStatus['closed'] }})
