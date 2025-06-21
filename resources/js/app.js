@@ -1,9 +1,11 @@
 import "./bootstrap";
 
+// https://livewire.laravel.com/docs/upgrading#accessing-alpine-via-js-bundle
+import { Livewire } from '../../vendor/livewire/livewire/dist/livewire.esm';
+
 import nProgress from "nprogress";
 import 'nprogress/nprogress.css';
 
-import Alpine from "alpinejs";
 import {
     computePosition,
     flip,
@@ -11,8 +13,6 @@ import {
     offset,
     autoUpdate as floatingAutoUpdate,
 } from "@floating-ui/dom";
-
-window.Alpine = Alpine;
 
 function updateWindowPosition(button, floatingWindow) {
     computePosition(button, floatingWindow, {
@@ -32,29 +32,35 @@ function updateWindowPosition(button, floatingWindow) {
 
 window.updateWindowPosition = updateWindowPosition;
 window.floatingAutoUpdate = floatingAutoUpdate;
-Alpine.start();
 
-if (window.livewire) {
-    let nProgressRunning = false;
+Livewire.start();
 
-    window.livewire.hook('message.sent', () => {
-        if (!nProgressRunning) {
-            nProgress.start();
-            nProgressRunning = true;
-        }
+let nProgressRunning = false;
+
+Livewire.hook('commit', ({ component, commit, respond, succeed, fail }) => {
+    // Equivalent of 'message.sent'
+    if (!nProgressRunning) {
+        nProgress.start();
+        nProgressRunning = true;
+    }
+
+    succeed(({ snapshot, effects }) => {
+        // Equivalent of 'message.received'
+
+        queueMicrotask(() => {
+            // Equivalent of 'message.processed'
+            if (nProgressRunning) {
+                nProgress.done();
+                nProgressRunning = false;
+            }
+        })
     });
 
-    window.livewire.hook('message.failed', () => {
+    fail(() => {
+        // Equivalent of 'message.failed'
         if (nProgressRunning) {
             nProgress.done();
             nProgressRunning = false;
         }
     });
-
-    window.livewire.hook('message.processed', () => {
-        if (nProgressRunning) {
-            nProgress.done();
-            nProgressRunning = false;
-        }
-    });
-}
+})

@@ -1,9 +1,0 @@
-version: '3.9'
-
-services:
-  mailhog:
-    container_name: voting-app-mailhog
-    image: mailhog/mailhog:latest
-    ports:
-      - '1025:1025'
-      - '8025:8025'
