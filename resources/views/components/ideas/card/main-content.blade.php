@@ -53,5 +53,5 @@
         @endforeach
     </div>
 
-    <x-ideas.card.footer :idea="$idea" :comments-count="$idea->comments_count" class="col-span-2 mt-2" />
+    <x-ideas.card.footer :idea="$idea" :comments-count="$idea->comments_count ?? $idea->comments->count()" class="col-span-2 mt-2" />
 </div>

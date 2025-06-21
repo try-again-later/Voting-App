@@ -2,7 +2,6 @@
 
 namespace App\Livewire;
 
-use App\Models\Comment;
 use App\Models\Idea;
 use Barryvdh\Debugbar\Facades\Debugbar;
 use Livewire\Attributes\On;
@@ -23,8 +22,6 @@ class CommentsList extends Component
     #[On('create:comment')]
     public function addNewComment($newComment)
     {
-        Debugbar::info($newComment);
-
         if (!$this->loadedNewComments) {
             $this->loadedNewComments = true;
             $this->loadedCommentsIdsRanges[$this->lastChunk + 1] = [
@@ -136,7 +133,6 @@ class CommentsList extends Component
 
     public function loadMoreComments(array $chunks)
     {
-
         $result = [];
         foreach ($chunks as $chunk) {
             $chunkIndex = $chunk['chunkIndex'];

@@ -1,6 +1,6 @@
 <div
     x-data="{
-        loadedCommentsIdsRanges: @entangle('loadedCommentsIdsRanges'),
+        loadedCommentsIdsRanges: @entangle('loadedCommentsIdsRanges').live,
         commentsChunks: [],
         async loadMoreComments(chunkIndex, count) {
             chunks = [{

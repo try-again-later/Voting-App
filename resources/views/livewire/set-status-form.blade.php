@@ -1,4 +1,8 @@
 <form
+    @close-set-status-form="
+        setOpened(false);
+        scrollTo({top: document.body.scrollHeight, behavior: 'smooth'});
+    "
     wire:submit.prevent="changeStatus"
 >
     <div class="mb-8">

@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\Comment;
 use App\Models\Idea;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -32,6 +33,15 @@ class Toast extends Component
         $this->dispatch(
             'create:alert',
             title: "Idea \"$ideaTitle\" successfully deleted..."
+        );
+    }
+
+    #[On('create:comment')]
+    public function addCreateCommentAlert($newComment) {
+        $ideaTitle = $newComment['idea']['title'];
+        $this->dispatch(
+            'create:alert',
+            title: "Successfully commented on idea \"{$ideaTitle}\""
         );
     }
 

@@ -18,7 +18,7 @@
         >
             <div>
                 <x-textarea
-                    wire:model.defer="body"
+                    wire:model="body"
                     name="comment"
                     placeholder="Give your feedback on this idea..."
                 />
