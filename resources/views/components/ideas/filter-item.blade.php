@@ -1,5 +1,6 @@
 @props([
   'filterName',
+  'redirect' => false,
   'first' => false,
   'last' => false,
   'active' => false,
@@ -8,7 +9,11 @@
 <div class="{{ $attributes['class'] }} group w-full sm:w-min">
   <button
     type="button"
-    wire:click="setStatusFilter('{{ $filterName }}')"
+    @if ($redirect)
+      x-on:click="$wire.dispatch('status-filter-redirect', { statusFilter: '{{ $filterName }}' })"
+    @else
+      x-on:click="$wire.dispatch('update:status-filter', { statusFilter: '{{ $filterName }}' })"
+    @endif
     @class([
       'block mx-auto mb-4 px-3 uppercase font-bold transition-colors whitespace-nowrap text-center cursor-pointer',
       'text-gray-700' => $active,

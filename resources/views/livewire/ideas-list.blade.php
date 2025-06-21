@@ -67,7 +67,7 @@
                 <button
                     x-show="$wire.searchQuery !== ''"
                     x-cloak
-                    @@click="@this.set('searchQuery', '')"
+                    wire:click="$set('searchQuery', '')"
                 >
                     <span class="sr-only">Clear the search query</span>
                     <x-icon.x class="w-5 h-5 text-red-700" />

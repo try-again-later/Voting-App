@@ -14,7 +14,7 @@
         <x-ideas.card.menu class="order-1 ml-auto sm:ml-0 sm:order-2">
             @can('update', $idea)
                 <x-ideas.card.menu-item
-                    wire:click="editIdea"
+                    x-on:click="$wire.dispatchTo('edit-idea-form', 'edit:idea', { ideaId: {{ $idea->id }} })"
                 >
                     Edit idea
                 </x-ideas.card.menu-item>
@@ -22,7 +22,7 @@
 
             @can('delete', $idea)
                 <x-ideas.card.menu-item
-                    wire:click="deleteIdea"
+                    x-on:click="$wire.dispatchTo('delete-idea-confirmation-modal', 'open-delete-modal:idea', { ideaId: {{ $idea->id }} })"
                 >
                     Delete idea
                 </x-ideas.card.menu-item>

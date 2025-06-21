@@ -48,10 +48,6 @@ class SetStatusForm extends Component
             $this->notifyVotersAboutStatusChange();
         }
 
-        if ($this->notifyVoters) {
-            $this->notifyVotersAboutStatusChange();
-        }
-
         $this->dispatch('update:status', $this->idea, $newStatus->human_name);
     }
 

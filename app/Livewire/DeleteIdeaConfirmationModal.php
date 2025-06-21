@@ -12,36 +12,22 @@ class DeleteIdeaConfirmationModal extends Component
 {
     public ?string $redirectOnDelete = null;
 
-    public ?Idea $idea = null;
-
-    #[On('open-delete-modal:idea')]
-    public function openModal(Idea $idea)
+    public function deleteIdea(int $ideaId)
     {
-        if (!Auth::check() || Auth::user()->cannot('delete', $idea)) {
-            return;
-        }
+        $idea = Idea::find($ideaId);
 
-        $this->idea = $idea;
-    }
-
-    public function deleteIdea()
-    {
-        if (!isset($this->idea)) {
-            return;
-        }
-
-        if (!Auth::check() || Auth::user()->cannot('delete', $this->idea)) {
+        if ($idea == null || !Auth::check() || Auth::user()->cannot('delete', $idea)) {
             abort(Response::HTTP_FORBIDDEN);
         }
 
-        $this->idea->delete();
-        $this->dispatch('destroy:idea', ideaTitle: $this->idea->title);
+        $idea->delete();
+        $this->dispatch('destroy:idea', ideaTitle: $idea->title);
 
         if (isset($this->redirectOnDelete)) {
             return redirect()
                 ->to($this->redirectOnDelete)
                 ->with('alerts', [
-                    ['title' => "Idea \"{$this->idea->title}\" successfully deleted..."],
+                    ['title' => "Idea \"{$idea->title}\" successfully deleted..."],
                 ]);
         }
     }

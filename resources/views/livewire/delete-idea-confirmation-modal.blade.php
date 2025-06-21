@@ -1,6 +1,13 @@
 <div
-    x-data="{ open: false }"
-    @@open-delete-modal:idea="open = true"
+    x-data="{
+        open: false,
+        ideaId: null,
+        openModal(event) {
+            this.open = true;
+            this.ideaId = event.detail.ideaId;
+        },
+    }"
+    @@open-delete-modal:idea="openModal"
     @@keydown.escape.window="open = false"
     @@destroy:idea="open = false"
 >
@@ -49,7 +56,7 @@
         </p>
 
         <button
-            wire:click="deleteIdea"
+            wire:click="deleteIdea(ideaId)"
             class="justify-self-center bg-red-500 text-white font-bold px-4 py-1 rounded-lg transition hover:bg-red-400"
         >
             Delete

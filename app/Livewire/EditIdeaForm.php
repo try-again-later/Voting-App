@@ -23,9 +23,11 @@ class EditIdeaForm extends Component
     ];
 
     #[On('edit:idea')]
-    public function handleEditIdea(Idea $idea)
+    public function handleEditIdea(int $ideaId)
     {
-        if (!Auth::check() || Auth::user()->cannot('update', $idea)) {
+        $idea = Idea::find($ideaId);
+
+        if ($idea == null || !Auth::check() || Auth::user()->cannot('update', $idea)) {
             return;
         }
 

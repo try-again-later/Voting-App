@@ -52,8 +52,8 @@ class EditIdeaTest extends TestCase
 
         Livewire::actingAs($author)
             ->test(EditIdeaForm::class)
-            ->dispatch('edit:idea', $idea)
-            ->assertSet('idea', $idea);
+            ->dispatch('edit:idea', ideaId: $idea->id)
+            ->assertSet('idea.id', $idea->id);
     }
 
     #[Test]

@@ -51,6 +51,8 @@ class IdeaController extends Controller
      */
     public function show(Idea $idea)
     {
+        $idea->load(['status', 'user', 'category']);
+
         $backUrl = url()->previous();
         $ideaIndexPath = parse_url(route('idea.index'), PHP_URL_PATH) ?? '/';
         $previousPath = parse_url(url()->previous(), PHP_URL_PATH) ?? '/';
