@@ -11,14 +11,6 @@ trait StatusFilter
     #[Url(as: 'status', except: 'all')]
     public string $statusFilter = 'all';
 
-    public function setStatusFilter(string $newStatusFilter): void
-    {
-        $this->statusFilter = $newStatusFilter;
-        if (method_exists(self::class, 'resetPage')) {
-            $this->resetPage();
-        }
-    }
-
     public function applyStatusFilter(Builder $query): void
     {
         $query->when($this->isStatusFilterActive(), function (Builder $query) {
@@ -28,20 +20,20 @@ trait StatusFilter
         });
     }
 
-    public function resetStatusFilter(): void
-    {
-        $this->statusFilter = 'all';
-    }
-
-    public function isStatusFilterActive(): bool
-    {
-        return $this->statusFilter !== 'all';
-    }
-
     #[On('update:status-filter')]
     public function handleStatusFilterUpdate($statusFilter)
     {
         $this->statusFilter = $statusFilter;
         $this->resetPage();
+    }
+
+    public function resetStatusFilter(): void
+    {
+        $this->dispatch('update:status-filter', statusFilter: 'all');
+    }
+
+    public function isStatusFilterActive(): bool
+    {
+        return $this->statusFilter !== 'all';
     }
 }

@@ -12,19 +12,6 @@ use Livewire\Component;
 #[On('update:idea')]
 class IdeaShow extends Component
 {
-    public ?array $ideasCountByStatus = null;
-
-    #[On('update:status')]
-    public function updateIdeasCounts()
-    {
-        if (isset($this->ideasCountByStatus)) {
-            $this->ideasCountByStatus = [
-                ...$this->ideasCountByStatus,
-                ...Idea::getCountsByStatuses(),
-            ];
-        }
-    }
-
     public Idea $idea;
     public int $votesCount;
     public bool $voted;
@@ -45,18 +32,6 @@ class IdeaShow extends Component
         $this->voted = $voted;
         $this->showPreview = $showPreview;
         $this->backUrl = $backUrl;
-
-        if (!$showPreview) {
-            $this->ideasCountByStatus = [
-                'all' => 0,
-                'open' => 0,
-                'considering' => 0,
-                'in-progress' => 0,
-                'implemented' => 0,
-                'closed' => 0,
-            ];
-            $this->updateIdeasCounts();
-        }
     }
 
     #[On('status-filter-redirect')]

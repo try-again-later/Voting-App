@@ -2,9 +2,8 @@
     <section class="flex flex-wrap gap-4 mb-8">
         <h2 class="sr-only">Ideas filters</h2>
 
-        <x-ideas.status-filters
+        <livewire:idea-status-filters
             :status-filter="$this->statusFilter"
-            :ideas-count-by-status="$this->ideasCountByStatus"
             class="w-full"
         />
 
@@ -96,7 +95,7 @@
 
         <livewire:edit-idea-form />
 
-        <livewire:delete-idea-confirmation-modal @destroy:idea="updateIdeasCounts" />
+        <livewire:delete-idea-confirmation-modal />
 
         <div>
             {{ $ideas->links() }}

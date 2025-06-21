@@ -12,35 +12,17 @@ use Livewire\Attributes\On;
 use Livewire\Attributes\Url;
 use Livewire\WithPagination;
 
+#[On('destroy:idea')]
 class IdeasList extends Component
 {
     use WithPagination;
     use StatusFilter, SearchFilter, CategoryFilter, AdditionalFilter;
-
-    public array $ideasCountByStatus = [
-        'all' => 0,
-        'open' => 0,
-        'considering' => 0,
-        'in-progress' => 0,
-        'implemented' => 0,
-        'closed' => 0,
-    ];
-
-    public function updateIdeasCounts()
-    {
-        $this->ideasCountByStatus = [
-            ...$this->ideasCountByStatus,
-            ...Idea::getCountsByStatuses(),
-        ];
-    }
 
     public function mount()
     {
         if (!Auth::check() && $this->additionalFilter === 'my-ideas') {
             $this->redirect(route('login'));
         }
-
-        $this->updateIdeasCounts();
     }
 
     #[Computed]
@@ -59,6 +41,7 @@ class IdeasList extends Component
         $this->resetSearchFilter();
         $this->resetCategoryFilter();
         $this->resetAdditionalFilter();
+        $this->resetPage();
     }
 
     public function render(CategoriesService $categories)

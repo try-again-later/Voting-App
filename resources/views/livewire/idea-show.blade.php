@@ -24,9 +24,8 @@
             />
         </article>
     @else
-        <x-ideas.status-filters
+        <livewire:idea-status-filters
             status-filter="none"
-            :ideas-count-by-status="$this->ideasCountByStatus"
             :redirect="true"
             class="mb-8"
         />
