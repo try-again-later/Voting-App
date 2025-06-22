@@ -4,13 +4,9 @@ services:
       context: .
       dockerfile: ./docker/workspace/Dockerfile
       args:
-        # Set HTTP_PROXY for downloading composer, if needed.
-        # PROXY: 0.0.0.0:2080
         UID: ${UID:-1000}
         GID: ${GID:-1000}
     ports:
-      # Set HTTP_PROXY for downloading composer, if needed.
-      # - 2080:2080
       - 5173:5173
       - 8000:8000
     tty: true
