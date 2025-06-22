@@ -10,6 +10,7 @@ use App\Models\User;
 use Database\Seeders\StatusSeeder;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Queue;
 use Livewire\Livewire;
 use PHPUnit\Framework\Attributes\Test;
@@ -94,6 +95,7 @@ class SetStatusFormTest extends TestCase
 
         $admin = User::factory()->admin()->create();
 
+        Config::set('send_emails', true);
         Queue::fake();
 
         Queue::assertNothingPushed();
@@ -105,5 +107,26 @@ class SetStatusFormTest extends TestCase
             ->call('changeStatus');
 
         Queue::assertPushed(NotifyAllVoters::class);
+    }
+
+    #[Test]
+    public function no_emails_are_sent_when_config_is_disabled()
+    {
+        $idea = Idea::factory()->create();
+
+        $admin = User::factory()->admin()->create();
+
+        Config::set('send_emails', false);
+        Queue::fake();
+
+        Queue::assertNothingPushed();
+
+        Livewire::actingAs($admin)
+            ->test(SetStatusForm::class, ['idea' => $idea])
+            ->set('status', 'in-progress')
+            ->set('notifyVoters', true)
+            ->call('changeStatus');
+
+        Queue::assertNothingPushed();
     }
 }

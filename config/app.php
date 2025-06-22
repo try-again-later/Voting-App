@@ -212,4 +212,6 @@ return [
         // 'ExampleClass' => App\Example\ExampleClass::class,
     ])->toArray(),
 
+    'send_emails' => env('SEND_EMAILS', default: true),
+
 ];
