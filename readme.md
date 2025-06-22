@@ -1,6 +1,10 @@
 # Voting App
 
-## Данные для входа / Credentials
+[**Открыть онлайн**](https://tal-voting-app.duckdns.org/)
+
+Сайт для принятия фидбека / трекер заявок, написанный на [Laravel](https://laravel.com/) и [Livewire](https://livewire.laravel.com/). Пользователи могут создавать топики и писать комментарии под ними. Админы могут обновлять статусы на топиках, уведомляя пользователей о статусах их заявок / предложений.
+
+### Данные для входа
 
 __Обычный пользователь__ (может оставлять комментарии, создавать и удалять (свои собственные) предложения, а также изменять их в течение одного часа после создания):
 
@@ -9,10 +13,16 @@ __Обычный пользователь__ (может оставлять ко�
 
 __Админ__ (может менять статусы предложений, а также удалять любые созданные предложения):
 
-- Email: `admin@example.com`
-- Password: `123123123`
+- Почта: `admin@example.com`
+- Пароль: `123123123`
 
 ---
+
+[**Live version**](https://tal-voting-app.duckdns.org/)
+
+A website for processing user feedback / an issue tracker written with [Laravel](https://laravel.com/) and [Livewire](https://livewire.laravel.com/). Users can create topics and comment on them. Admins can update topic statuses, notifying users on the status of their requests / offers.
+
+### Credentials
 
 __Regular user__ (can delete their own ideas and change their ideas within one hour after they've created the idea):
 
@@ -24,12 +34,21 @@ __Admin user__ (can change ideas' statuses and delete any ideas):
 - Email: `admin@example.com`
 - Password: `123123123`
 
+## Screenshots
+
+<img src="./screenshots/1.png" width="60%"> <img src="./screenshots/4.png" width="25%">
+
+<img src="./screenshots/3.png" width="70%"> <img src="./screenshots/6.png" width="20%">
+
+<img src="./screenshots/2.png" width="60%"> <img src="./screenshots/5.png" width="25%">
+
 ## Deploy for production
 
 ```sh
 git clone https://github.com/try-again-later/Voting-App
 cd Voting-App
 
+# Set APP_ENV to "production" and update APP_URL with your domain.
 cp .env.example .env
 docker-compose -f ./compose.prod.yaml up -d --build
 
