@@ -1,10 +1,29 @@
 services:
-  postgres:
+  voting-app-workspace:
+    build:
+      context: .
+      dockerfile: ./docker/workspace/Dockerfile
+      args:
+        # Set HTTP_PROXY for downloading composer, if needed.
+        # PROXY: 0.0.0.0:2080
+        UID: ${UID:-1000}
+        GID: ${GID:-1000}
+    ports:
+      # Set HTTP_PROXY for downloading composer, if needed.
+      # - 2080:2080
+      - 5173:5173
+      - 8000:8000
+    tty: true
+    stdin_open: true
+    volumes:
+      - ./:/var/www
+    networks:
+      - voting-app
+
+  voting-app-postgres:
     image: postgres:16
     ports:
       - "${POSTGRES_PORT:-5432}:5432"
-    env_file:
-      - .env
     environment:
       - POSTGRES_DB=${DB_DATABASE}
       - POSTGRES_USER=${DB_USERNAME}
@@ -13,12 +32,17 @@ services:
       - voting-app-data:/var/lib/postgresql/data
     networks:
       - voting-app
-  mailhog:
+
+  voting-app-mailhog:
     image: mailhog/mailhog:latest
     ports:
       - '1025:1025'
       - '8025:8025'
+    networks:
+      - voting-app
+
 networks:
   voting-app:
+
 volumes:
   voting-app-data:
