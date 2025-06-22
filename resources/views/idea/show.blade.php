@@ -8,10 +8,7 @@
 
     <livewire:edit-idea-form />
 
-    <livewire:comments-list
-        :idea="$idea"
-        class="mt-0 sm:mt-8"
-    />
+    <livewire:comments-list :idea="$idea" class="mt-8" />
 
     <livewire:delete-idea-confirmation-modal :redirect-on-delete="$backUrl" />
 </x-app-layout>

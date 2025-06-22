@@ -41,15 +41,7 @@
     />
 
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
-        <x-input-file
-            id="set-status-attachment"
-            class="flex-1"
-            name="attachment"
-        />
-
-        <x-submit-button
-            class="flex-1 disabled:opacity-25"
-        >
+        <x-submit-button class="disabled:opacity-25 col-2">
             Submit
         </x-submit-button>
     </div>

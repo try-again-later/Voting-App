@@ -2,24 +2,19 @@
 
 namespace App\Livewire;
 
-use App\Models\Category;
 use App\Models\Idea;
 use App\Models\Status;
 use Illuminate\Support\Facades\Auth;
 use App\Services\CategoriesService;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
-use Livewire\WithFileUploads;
 use Symfony\Component\HttpFoundation\Response;
 
 class CreateIdea extends Component
 {
-    use WithFileUploads;
-
     public $title;
     public $category = 'none';
     public $description;
-    public $attachment;
 
     protected $messages = [
         'category.not_in' => 'Please select a category.',
@@ -32,14 +27,6 @@ class CreateIdea extends Component
             'category' => ['required', Rule::notIn(['none'])],
             'description' => 'required',
         ];
-    }
-
-    public function attachmentBasename()
-    {
-        if (!isset($this->attachment)) {
-            return '';
-        }
-        return basename($this->attachment);
     }
 
     public function render(CategoriesService $categories)

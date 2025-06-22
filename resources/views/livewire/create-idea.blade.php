@@ -1,7 +1,6 @@
 <form
     method="post"
     wire:submit="createIdea"
-    x-data="{ attachment: null }"
 >
     @csrf
 
@@ -50,31 +49,6 @@
     </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <x-input-file
-            id="create-idea-attachment"
-            wire:model="attachment"
-            @change="attachment = $event.target?.files?.[0]?.name"
-        />
-        <x-submit-button class="flex-1">Submit</x-submit-button>
-    </div>
-
-    <div
-        x-show="attachment != null"
-        class="mt-4 flex flex-wrap gap-2 items-center text-sm"
-        x-cloak
-    >
-        <button
-            type="button"
-            @@click="
-                attachment = null;
-                $wire.attachment = null;
-            "
-            class="relative circle-background-hover"
-        >
-            <x-icon.x class="w-4 h-4 text-red-700" />
-            <span class="sr-only">Remove attached file</span>
-        </button>
-        <span>Attached file: </span>
-        <span class="text-gray-400 break-all" x-text="attachment"></span>
+        <x-submit-button class="col-1 sm:col-2">Submit</x-submit-button>
     </div>
 </form>
