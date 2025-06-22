@@ -45,5 +45,8 @@ jobs:
       - name: Build frontend assets
         run: npm run build
 
+      - name: Run linters (PHPStan)
+        run: ./vendor/bin/phpstan
+
       - name: Run test suite
         run: php artisan test

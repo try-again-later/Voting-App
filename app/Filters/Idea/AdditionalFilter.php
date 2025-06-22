@@ -2,6 +2,7 @@
 
 namespace App\Filters\Idea;
 
+use App\Models\Idea;
 use App\Models\Vote;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
@@ -13,21 +14,21 @@ trait AdditionalFilter
     #[Url(as: 'filter', except: 'no-filter')]
     public string $additionalFilter = 'no-filter';
 
-    public function updatingAdditionalFilter(string $newAdditionalFilter)
+    public function updatingAdditionalFilter(string $newAdditionalFilter): void
     {
-        if (method_exists(self::class, 'resetPage')) {
-            $this->resetPage();
-        }
-        if (method_exists(self::class, 'redirect')) {
-            if (
-                !Auth::check() &&
-                in_array($newAdditionalFilter, ['my-ideas', 'voted-for'], strict: true)
-            ) {
-                $this->redirect(route('login'));
-            }
+        $this->resetPage();
+
+        if (
+            !Auth::check() &&
+            in_array($newAdditionalFilter, ['my-ideas', 'voted-for'], strict: true)
+        ) {
+            $this->redirect(route('login'));
         }
     }
 
+    /**
+     * @param Builder<Idea> $query
+     */
     public function applyAdditionalFilter(Builder $query): ?RedirectResponse
     {
         if (!$this->isAdditionalFilterActive()) {

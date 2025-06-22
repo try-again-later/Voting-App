@@ -3,7 +3,6 @@
 namespace App\Livewire;
 
 use App\Models\Idea;
-use Barryvdh\Debugbar\Facades\Debugbar;
 use Livewire\Attributes\On;
 use Livewire\Component;
 

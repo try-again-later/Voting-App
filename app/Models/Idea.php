@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
-use Barryvdh\Debugbar\Facades\Debugbar;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\DB;
 
 class Idea extends Model
@@ -23,27 +25,42 @@ class Idea extends Model
         ];
     }
 
-    public function user()
+    /**
+     * @return BelongsTo<User, $this>
+     */
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function category()
+    /**
+     * @return BelongsTo<Category, $this>
+     */
+    public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
     }
 
-    public function status()
+    /**
+     * @return BelongsTo<Status, $this>
+     */
+    public function status(): BelongsTo
     {
         return $this->belongsTo(Status::class);
     }
 
-    public function votes()
+    /**
+     * @return BelongsToMany<User, $this>
+     */
+    public function votes(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'votes');
     }
 
-    public function comments()
+    /**
+     * @return HasMany<Comment, $this>
+     */
+    public function comments(): HasMany
     {
         return $this->hasMany(Comment::class);
     }
@@ -114,7 +131,6 @@ class Idea extends Model
             ->selectRaw('COUNT(ideas.id) AS count')
             ->leftJoin('ideas', 'ideas.status_id', '=', 'statuses.id')
             ->groupBy('statuses.name')
-            ->get()
             ->pluck('count', 'status_name');
 
         $ideasCountByStatus['all'] = $ideasCountByStatus->reduce(

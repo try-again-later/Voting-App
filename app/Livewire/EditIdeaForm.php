@@ -12,9 +12,9 @@ use Livewire\Component;
 class EditIdeaForm extends Component
 {
     public ?Idea $idea = null;
-    public string $category = 'none';
-    public string $title = '';
-    public string $description = '';
+    public $category = 'none';
+    public $title = '';
+    public $description = '';
 
     protected $rules = [
         'category' => ['required', 'integer', 'exists:categories,id'],

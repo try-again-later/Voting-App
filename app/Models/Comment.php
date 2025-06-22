@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Comment extends Model
 {
@@ -11,17 +12,26 @@ class Comment extends Model
 
     protected $guarded = [];
 
-    public function author()
+    /**
+     * @return Belongsto<User, $this>
+     */
+    public function author(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function newIdeaStatus()
+    /**
+     * @return BelongsTo<Status, $this>
+     */
+    public function newIdeaStatus(): BelongsTo
     {
         return $this->belongsTo(Status::class);
     }
 
-    public function idea()
+    /**
+     * @return BelongsTo<Idea, $this>
+     */
+    public function idea(): BelongsTo
     {
         return $this->belongsTo(Idea::class);
     }

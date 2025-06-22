@@ -2,6 +2,7 @@
 
 namespace App\Filters\Idea;
 
+use App\Models\Idea;
 use Illuminate\Database\Eloquent\Builder;
 use Livewire\Attributes\Url;
 
@@ -10,7 +11,7 @@ trait CategoryFilter
     #[Url(as: 'category', except: 'all')]
     public string $categoryFilter = 'all';
 
-    public function updatingCategoryFilter()
+    public function updatingCategoryFilter(): void
     {
         $this->resetPage();
     }
@@ -18,11 +19,12 @@ trait CategoryFilter
     public function setCategoryFilter(string $newCategoryFilter): void
     {
         $this->categoryFilter = $newCategoryFilter;
-        if (method_exists(self::class, 'resetPage')) {
-            $this->resetPage();
-        }
+        $this->resetPage();
     }
 
+    /**
+     * @param Builder<Idea> $query
+     */
     public function applyCategoryFilter(Builder $query): void
     {
         $query->when($this->isCategoryFilterActive(), function (Builder $query) {

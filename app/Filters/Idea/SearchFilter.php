@@ -2,6 +2,7 @@
 
 namespace App\Filters\Idea;
 
+use App\Models\Idea;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\Url;
@@ -14,11 +15,12 @@ trait SearchFilter
     public function setSearchQuery(string $newSearchQuery): void
     {
         $this->searchQuery = $newSearchQuery;
-        if (method_exists(self::class, 'resetPage')) {
-            $this->resetPage();
-        }
+        $this->resetPage();
     }
 
+    /**
+     * @param Builder<Idea> $query
+     */
     public function applySearchFilter(Builder $query): void
     {
         $query->when($this->isSearchFilterActive(), function (Builder $query) {
@@ -37,7 +39,7 @@ trait SearchFilter
         return mb_strlen($this->searchQuery) >= 3;
     }
 
-    public function updatingSearchQuery()
+    public function updatingSearchQuery(): void
     {
         $this->resetPage();
     }
