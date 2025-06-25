@@ -21,7 +21,6 @@ class DeleteIdeaConfirmationModal extends Component
         }
 
         $idea->delete();
-        $this->dispatch('destroy:idea', ideaTitle: $idea->title);
 
         if (isset($this->redirectOnDelete)) {
             return redirect()
@@ -29,6 +28,8 @@ class DeleteIdeaConfirmationModal extends Component
                 ->with('alerts', [
                     ['title' => "Idea \"{$idea->title}\" successfully deleted..."],
                 ]);
+        } else {
+            $this->dispatch('destroy:idea', ideaTitle: $idea->title);
         }
     }
 
